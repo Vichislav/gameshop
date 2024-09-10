@@ -43,10 +43,10 @@ const users = await res.json();
  
 
   return (
-    <main className="flex flex-col items-center justify-between p-24">
+    <div className="flex flex-col items-center p-[5px] w-full">
       <h1 className="text-[50px]">First Gameshop is here</h1>
         <Grid dataProps={users as User[]} />
-    </main>
+    </div>
   );
 }
 
