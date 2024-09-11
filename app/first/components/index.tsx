@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { User } from '../page'
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useAppSelector, useAppDispatch, useAppStore } from '@/lib/hooks'
+import { addUserToGroup } from '@/lib/features/group/group.slice';
 
 interface UserListProps {
     dataProps: User[];
@@ -18,8 +20,14 @@ export default function Grid ({ dataProps }: UserListProps)  {
         router.push('/basket'); 
     }; 
     
-    console.log('data')
-    console.log(dataProps)
+    const store = useAppStore()
+    const dispatch = useAppDispatch()
+
+    const addUser = (item: User) => {
+      store.dispatch(addUserToGroup(item))
+      console.log('dispatch work with ' + item.name)
+    }
+   
     useEffect(()=>{
         setData(dataProps)
     }, [dataProps])
@@ -33,7 +41,7 @@ export default function Grid ({ dataProps }: UserListProps)  {
             return(
             <div className='p-[10px] m-[10px] w-[80%] border-2 border-black rounded-lg' key={item.id}>
                 <p>{item.name}</p>
-                <button className='w-[40px] h-[20px] border-2 border-blue-500 m-2 flex justify-center items-center rounded'>+</button> 
+                <button onClick={() => {addUser(item)}} className='w-[40px] h-[20px] border-2 border-blue-500 m-2 flex justify-center items-center rounded'>+</button> 
               </div>) 
           })}
         </div>
