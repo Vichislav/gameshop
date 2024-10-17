@@ -14,8 +14,12 @@ export default function Basket() {
   const router = useRouter(); 
 
   const data = useAppSelector((state)=>state.group)
+  const amontData = useAppSelector((state)=>state.amount)
   console.log(typeof data)
   console.log(data)
+  console.log('/////////////////////////////////////////////////')
+  console.log(amontData)
+
 
 
   const store = useAppStore()

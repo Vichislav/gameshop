@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import groupReducer from './features/group/group.slice'
+import amountReducer from './features/amount/amount.slice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      group: groupReducer
+      group: groupReducer,
+      amount: amountReducer
     },
   })
 }
