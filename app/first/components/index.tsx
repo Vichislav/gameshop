@@ -18,6 +18,10 @@ export default function Grid ({ dataProps }: UserListProps)  {
     const goToBasket = () => { 
         router.push('/basket'); 
     }; 
+
+    const goToExample = () => { 
+      router.push('/example'); 
+  }; 
    
     useEffect(()=>{
         setData(dataProps)
@@ -35,6 +39,7 @@ export default function Grid ({ dataProps }: UserListProps)  {
           })}
         </div>
         <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToBasket}>to Basket</button>
+        <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToExample}>to Example</button>
     </div>
   );
 }
