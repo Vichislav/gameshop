@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.card:hover .no-parent-hover {
+  background-color: rgb(var(--background-start-rgb));
+}

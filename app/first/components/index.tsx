@@ -22,6 +22,10 @@ export default function Grid ({ dataProps }: UserListProps)  {
     const goToExample = () => { 
       router.push('/example'); 
   }; 
+
+  const goToPosts = () => { 
+    router.push('/posts'); 
+}; 
    
     useEffect(()=>{
         setData(dataProps)
@@ -34,12 +38,13 @@ export default function Grid ({ dataProps }: UserListProps)  {
         <div className=' w-[80%] grid grid-cols-3 justify-center justify-items-center'>
           {data && data.map((user)=>{
             return(
-              <ItemComponent item={user}/>
+              <ItemComponent item={user} key={user.id}/>
               )
           })}
         </div>
         <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToBasket}>to Basket</button>
         <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToExample}>to Example</button>
+        <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToPosts}>to Posts</button>
     </div>
   );
 }
