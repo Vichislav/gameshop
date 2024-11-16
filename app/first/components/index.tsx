@@ -15,7 +15,7 @@ export default function Grid ({ dataProps }: UserListProps)  {
     const [data, setData] = useState<User[] | null>(null)
     const router = useRouter(); 
 
-    const goToBasket = () => { 
+/*     const goToBasket = () => { 
         router.push('/basket'); 
     }; 
 
@@ -25,7 +25,7 @@ export default function Grid ({ dataProps }: UserListProps)  {
 
   const goToPosts = () => { 
     router.push('/posts'); 
-}; 
+};  */
    
     useEffect(()=>{
         setData(dataProps)
@@ -34,7 +34,7 @@ export default function Grid ({ dataProps }: UserListProps)  {
 
   return (
     <div className="flex flex-col items-center justify-between p-[5px] w-full">
-      <h1 className="text-[50px]">Grid for data</h1>
+      <h1 className="text-[20px] pt-[10px]">Please select the author</h1>
         <div className=' w-[80%] grid grid-cols-3 justify-center justify-items-center'>
           {data && data.map((user)=>{
             return(
@@ -42,9 +42,9 @@ export default function Grid ({ dataProps }: UserListProps)  {
               )
           })}
         </div>
-        <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToBasket}>to Basket</button>
+        {/* <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToBasket}>to Basket</button>
         <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToExample}>to Example</button>
-        <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToPosts}>to Posts</button>
+        <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToPosts}>to Posts</button> */}
     </div>
   );
 }

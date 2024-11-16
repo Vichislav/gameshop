@@ -36,7 +36,7 @@ export default function Basket() {
 
 
   return (
-    <section className="flex flex-col w-[100%] gap-[20px] mt-[20px] justify-center items-center min-h-screen min-w-[100%] bg-slate-700">
+    <section className="flex flex-col w-[100%] gap-[20px] justify-center items-center min-h-screen min-w-[100%] bg-slate-700">
       <h1 className="text-[50px]">Grid for data</h1>
         <div className=' w-[80%] grid grid-cols-1 justify-center justify-items-center'>
           {data && data.group.map((item)=>{

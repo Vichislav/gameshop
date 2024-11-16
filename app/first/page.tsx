@@ -44,7 +44,7 @@ const users = await res.json();
 
   return (
     <div className="flex flex-col items-center p-[5px] w-full">
-      <h1 className="text-[50px]">First Gameshop is here</h1>
+      <h1 className="text-[20px]">We have gathered for you, from all over the world, the best authors of tasks for studying JS</h1>
         <Grid dataProps={users as User[]} />
     </div>
   );

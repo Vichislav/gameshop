@@ -4,13 +4,15 @@ import { addUserToGroup } from '@/lib/features/group/group.slice';
 import { amountProps, createAmountData } from '@/lib/features/amount/amount.slice';
 import Modal from "@/app/component/Modal";
 import { useState } from "react";
-
+import Image from "next/image";
+import akkPhoto from '../../img/akkPhoto.png'
+import { useRouter } from "next/navigation";
 interface MyProps {
     item: User
 }
 
 
-const ItemComponent: React.FC<MyProps> = ({item}) => {
+const ItemComponent: React.FC<MyProps> = ({ item }) => {
 
     const [isModalOpen, setModalOpen] = useState(false);
 
@@ -19,33 +21,56 @@ const ItemComponent: React.FC<MyProps> = ({item}) => {
 
     const store = useAppStore()
     const dispatch = useAppDispatch()
+    const router = useRouter(); 
 
-    const addUser = (item: User) => {
-      store.dispatch(addUserToGroup(item))
-      console.log('dispatch work with ' + item.name)
+    const goToAothor = (id: string) => { 
+        router.push(`/author/${id}`); 
+    }; 
 
-      const currentAmount: amountProps = {
-        key: `${item.id}`,
-        value: 1
-      }
-      store.dispatch(createAmountData(currentAmount))
-    }
+    /*  const addUser = (item: User) => {
+       store.dispatch(addUserToGroup(item))
+       console.log('dispatch work with ' + item.name)
+ 
+       const currentAmount: amountProps = {
+         key: `${item.id}`,
+         value: 1
+       }
+       store.dispatch(createAmountData(currentAmount))
+     } */
 
-    return(
+    return (
         <div className='card p-[10px] m-[10px] w-[80%] border-2 border-black rounded-lg hover:bg-white' key={item.id}>
-            <p>{item.name}</p>
-            <button onClick={openModal}>Open Modal</button>
+            <p className="text-gray-600 text-[18px]">{item.name}</p>
+            <p>from {item.address.city}</p>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <h2>This is a Modal! for {item.name}</h2>
-                <p>You can add any content here.</p>
+                <div className="flex flex-row p-5 gap-3">
+                    <Image
+                        src={akkPhoto}
+                        width={200}
+                        height={200}
+                        alt="Picture of the author"
+                    />
+                    <div>
+                        <h2> name: {item.name}</h2>
+                        <h4> email: {item.email}</h4>
+                    </div>
+                </div>
+                <div className="flex p-5 justify-end items-end">
+                    <button className="border-black border-2 rounded-md p-1 hover:bg-slate-400" onClick={()=>goToAothor(`${item.id}`)}>
+                        See more
+                    </button>
+                </div>
             </Modal>
-            <button onClick={() => {addUser(item)}} 
-            className='btn w-[40px] h-[20px] border-2 border-blue-500 m-2 flex justify-center items-center 
-            rounded no-parent-hover active:border-4'>
-                +
-            </button> 
+            <div className="flex justify-end">
+                <button onClick={openModal}
+                    className='btn w-[40px] h-[20px] border-2 border-blue-500 m-2 flex justify-center items-center 
+                rounded no-parent-hover active:border-4'>
+                    +
+                </button>
+            </div>
+
         </div>
-        ) 
+    )
 }
 
 export default ItemComponent

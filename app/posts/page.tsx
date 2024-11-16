@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import PostItem from './components';
@@ -15,17 +15,27 @@ export interface Post {
 
 export default function Posts() {
   const [posts, setPosts] = useState<Post[] | null>(null)
-
+  const [count, setCount] = useState<number>(0)
+  const refCount = useRef<number>(0)
   const router = useRouter(); 
 
   const goToHome = () => { 
       router.push('/'); 
   }; 
 
-  const DeletePost = (id: number):void => {
+  const DeletePost = (id: number): void => {
     const filterPosts = posts?.filter(item=> item.id != id)
-    setPosts(filterPosts as Post[])
+    setPosts(filterPosts || [])
   }
+
+
+  console.log('Parent render work')
+
+  const LogRender =  useCallback(() => {
+    setCount(prev => prev + 1)
+    //refCount.current + 1
+    console.log('render work' + refCount.current)
+  }, [])
 
   
 
@@ -44,16 +54,15 @@ export default function Posts() {
         <div className=' w-[80%] grid grid-cols-1 justify-center justify-items-center gap-2'>
           Amount of posts {posts ? posts.length : 'posts not find'}
            {posts && posts.map((item)=>{
-            console.log('PostItem render')
-            return(
-              <div>
-                  <PostItem newItem = {item} delFn={DeletePost}/>
-              </div>
-              
-            )
+            if(item.id < 5){
+              return(
+                <div className='flex justify-center w-[100%]' key={item.id}>
+                    <PostItem newItem = {item}  renderFn={LogRender}/>
+                </div>)
+            }
            })}
         </div>
-        <button className='w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToHome}>Back to home</button> 
+        <button className=' fixed top-[90%] left-[80%] w-[120px] p-[5px] border-2 bg-slate-300' onClick={goToHome}>Back to home</button> 
     </section>
   );
 }
