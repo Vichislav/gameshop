@@ -1,13 +1,13 @@
 import Grid from "./components";
 
 // Определяем интерфейс для геолокации
-interface Geo {
+export interface Geo {
     lat: string;
     lng: string;
   }
   
   // Определяем интерфейс для адреса
-  interface Address {
+  export interface Address {
     street: string;
     suite: string;
     city: string;
@@ -16,7 +16,7 @@ interface Geo {
   }
   
   // Определяем интерфейс для компании
-  interface Company {
+  export interface Company {
     name: string;
     catchPhrase: string;
     bs: string;

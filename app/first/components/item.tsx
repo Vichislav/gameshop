@@ -42,23 +42,26 @@ const ItemComponent: React.FC<MyProps> = ({ item }) => {
         <div className='card p-[10px] m-[10px] w-[80%] border-2 border-black rounded-lg hover:bg-white' key={item.id}>
             <p className="text-gray-600 text-[18px]">{item.name}</p>
             <p>from {item.address.city}</p>
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <div className="flex flex-row p-5 gap-3">
-                    <Image
-                        src={akkPhoto}
-                        width={200}
-                        height={200}
-                        alt="Picture of the author"
-                    />
-                    <div>
-                        <h2> name: {item.name}</h2>
-                        <h4> email: {item.email}</h4>
+            <Modal isOpen={isModalOpen} onClose={closeModal} big={true}>
+                <div className="flex flex-col h-full p-5 justify-between">
+                    <div className="flex flex-row gap-3">
+                        <Image
+                            src={akkPhoto}
+                            width={250}
+                            height={250}
+                            alt="Picture of the author"
+                        />
+                        <div>
+                            <h2> name: {item.name}</h2>
+                            <h4> email: {item.email}</h4>
+                            <p> website: {item.website}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="flex p-5 justify-end items-end">
-                    <button className="border-black border-2 rounded-md p-1 hover:bg-slate-400" onClick={()=>goToAothor(`${item.id}`)}>
-                        See more
-                    </button>
+                    <div className="flex p-5 justify-end items-end">
+                        <button className="border-black border-2 rounded-md p-1 hover:bg-slate-400" onClick={()=>goToAothor(`${item.id}`)}>
+                            See more
+                        </button>
+                    </div>
                 </div>
             </Modal>
             <div className="flex justify-end">
