@@ -51,10 +51,10 @@ const ItemComponent: React.FC<MyProps> = ({ item }) => {
                             height={250}
                             alt="Picture of the author"
                         />
-                        <div>
-                            <h2> name: {item.name}</h2>
-                            <h4> email: {item.email}</h4>
-                            <p> website: {item.website}</p>
+                        <div className=" p-3 flex flex-col gap-2 text-lg">
+                            <p> <b>name:</b> {item.name}</p>
+                            <p> <b>email:</b> {item.email}</p>
+                            <p> <b>website:</b> {item.website}</p>
                         </div>
                     </div>
                     <div className="flex p-5 justify-end items-end">
