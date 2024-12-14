@@ -1,4 +1,5 @@
-import { User } from "@/app/first/page";
+import PostView from "../(component)"
+
 type AuthorProps = {
     params: {
         id: string
@@ -13,23 +14,32 @@ export interface IPost {
 }
 
 const getUser = async (id: string) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
-    const user = await res.json();
-    return user
+    try{
+        const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+        const user = await res.json();
+        return user
+    }catch (error) {
+        console.error(error)
+    }
 }
 
 const getUsersPosts = async (id: string) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`);
-    const posts = await res.json();
-    return posts
+    try {
+        const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`);
+        const posts = await res.json();
+        return posts
+    } catch (error) {
+        console.error(error)
+    }  
 }
 
 export default async function AuthorPage({ params: { id } }: AuthorProps) {
 
+    
     const data = await getUser(id)
     const posts = await getUsersPosts(id)
-    console.log(id)
-    console.log('AuthorPage correct')
+
+   
 
     return (
         <div className="flex flex-col p-5 justify-center items-center ">
@@ -37,11 +47,7 @@ export default async function AuthorPage({ params: { id } }: AuthorProps) {
             {posts ? <ul className="w-[60%] flex flex-col gap-2">
                 {posts.map((post: IPost) => {
                     return (
-                        <li key={post.id} className="flex flex-col gap-1 odd:bg-slate-400 even:bg-neutral-400 p-3 rounded-md">
-                            <h1><b>{post.id} {post.title}</b></h1>
-                            <p>{post.body}</p>
-                            <hr></hr>
-                        </li>
+                       <PostView authorId={id} post={post} key={post.id}/>
                     )
                 })}
             </ul> : <p>posts not founded</p>}

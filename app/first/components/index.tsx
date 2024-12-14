@@ -35,7 +35,7 @@ export default function Grid ({ dataProps }: UserListProps)  {
   return (
     <div className="flex flex-col items-center justify-between p-[5px] w-full">
       <h1 className="text-[20px] pt-[10px]">Please select the author</h1>
-        <div className=' w-[80%] grid grid-cols-3 justify-center justify-items-center'>
+        <div className=' w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center justify-items-center'>
           {data && data.map((user)=>{
             return(
               <ItemComponent item={user} key={user.id}/>
