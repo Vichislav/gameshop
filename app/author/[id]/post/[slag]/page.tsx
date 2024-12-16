@@ -27,19 +27,22 @@ export default async function PostPage({params: {slag}}: postProps) {
     const comments =  await getComments(slag)
     
     return (
-        <div>
-            <h1>Hi this is comments of post with id:{slag}</h1>
-            {comments? 
-            <ul>
-                {comments.map((item: IComment) => {
-                    return (
-                        <div>
-                            <h2>{item.name}</h2>
-                            <p>{item.body}</p>
-                        </div>
-                    )
-                })}
-            </ul> :  <p>comments not founded</p>}
+        <div className="flex flex-col items-center w-full pt-5 ">
+            <div className="flex flex-col justify-center w-[70%] ">
+                <h1>Hi this is comments of post with id:{slag}</h1>
+                {comments? 
+                <ul>
+                    {comments.map((item: IComment) => {
+                        return (
+                            <div key={item.id} className="p-2">
+                                <h2>{item.name}</h2>
+                                <p>{item.body}</p>
+                                <hr></hr>
+                            </div>
+                        )
+                    })}
+                </ul> :  <p>comments not founded</p>}
+            </div>
         </div>
     )
 }

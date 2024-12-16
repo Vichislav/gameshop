@@ -50,7 +50,7 @@ export default async function AuthorPage({ params: { id } }: AuthorProps) {
                        <PostView authorId={id} post={post} key={post.id}/>
                     )
                 })}
-            </ul> : <p>posts not founded</p>}
+            </ul> : <p>posts not find</p>}
 
         </div>
     )
