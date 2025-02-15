@@ -25,7 +25,7 @@ export default function RootLayout({
             <body className={inter.className}>
               <header className="w-full h-[100px] bg-slate-500 flex flex-col justify-end items-center">
                 <nav className="w-[500px] h-[40px] flex justify-center items-center">
-                  <Link href={'/example'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100">About</Link>
+                  <Link href={'/about'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100">About</Link>
                   <Link href={'/posts'} className="pl-4 pr-4  border-r-2 text-cyan-100">Posts</Link>
                   <Link href={'/basket'} className="pl-4 pr-4  border-r-2 text-cyan-100">Basket</Link>
                   <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100">Home</Link>
