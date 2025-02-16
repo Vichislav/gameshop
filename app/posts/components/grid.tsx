@@ -17,6 +17,7 @@ const GridItem : React.FC<GridProps> = ({arrPosts})=> {
     const [step, setStep] = useState<number>(0)
     const [filterPosts, setFilterPosts] = useState<Post[] | []>([]) 
     const [botBtn, setBotbtn] = useState<number[]>([])
+    const [delta, setDelta] = useState<number>(50)
     //const [onerender, setOnerender] = useState<boolean>(false)
 
     useEffect(() => {
@@ -34,26 +35,47 @@ const GridItem : React.FC<GridProps> = ({arrPosts})=> {
         setFilterPosts(arrPosts.slice(num*10, num*10+10))
     }
 
-    const toLeft = () => {
-        console.log('toLeft work with' + step)
+    const toLeft = () => {    
         const elem = containerRef.current
-
-        if(elem) {
-            elem.style.transform = `translateX(${step + 50}px)`;
-        }
-        setStep((prev) => prev + 50)
-        
+        if(elem && step != 0) {
+            elem.style.transform = `translateX(${step + delta}px)`;
+            setStep((prev) => prev + delta )
+            console.log('toLeft work with' + `${step + delta}`)
+        }else if (elem){
+            shakeLeft(elem, 0)
+            console.log('shakeLeft work with')
+        }   
     }
 
     const toRight = () => {
-        console.log('toRight work with' + step)
         const elem = containerRef.current
 
-        if(elem) {
-            elem.style.transform = `translateX(${step-50}px)`;
-        }
-        setStep((prev) => prev - 50)
+        if(elem && step != -300) {
+            elem.style.transform = `translateX(${step-delta}px)`;
+            console.log('toRight work with' + `${step - delta}`)
+            setStep((prev) => prev - delta )
+        }else if (elem){
+            shakeRight(elem, -300)
+            console.log('shakeRight work with')
+        }   
+       
     }
+
+    const  shakeLeft = (element: HTMLElement, currentpos: any) => {
+        element.style.transform = `translateX(${currentpos+15}px)`;
+        setTimeout(() => {
+            element.style.transform = `translateX(${currentpos}px)`;
+        }, 250); 
+      }
+      
+      const shakeRight = (element: HTMLElement, currentpos: any) => {
+           
+        element.style.transform = `translateX(${currentpos-15}px)`;
+        
+        setTimeout(() => {
+            element.style.transform = `translateX(${currentpos}px)`;
+        }, 250); 
+      }
         
     return (
         <div className="flex flex-col justify-center items-center">
@@ -63,20 +85,24 @@ const GridItem : React.FC<GridProps> = ({arrPosts})=> {
                 ))}
             </div> : <p>posts not find</p>}
             {botBtn&& 
-            <div className='w-[40%]  flex flex-row justify-between p-2 gap-1 '>
-                <button className="pl-4" onClick={toLeft}>&#10094;</button>
-                <div  ref={wrapRef} className=' relative w-full flex flex-row justify-between overflow-hidden'>
+            <div className='w-[50%] flex flex-row items-center justify-center p-2 gap-1 '>
 
-                    <div ref={containerRef} className='relative flex flex-row  p-2 gap-1 transition duration-300 ease-in-out'>
+                <button className="w-[50px] h-[32px] p-1 rounded-xl flex items-center justify-center  hover:bg-zinc-50" onClick={toLeft}>&#10094;</button>
+
+                <div  ref={wrapRef} className=' relative w-[200px] flex flex-row justify-between overflow-hidden'>
+
+                    <div ref={containerRef} className='relative flex flex-row  transition duration-300 ease-in-out'>
                         {botBtn.map((item) => (
-                            <button className='w-[50px]' onClick={()=>paginationHandler(item)} key={`paginationBtn${item}`}>
+                            <button className='w-[50px] hover:bg-zinc-50 rounded-md p-1' onClick={()=>paginationHandler(item)} key={`paginationBtn${item}`}>
                                 {`${item}`}
                             </button>
                         ))}
                     </div>
                     
                 </div>
-                <button className="pr-4" onClick={toRight}>&#10095;</button>
+
+                <button className="w-[50px] h-[32px] p-1 rounded-xl flex items-center justify-center  hover:bg-zinc-50" onClick={toRight}>&#10095;</button>
+
             </div>}
         </div>
     )
