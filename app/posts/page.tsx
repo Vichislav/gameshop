@@ -34,14 +34,15 @@ export default async function Posts() {
 
   return (
     <section className="flex flex-col w-[100%] p-[10px] gap-[20px] items-center min-h-screen min-w-[100%] bg-slate-400">
-      <h1 className="text-[30px]">All posts here</h1>
-        <div className=' w-[80%] flex flex-col items-center'>
-        {data? 
-        <div className=' w-[80%] flex flex-col'>
-          <GridItem arrPosts={data}/>
-        </div> 
-        : 
-        <p>Posts not find</p>}
+      <h1 className="text-[20px]">All posts here</h1>
+        <div className=' w-[100%] flex flex-col items-center'>
+
+          {data? 
+          <div className=' w-[90%] md:w-[80%] lg:w-[70%] flex flex-col'>
+            <GridItem arrPosts={data}/>
+          </div> 
+          : 
+          <p>Posts not find</p>}
         
         </div>
        
