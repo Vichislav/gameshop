@@ -102,7 +102,7 @@ const GridItem : React.FC<GridProps> = ({arrPosts})=> {
                 <div className="w-[50%] flex flex-row items-center justify-center p-2 gap-1 ">
 
                     <button
-                        className="w-[50px] h-[32px] p-1 rounded-xl flex items-center justify-center hover:bg-zinc-50"
+                        className="w-[50px] h-[32px] p-1 rounded-xl flex items-center justify-center hover:bg-blue-300"
                         onClick={toLeft}
                     >
                         &#10094;
@@ -112,8 +112,8 @@ const GridItem : React.FC<GridProps> = ({arrPosts})=> {
                         <div ref={containerRef} className="relative flex flex-row transition duration-300 ease-in-out">
                             {botBtn.map((item) => (
                                 <button
-                                    className={`w-[50px] hover:bg-zinc-50 rounded-md p-1 ${
-                                        activePage === item ? 'bg-blue-300' : ''}`} 
+                                    className={`w-[50px] hover:bg-blue-300 rounded-md p-1 ${
+                                        activePage === item ? 'bg-blue-400' : ''}`} 
                                     onClick={() => handlePageClick(item)}
                                     key={`paginationBtn${item}`}
                                 >
@@ -124,7 +124,7 @@ const GridItem : React.FC<GridProps> = ({arrPosts})=> {
                     </div>
 
                     <button
-                        className="w-[50px] h-[32px] p-1 rounded-xl flex items-center justify-center hover:bg-zinc-50"
+                        className="w-[50px] h-[32px] p-1 rounded-xl flex items-center justify-center hover:bg-blue-300"
                         onClick={toRight}
                     >
                         &#10095;

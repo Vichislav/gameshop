@@ -33,7 +33,7 @@ export default async function Posts() {
 
 
   return (
-    <section className="flex flex-col w-[100%] p-[10px] gap-[20px] items-center min-h-screen min-w-[100%] bg-slate-400">
+    <section className="flex flex-col w-[100%] p-[10px] gap-[20px] items-center min-h-screen min-w-[100%]">
       <h1 className="text-[20px]">All posts here</h1>
         <div className=' w-[100%] flex flex-col items-center'>
 
