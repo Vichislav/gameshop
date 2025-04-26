@@ -7,7 +7,6 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center">
       <h1 className="text-[25px] pt-4">Welcome to JS Study!</h1>
       <FetchData/>
-      <div id="modal-root"></div>
     </main>
   );
 }
