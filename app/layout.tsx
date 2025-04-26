@@ -27,7 +27,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <div className="relative w-full flex justify-center">
 
-          <div className=" hidden md:block absolute inset-0 z-0"> 
+            <div className=" hidden md:block absolute inset-0 z-0">
               <Image
                 className='object-cover' // чтобы изображение сохраняло свои пропорции и заполнило контейнер
                 src={backGround}
@@ -35,14 +35,20 @@ export default function RootLayout({
                 alt="Picture of the background"
               />
             </div>
-                                                                  
+
             <div className="w-full md:w-[80%] relative z-10">
               <header className="w-full h-[100px]  flex flex-col justify-end items-center bg-gradient-radial from-slate-500 to-slate-300">
-                <nav className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-center flex-wrap">
+                <nav className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
                   <Link href={'/about'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100">About</Link>
-                  <Link href={'/posts'} className="pl-4 pr-4  border-r-2 text-cyan-100">Posts</Link>
-                  <Link href={'/basket'} className="pl-4 pr-4  border-r-2 text-cyan-100">Basket</Link>
-                  <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100">Home</Link>
+                  <Link href={'/basket'} className="pl-4 pr-4  border-r-2 text-cyan-100">JS tasks</Link>
+                  <div className="flex flex-col items-center">
+                    <div>
+                      <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100">Authors</Link>
+                      <Link href={'/posts'} className="pl-4 pr-4 border-r-2  text-cyan-100">Posts</Link>
+                    </div>
+                    <p className=" text-[10px]">↑ Work with API ↑</p>
+                  </div>
+
                   <EnterBtn />
                 </nav>
                 <div className="w-[60%] flex justify-end mb-1">
@@ -52,7 +58,7 @@ export default function RootLayout({
               <main className="bg-gradient-to-tr from-slate-300 to-slate-100">
                 {children}
               </main>
-             
+              <div id="modal-root"></div>
 
               <footer>
 

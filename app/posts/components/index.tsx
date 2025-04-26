@@ -9,7 +9,7 @@ interface PostProps {
 
 const PostItem : React.FC<PostProps> = memo( ({newItem})=> {
 
-    console.log('Child render work')
+    
     
     return (
         <div key={newItem.id} className='w-[100%] p-2 rounded-md flex flex-col gap-1 bg-gradient-to-r from-cyan-500 to-blue-500'>
