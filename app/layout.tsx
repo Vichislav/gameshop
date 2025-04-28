@@ -40,7 +40,7 @@ export default function RootLayout({
               <header className="w-full h-[100px]  flex flex-col justify-end items-center bg-gradient-radial from-slate-500 to-slate-300">
                 <nav className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
                   <Link href={'/about'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100">About</Link>
-                  <Link href={'/basket'} className="pl-4 pr-4  border-r-2 text-cyan-100">JS tasks</Link>
+                  <Link href={'/tasks'} className="pl-4 pr-4  border-r-2 text-cyan-100">JS tasks</Link>
                   <div className="flex flex-col items-center">
                     <div>
                       <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100">Authors</Link>
