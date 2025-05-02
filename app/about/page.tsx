@@ -39,7 +39,7 @@ export default function About() {
                   <h1 className="text-lg text-center">Привет меня зовут Вячеслав! </h1>
               </div>
               <div className='flex  flex-row w-full gap-4  p-4'>
-               <h2> Этот сайт я сделал для перезентационных и одновременной учебных целей. Сайт написан на Next.js, стилизация tailwind css.</h2>
+               <h2> Этот сайт я сделал для перезентационных и одновремено учебных целей. Сайт написан на Next.js, стилизация tailwind css.</h2>
               </div>
             </div>
 
