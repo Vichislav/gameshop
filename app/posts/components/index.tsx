@@ -7,7 +7,7 @@ interface PostProps {
     //renderFn: () => void
 }
 
-const PostItem : React.FC<PostProps> = memo( ({newItem})=> {
+const PostItemComponent: React.FC<PostProps> = ({ newItem }) => {
 
     
     
@@ -19,5 +19,6 @@ const PostItem : React.FC<PostProps> = memo( ({newItem})=> {
             {/* <button className="border-2 w-[50%] " onClick={renderFn}>Log render</button> */}
         </div>
     )
-})
+}
+const PostItem = memo(PostItemComponent)
 export default PostItem

@@ -99,7 +99,7 @@ export default function Operators() {
         min-h-screen min-w-[100%] bg-gradient-to-tr from-slate-300 to-slate-100 gree
         p-4">
 
-        <h1 className=' text-center' >Переместите элементы справа на места с "..." таким образом что бы выражение в итоге возвращало true</h1>
+        <h1 className=' text-center' >Переместите элементы справа на места с &quot;...&quot; таким образом что бы выражение в итоге возвращало true</h1>
 
         <div className='w-[80%] flex items-center gap-[10px] border-2  border-black rounded-lg p-5'
           style={{ backgroundColor: solving ? '#7efca0' : 'white' }}

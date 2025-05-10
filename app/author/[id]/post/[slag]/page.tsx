@@ -27,7 +27,7 @@ export default async function PostPage({params: {slag}}: postProps) {
     const comments =  await getComments(slag)
     
     return (
-        <div className="flex flex-col items-center w-full pt-5 ">
+        <div className="flex flex-col items-center w-full pt-5 min-h-[calc(100vh-116px)]">
             <div className="flex flex-col justify-center w-[70%] ">
                 <h1>Hi this is comments of post with id:{slag}</h1>
                 {comments? 

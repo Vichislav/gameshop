@@ -19,13 +19,13 @@ export default function TusksTab({ name }: TusksTabProps) {
         }else {
             setPick(false)
         }
-    }, [currentUrl])
+    }, [currentUrl, name])
  
     return (
         <div className="flex justify-center items-center w-full h-[95px] border-2 border-black rounded-lg cursor-pointer"
             style={{ backgroundColor: pick ? '#dde4ec' : 'white',
-                     border: pick ? 'none' : '2px solid black',
-                     fontSize: pick ? '18px' : '15px' }}>
+                     border: pick ? '1px dashed grey' : '2px solid black',
+                     fontSize: pick ? '15px' : '18px' }}>
             {name}
         </div>
     )

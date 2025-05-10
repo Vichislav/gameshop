@@ -67,7 +67,7 @@ export default function About() {
           <div className='flex w-full gap-2 mb-2'>
             <div className='w-full rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg'>
-                  <h1 className="text-lg text-start">Работал над сайтом магазина "Удачный огород"</h1>
+                  <h1 className="text-lg text-start">Работал над сайтом магазина &quot;Удачный огород&quot;</h1>
                 </div>
                 <div className='flex  flex-col w-full gap-4  p-4'>
                   <h2> В мои обязанности входило:</h2>
@@ -87,7 +87,7 @@ export default function About() {
 
               <div className='w-full rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg'>
-                  <h1 className="text-lg text-start">Работал над сайтом магазина "Удачный огород"</h1>
+                  <h1 className="text-lg text-start">Работал над сайтом магазина &quot;Удачный огород&quot;</h1>
                 </div>
                 <div className='flex  flex-col w-full gap-4  p-4'>
                   <h2> В мои обязанности входило:</h2>
