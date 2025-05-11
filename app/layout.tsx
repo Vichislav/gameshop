@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./reset.css";
 import StoreProvider from './StoreProvider';
 import Link from "next/link";
 import EnterBtn from "./component/enterBtn";
@@ -32,21 +33,21 @@ export default function RootLayout({
                 className='object-cover' // чтобы изображение сохраняло свои пропорции и заполнило контейнер
                 src={backGround}
                 layout='fill' // подгоняет изображение под размер контейнера 
-                alt="Picture of the background"
+                alt="Picture of the background"  
               />
             </div>
-
-            <div className="w-full md:w-[80%] relative z-10">
+             
+            <div className="w-full md:w-[80%] relative z-10"> 
               <header className="w-full h-[100px]  flex flex-col justify-end items-center bg-gradient-radial from-slate-500 to-slate-300">
                 <nav className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
-                  <Link href={'/about'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100">About</Link>
-                  <Link href={'/tasks'} className="pl-4 pr-4  border-r-2 text-cyan-100">JS tasks</Link>
-                  <div className="flex flex-col items-center">
-                    <div>
-                      <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100">Authors</Link>
-                      <Link href={'/posts'} className="pl-4 pr-4 border-r-2  text-cyan-100">Posts</Link>
+                  <Link href={'/about'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100 text-sm lg:text-md">About</Link>
+                  <Link href={'/tasks'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">JS tasks</Link>
+                  <div className="flex flex-col items-center justify-start">
+                    <div className="flex h-[20px]">
+                      <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">Authors</Link>
+                      <Link href={'/posts'} className="pl-4 pr-4 border-r-2  text-cyan-100 text-sm lg:text-md">Posts</Link>
                     </div>
-                    <p className=" text-[10px]">↑ Work with API ↑</p>
+                    <p className="pt-1 text-[7px] lg:text-[10px] ">↑ Work with API ↑</p>
                   </div>
 
                   <EnterBtn />

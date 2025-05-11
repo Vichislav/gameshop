@@ -44,7 +44,7 @@ export default async function AuthorPage({ params: { id } }: AuthorProps) {
     return (
         <div className="flex flex-col p-5 justify-center items-center ">
             <h1>AuthorPage for <b>{data.name}</b></h1>
-            {posts ? <ul className="w-[60%] flex flex-col gap-2">
+            {posts ? <ul className="w-[90%] lg:w-[60%] flex flex-col gap-2">
                 {posts.map((post: IPost) => {
                     return (
                        <PostView authorId={id} post={post} key={post.id}/>

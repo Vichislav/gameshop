@@ -101,7 +101,7 @@ export default function Operators() {
 
         <h1 className=' text-center' >Переместите элементы справа на места с &quot;...&quot; таким образом что бы выражение в итоге возвращало true</h1>
 
-        <div className='w-[80%] flex items-center gap-[10px] border-2  border-black rounded-lg p-5'
+        <div className='w-[100%] lg:w-[80%] flex items-center gap-[10px] border-2  border-black rounded-lg p-5'
           style={{ backgroundColor: solving ? '#7efca0' : 'white' }}
         >
 

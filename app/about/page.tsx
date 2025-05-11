@@ -15,16 +15,16 @@ export default function About() {
   }; 
 
 
-
+        //grid-cols-1 md:grid-cols-2 lg:grid-cols-3
 
   return (
     <section className="flex flex-col w-[100%] items-center min-h-screen min-w-[100%] bg-gradient-to-tr from-slate-300 to-slate-100">
       
-        <div className='p-4  w-[80%] flex-col justify-center justify-items-center'>
+        <div className='p-4  w-[100%] lg:w-[80%] flex-col justify-center justify-items-center'>
 
-          <div className='grid w-full grid-cols-[200px_auto]  gap-2 mb-2'>
+          <div className='grid w-full grid-cols-[100px_auto] lg:grid-cols-[200px_auto]  gap-2 mb-2'>
             
-            <div className='rounded-lg max-w-[200px] row-span-2'>
+            <div className='rounded-lg max-w-[120px] lg:max-w-[200px] lg:row-span-2'>
               <Image
                     className=' rounded-md'
                     src={myPhoto}
@@ -36,17 +36,17 @@ export default function About() {
 
             <div className='w-full rounded-lg bg-gradient-to-tr from-sky-200 to-sky-100'>
               <div className='bg-gradient-to-tr from-sky-300 to-sky-100 p-4 rounded-t-lg'>
-                  <h1 className="text-lg text-center">Привет меня зовут Вячеслав! </h1>
+                  <h1 className="text-md lg:text-lg text-center">Привет меня зовут Вячеслав! </h1>
               </div>
               <div className='flex  flex-row w-full gap-4  p-4'>
-               <h2> Этот сайт я сделал для перезентационных и одновремено учебных целей. Сайт написан на Next.js, стилизация tailwind css.</h2>
+               <h2 className='text-sm lg:text-md text-center'> Этот сайт я сделал для перезентационных и одновремено учебных целей. Сайт написан на Next.js, стилизация tailwind css.</h2>
               </div>
             </div>
 
-            <div className='flex flex-col justify-start 
-            w-full gap-2 bg-gradient-to-tr from-sky-200 to-sky-100 rounded-t-lg'>
+            <div className='flex flex-col justify-start col-span-2 lg:col-span-1
+            w-full gap-2 bg-gradient-to-tr from-sky-200 to-sky-100 rounded-t-lg text-sm lg:text-md'>
               <div className='bg-gradient-to-tr from-sky-300 to-sky-100 rounded-t-lg p-4'>
-                <h2>Основные навыки</h2>
+                <h2 className="text-md lg:text-lg">Основные навыки</h2>
               </div>
               <div className='flex  flex-row w-full gap-4  p-4'>
                 <div className='flex flex-col w-[50%]'>
@@ -64,10 +64,11 @@ export default function About() {
 
           </div>
          
-          <div className='flex w-full gap-2 mb-2'>
+          <div className='flex flex-col lg:flex-row w-full gap-2 mb-2 text-sm lg:text-md'>
+
             <div className='w-full rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg'>
-                  <h1 className="text-lg text-start">Работал над сайтом магазина &quot;Удачный огород&quot;</h1>
+                  <h1 className="text-md lg:text-lg text-start">Работал над сайтом магазина &quot;Удачный огород&quot;</h1>
                 </div>
                 <div className='flex  flex-col w-full gap-4  p-4'>
                   <h2> В мои обязанности входило:</h2>
@@ -87,7 +88,7 @@ export default function About() {
 
               <div className='w-full rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg'>
-                  <h1 className="text-lg text-start">Работал над сайтом магазина &quot;Удачный огород&quot;</h1>
+                  <h1 className="text-md lg:text-lg text-start">Работал над сайтом магазина &quot;Удачный огород&quot;</h1>
                 </div>
                 <div className='flex  flex-col w-full gap-4  p-4'>
                   <h2> В мои обязанности входило:</h2>

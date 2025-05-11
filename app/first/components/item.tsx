@@ -42,9 +42,9 @@ const ItemComponent: React.FC<MyProps> = ({ item }) => {
         <div className='card p-[10px] m-[10px] w-[80%] border-2 border-black rounded-lg hover:bg-white' key={item.id}>
             <p className="text-gray-600 text-[18px]">{item.name}</p>
             <p>from {item.address.city}</p>
-            <Modal isOpen={isModalOpen} onClose={closeModal} big={true}>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <div className="flex flex-col h-full p-5 justify-between">
-                    <div className="flex flex-row gap-3">
+                    <div className="flex flex-row gap-3 max-w-[125px] lg:max-w-[250px] h-[125px] lg:h-[220px]">
                         <Image
                             src={akkPhoto}
                             width={250}
