@@ -85,7 +85,7 @@ export default function Operators() {
     } else {
       setSolving(false);
     }
-  }, [onDrop])
+  }, [onDrop, data])
 
   const goToHome = () => {
     router.push('/');
