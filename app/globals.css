@@ -52,3 +52,19 @@ body {
 .animate-highlight {
   animation: highlight 1s;
 }
+
+@keyframes redlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(238, 166, 144, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(255, 0, 0, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(238, 166, 144, 0.5);
+  }
+}
+
+.animate-redlight {
+  animation: redlight 1s;
+}
