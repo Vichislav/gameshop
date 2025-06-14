@@ -8,7 +8,7 @@ interface Item {
 }
 
 
-export default function Task3() {
+export default function Task2() {
 
     // Сохраняем id перетаскиваемого элемента
 
@@ -18,13 +18,13 @@ export default function Task3() {
     const [isSetValue, setIsSetValue] = useState<boolean>(false) //задано ли текущие значение
     const [solving, setSolving] = useState<boolean>(false)// верно ли решено задание
     //one two three
-    const [data, setData] = useState<string[]>(['...', '...', '...']);
-    const [borederChange, setBorderChange] = useState<boolean[]>([false, false, false])
+    const [data, setData] = useState<string>('...');
+    const [borederChange, setBorderChange] = useState<boolean[]>([false, false])
 
     const itemHandler = (str: string, ind: number) => {
         setCurrentValue(str)//берем с кнопки текущее значение оператора
         setBorderChange(() => {
-            const newArr = [false, false, false]
+            const newArr = [false, false]
             newArr[ind] = true
             return newArr
         })
@@ -38,18 +38,14 @@ export default function Task3() {
         //если значение оператора утсановлено то 
         if (isSetValue) {
             //устанавливаем значение по индексу
-            setData(data => {
-                const newData = [...data]
-                newData[index] = currentValue
-                return newData
-            })
+            setData(currentValue)
             //убираем флаг того, что значение оператора выбрано
             setIsSetValue(false)
             //убираем текущие значение оператора 
             setCurrentValue('...')
             //убираем выделение с кнопки панели выбора оператора
             setBorderChange(() => {
-                const newArr = [false, false, false]
+                const newArr = [false, false]
                 return newArr
             })
         } else { //если значение я нет подсвечиваем операторы красным
@@ -62,8 +58,8 @@ export default function Task3() {
 
     useEffect(() => {
         //
-        const expression = `7&&2==2||6`;
-        const currentSolving = `7${data[0]}2${data[1]}2${data[2]}6`
+        const expression = `undefined||42`;
+        const currentSolving = `undefined${data}42`
         
         if (currentSolving === expression) {
             setSolving(true);
@@ -91,64 +87,38 @@ export default function Task3() {
 
                 <div className='flex flex-row border-b-2 lg:flex-col lg:border-r-2 lg:border-b-0 w-[90%] lg:w-[60px] border-black gap-6 lg:gap-2 justify-center  p-2'>
 
+                    
                     <div className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
                         cursor-pointer ${borederChange[0] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
                         ${leftActive ? 'animate-redlight' : ''}`}
-                        onClick={() => itemHandler('==', 0)}>
-                        ==
+                        onClick={() => itemHandler('||', 0)}>
+                        ||
                     </div>
                     <div className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
                         cursor-pointer ${borederChange[1] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
                         ${leftActive ? 'animate-redlight' : ''}`}
-                        onClick={() => itemHandler('||', 1)}>
-                        ||
-                    </div>
-                    <div className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
-                        cursor-pointer ${borederChange[2] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
-                        ${leftActive ? 'animate-redlight' : ''}`}
-                        onClick={() => itemHandler('&&', 2)}>
+                        onClick={() => itemHandler('&&', 1)}>
                         &&
                     </div>
 
                 </div>
 
                 <div className='flex h-[43%] gap-[2px] relative'>
-                    <div className='flex justify-center items-center w-[40px] h-[40px] lg:w-[45px] lg:h-[45px] rounded-lg bg-white'>
-                        <p>7</p>
+                    <div className='flex justify-center items-center w-fit px-1 h-[40px] lg:w-[45px] lg:h-[45px] rounded-lg bg-white'>
+                        <p>undefined</p>
                     </div>
 
                     <div
                         className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
                             cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
                         onClick={() => dataHandler(0)}>
-                        {data[0]}
+                        {data}
                     </div>
 
                     <div className='flex justify-center items-center w-[40px]  lg:w-[45px] rounded-lg bg-white z-0'>
-                        <p>2</p>
+                        <p>42</p>
                     </div>
 
-                    <div
-                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
-                        cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
-                        onClick={() => dataHandler(1)}>
-                        {data[1]}
-                    </div>
-
-                    <div className='flex justify-center items-center w-[40px]  lg:w-[45px] rounded-lg bg-white'>
-                        <p>2</p>
-                    </div>
-
-                    <div
-                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
-                        cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
-                        onClick={() => dataHandler(2)}>
-                        {data[2]}
-                    </div>
-
-                    <div className='flex justify-center items-center w-[40px]  lg:w-[45px] rounded-lg bg-white'>
-                        <p>6</p>
-                    </div>
                 </div>
                 {solving && <div className=' p-2'>true!</div>}
             </div>

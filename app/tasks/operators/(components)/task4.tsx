@@ -34,7 +34,7 @@ export default function Task4() {
   }
 
   const dataHandler = (index: number) => {
-    
+
     //если значение оператора утсановлено то 
     if (isSetValue) {
       //устанавливаем значение по индексу
@@ -52,7 +52,7 @@ export default function Task4() {
         const newArr = [false, false, false]
         return newArr
       })
-    }else { //если значение я нет подсвечиваем операторы красным
+    } else { //если значение я нет подсвечиваем операторы красным
       setLeftActive(true)
       setTimeout(() => setLeftActive(false), 1000);
     }
@@ -64,7 +64,7 @@ export default function Task4() {
 
     const expression = `1&&9>2||2`;
     const currentSolving = `1${data[0]}9${data[1]}2${data[2]}2`
-    console.log(currentSolving)
+    
     if (currentSolving === expression) {
       setSolving(true);
 
@@ -79,27 +79,31 @@ export default function Task4() {
   return (
 
 
-      <div className='w-[100%] lg:w-[80%] flex flex-col lg:flex-row items-center gap-[10px] border-2  border-black rounded-lg p-5'
-        style={{ backgroundColor: solving ? '#7efca0' : 'white' }}
-      >
+    <div className='w-[100%] lg:w-[80%] flex flex-col lg:flex-row items-center gap-[10px] border-2  border-black rounded-lg'
+      style={{ backgroundColor: solving ? '#7efca0' : 'white' }}
+    >
+      <div className=' w-full text-center bg-[#dde4ec] rounded-t-[5px]'>
+        <p className='text-sm px-2 py-1'>Расположите операторы в выражении таким образом, чтобы оно возвращало <span className='text-green-500'>true</span></p>
+      </div>
 
+      <div className='w-[100%] flex flex-col lg:flex-row items-center gap-[10px] p-5'>
         <div className='flex flex-row border-b-2 lg:flex-col lg:border-r-2 lg:border-b-0 w-[90%] lg:w-[60px] border-black gap-6 lg:gap-2 justify-center  p-2'>
 
           <div className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
-              cursor-pointer ${borederChange[0] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
-              ${leftActive ? 'animate-redlight' : ''}`}
+            cursor-pointer ${borederChange[0] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
+            ${leftActive ? 'animate-redlight' : ''}`}
             onClick={() => itemHandler('>', 0)}>
             &gt;
           </div>
           <div className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
-              cursor-pointer ${borederChange[1] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
-              ${leftActive ? 'animate-redlight' : ''}`}
+            cursor-pointer ${borederChange[1] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
+            ${leftActive ? 'animate-redlight' : ''}`}
             onClick={() => itemHandler('||', 1)}>
             ||
           </div>
           <div className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
-              cursor-pointer ${borederChange[2] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
-              ${leftActive ? 'animate-redlight' : ''}`}
+            cursor-pointer ${borederChange[2] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
+            ${leftActive ? 'animate-redlight' : ''}`}
             onClick={() => itemHandler('&&', 2)}>
             &&
           </div>
@@ -124,7 +128,7 @@ export default function Task4() {
 
           <div
             className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
-             cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
+            cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
             onClick={() => dataHandler(1)}>
             {data[1]}
           </div>
@@ -146,6 +150,8 @@ export default function Task4() {
         </div>
         {solving && <div className=' p-2'>true!</div>}
       </div>
+
+    </div>
 
   );
 }
