@@ -31,12 +31,12 @@ export default function TasksStart() {
             <p className='text-sm lg:text-lg'>&&</p>
           </div>
           <div className='w-[90%] lg:w-[80%]'>
-            <p className='text-sm lg:text-lg'>Оператор && &#40;логическое "и"&#41;
+            <p className='text-sm lg:text-lg'>Оператор && &#40;логическое  &quot;и &quot;&#41;
               - Возвращает первое ложное значение, если такое есть, иначе возвращает последнее значение.
               - Используется для проверки, что все условия истинны.
               - Если первое значение ложное &#40;falsy&#41;, то оно будет возвращено, и последующие значения не будут проверяться. <br />
-              Ложное значение — это значение, которое в контексте логических операций рассматривается как "ложь".
-              В JavaScript и многих других языках программирования к ложным значениям относятся: false, 0, undefinded, null, NaN, '' - пустая строка
+              Ложное значение — это значение, которое в контексте логических операций рассматривается как  &quot;ложь &quot;.
+              В JavaScript и многих других языках программирования к ложным значениям относятся: false, 0, undefinded, null, NaN, &prime;&prime; - пустая строка
               В примере ниже ложные значения будут <span className='text-red-600'>красного</span> цвета,
               истенные <span className='text-green-500'>зеленого</span> цвета.
             </p>
@@ -86,11 +86,12 @@ export default function TasksStart() {
             <p className='text-sm lg:text-lg'>||</p>
           </div>
           <div className='w-[90%] lg:w-[80%]'>
-            <p className='text-sm lg:text-lg'>Оператор || &#40;логическое "или"&#41;
+            <p className='text-sm lg:text-lg'>Оператор || &#40;логическое &quot;или&quot;&#41;
 
               - Возвращает первое истинное значение, если такое есть, иначе возвращает последнее значение.
               - Применяется для проверки нескольких условий.
-              - Если первое значение истинное &#40;truthy&#41;, то оно будет возвращено, и последующие значения не будут проверяться. </p>
+              - Если первое значение истинное &#40;truthy&#41;, то оно будет возвращено, 
+              и последующие значения не будут проверяться. </p>
           </div>
         </div>
 
@@ -99,7 +100,7 @@ export default function TasksStart() {
 
             <div className='flex justify-center gap-1'>
               <p className='text-green-500'>2</p>
-              <p className=''>||</p>
+              <p >||</p>
               <p className='text-green-500'>3</p>
             </div>
             <div className='text-center'>return</div>
@@ -107,7 +108,7 @@ export default function TasksStart() {
 
             <div className='flex justify-center gap-1'>
               <p className='text-red-600'>0</p>
-              <p className=''>||</p>
+              <p >||</p>
               <p className='text-green-500'>3</p>
             </div>
             <div className='text-center'>return</div>
@@ -115,7 +116,7 @@ export default function TasksStart() {
 
             <div className='flex justify-center gap-1'>
               <p className='text-green-500'>3</p>
-              <p className=''>||</p>
+              <p >||</p>
               <p className='text-red-600'>null</p>
             </div>
             <div className='text-center'>return</div>
@@ -123,7 +124,7 @@ export default function TasksStart() {
 
             <div className='flex justify-center gap-1'>
               <p className='text-red-600'>0</p>
-              <p className=''>||</p>
+              <p >||</p>
               <p className='text-red-600'>null</p>
             </div>
             <div className='text-center'>return</div>
