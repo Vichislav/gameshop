@@ -79,7 +79,7 @@ export default function Task4() {
   return (
 
 
-    <div className='w-[100%] lg:w-[80%] flex flex-col lg:flex-row items-center gap-[10px] border-2  border-black rounded-lg'
+    <div className='w-[100%] lg:w-[80%] flex flex-col  items-center gap-[10px] border-2  border-black rounded-lg'
       style={{ backgroundColor: solving ? '#7efca0' : 'white' }}
     >
       <div className=' w-full text-center bg-[#dde4ec] rounded-t-[5px]'>
@@ -116,7 +116,7 @@ export default function Task4() {
           </div>
 
           <div
-            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
+            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
             cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
             onClick={() => dataHandler(0)}>
             {data[0]}
@@ -127,7 +127,7 @@ export default function Task4() {
           </div>
 
           <div
-            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
+            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
             cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
             onClick={() => dataHandler(1)}>
             {data[1]}
@@ -138,7 +138,7 @@ export default function Task4() {
           </div>
 
           <div
-            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
+            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
             cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
             onClick={() => dataHandler(2)}>
             {data[2]}

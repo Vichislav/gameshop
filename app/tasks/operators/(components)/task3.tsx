@@ -118,7 +118,7 @@ export default function Task3() {
                     </div>
 
                     <div
-                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
+                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
                             cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
                         onClick={() => dataHandler(0)}>
                         {data[0]}
@@ -129,7 +129,7 @@ export default function Task3() {
                     </div>
 
                     <div
-                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
+                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2  border-gray-500 z-10 rounded-lg 
                         cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
                         onClick={() => dataHandler(1)}>
                         {data[1]}
@@ -140,7 +140,7 @@ export default function Task3() {
                     </div>
 
                     <div
-                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-black z-10 rounded-lg 
+                        className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2  border-gray-500 z-10 rounded-lg 
                         cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
                         onClick={() => dataHandler(2)}>
                         {data[2]}
