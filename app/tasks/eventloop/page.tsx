@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import EventTask1 from './(components)/eventtask1';
+import EventTask2 from './(components)/eventtask2';
 
 
 
@@ -21,6 +22,7 @@ export default function EventLoopTask() {
 
         <h1 className=' text-center' >Задачи по EventLoop</h1>
         <EventTask1/>
+        <EventTask2/>
       </section>
 
     
