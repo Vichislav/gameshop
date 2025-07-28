@@ -8,6 +8,7 @@ import EnterBtn from "./component/enterBtn";
 import UserLabel from "./component/userLabel";
 import Image from "next/image";
 import backGround from '../app/img/line.jpg'
+import HeaderComponent from "./component/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,23 +39,11 @@ export default function RootLayout({
             </div>
              
             <div className="w-full md:w-[80%] relative z-10"> 
-              <header className="w-full h-[100px]  flex flex-col justify-end items-center bg-gradient-radial from-slate-500 to-slate-300">
-                <nav className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
-                  <Link href={'/about'} className="pl-4 pr-4 border-l-2 border-r-2 text-cyan-100 text-sm lg:text-md">About</Link>
-                  <Link href={'/tasks'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">JS tasks</Link>
-                  <div className="flex flex-col items-center justify-start">
-                    <div className="flex h-[20px]">
-                      <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">Authors</Link>
-                      <Link href={'/posts'} className="pl-4 pr-4 border-r-2  text-cyan-100 text-sm lg:text-md">Posts</Link>
-                    </div>
-                    <p className="pt-1 text-[7px] lg:text-[10px] ">↑ Work with API ↑</p>
-                  </div>
-
-                  <EnterBtn />
-                </nav>
-                <div className="w-[60%] flex justify-end mb-1">
+              <header className="w-full h-fit  relative z-20 flex flex-col justify-end items-center bg-gradient-radial from-slate-500 to-slate-300">
+                <HeaderComponent/>
+                {/* <div className="w-[60%] flex justify-end mb-1">
                   <UserLabel />
-                </div>
+                </div> */}
               </header>
               <main className="bg-gradient-to-tr from-slate-300 to-slate-100">
                 {children}
