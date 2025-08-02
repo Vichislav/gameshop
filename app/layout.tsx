@@ -7,7 +7,7 @@ import Link from "next/link";
 import EnterBtn from "./component/enterBtn";
 import UserLabel from "./component/userLabel";
 import Image from "next/image";
-import backGround from '../app/img/line.jpg'
+import backGround from '../app/img/line_2.png'
 import HeaderComponent from "./component/header";
 
 const inter = Inter({ subsets: ["latin"] });
