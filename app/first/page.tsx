@@ -53,7 +53,7 @@ const FetchData = async () => {
 
 
   return (
-    <div className="flex flex-col items-center p-[5px] w-full">
+    <div className="flex flex-col items-center p-[5px] w-full min-h-[95vh]">
       <Grid dataProps={users as User[]} />
     </div>
   );

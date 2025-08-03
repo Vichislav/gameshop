@@ -33,7 +33,7 @@ export default function RootLayout({
               <Image
                 className='object-cover' // чтобы изображение сохраняло свои пропорции и заполнило контейнер
                 src={backGround}
-                layout='fill' // подгоняет изображение под размер контейнера 
+                fill // подгоняет изображение под размер контейнера 
                 alt="Picture of the background"  
               />
             </div>
