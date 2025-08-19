@@ -4,6 +4,7 @@
 import Link from "next/link";
 import EnterBtn from "../enterBtn";
 import { useState } from "react";
+import BackButton from "../backBtn";
 
 
 
@@ -22,6 +23,7 @@ export default function HeaderComponent() {
     return (
         <>
             <nav className="w-[100%]  md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
+                <BackButton/>
                 <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">Home</Link>
                 <Link href={'/about'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">About</Link>
                 <Link href={'/tasks'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">JS tasks</Link>

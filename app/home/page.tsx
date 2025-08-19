@@ -19,19 +19,20 @@ export default function HomePage() {
   //grid-cols-1 md:grid-cols-2 lg:grid-cols-3
   //bg-gradient-to-tr from-slate-300 to-slate-100
   return (
-    <section className="flex flex-row w-[100%] items-start   min-w-[100%] ">
-      <div className='w-[40%] md:w-[50%] flex h-full'>
+    <section className="flex flex-row w-[100%] items-start justify-center  min-w-[100%] ">
+      <div className='w-[30%] hidden lg:flex h-full pt-6'>
         <Image
           className='rounded-md animate-slideright-07'
           src={mem}
           alt="Picture of the author"
         />
       </div>
-      <div className='mt-[1%] w-[60%] md:w-[50%] md:mt-[10%] h-full flex flex-col  justify-center  items-center gap-3'>
+      <div className='pt-3 w-[80%] lg:w-[50%] lg:pt-10 h-full flex flex-col  justify-center  items-center gap-5'>
 
               
 
-              <div className='w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-05'>
+              <div className='w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-05
+              transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full'>
                   <h1 className="text-sm md:text-md lg:text-lg text-start">Здесь вы можете порешать задачи, которые встречались мне на собеседованиях либо подобные им</h1>
                 </div>
@@ -39,7 +40,8 @@ export default function HomePage() {
                 bg-violet-500 hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700">JS tasks</Link>
               </div>
 
-              <div className='w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-1'>
+              <div className='w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-1
+              transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full'>
                   <h1 className="text-sm md:text-md lg:text-lg text-start">Здесь собраны вопросы с моих собеседований</h1>
                 </div>
@@ -47,7 +49,8 @@ export default function HomePage() {
                 bg-violet-500 hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700">Questions</Link>
               </div>
 
-              <div className='w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-15'>
+              <div className='w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-15
+              transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg'>
                 <div className='bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full'>
                   <h1 className="text-sm md:text-md lg:text-lg text-start">Тут можно посмотреть информацию обо мне</h1>
                 </div>
