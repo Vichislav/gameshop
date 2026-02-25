@@ -15,7 +15,10 @@ const config: Config = {
       },
       colors: {
         bgModal: 'rgba(220, 229, 242, 0.8)',
-      }
+      },
+      screens: {
+        'smmb': '460px',
+      },
     },
   },
   plugins: [],

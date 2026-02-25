@@ -22,21 +22,13 @@ export default function HeaderComponent() {
 
     return (
         <>
-            <nav className="w-[100%]  md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
+            <nav className="w-[100%]  md:w-[80%] lg:w-[55%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
                 <BackButton/>
-                <Link href={'/'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">Home</Link>
-                <Link href={'/about'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">About</Link>
-                <Link href={'/tasks'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">JS tasks</Link>
-                <Link href={'/questions'} className="pl-4 pr-4   text-cyan-100 text-sm lg:text-md">Questions</Link>
-                {/* <div className="flex flex-col items-center justify-start">
-                    <div className="flex h-[20px]">
-                        <Link href={'/first'} className="pl-4 pr-4  border-r-2 text-cyan-100 text-sm lg:text-md">Authors</Link>
-                        <Link href={'/posts'} className="pl-4 pr-4 border-r-2  text-cyan-100 text-sm lg:text-md">Posts</Link>
-                    </div>
-                    <p className="pt-1 text-[7px] lg:text-[10px] ">↑ Work with API ↑</p>
-                </div> */}
-
-                {/* <EnterBtn /> */}
+                <Link href={'/'} className=" px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">Home</Link>
+                <Link href={'/about'} className="px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">About</Link>
+                <Link href={'/tasks'} className="px-2 smmb:px-4  border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">JS tasks</Link>
+                <Link href={'/questions'} className="px-2 smmb:px-4 border-r-2  text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">Questions</Link>
+                <EnterBtn />
             </nav>
 
         {/*     <div className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-fit flex md:hidden lg:hidden justify-center items-start flex-wrap">

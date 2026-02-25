@@ -39,7 +39,7 @@ export default function EnterBtn() {
 
     return (
         <>
-            <button className="pl-4 pr-4  border-r-2 text-cyan-100" onClick={openModal}>&#9776;</button>
+            <button className="px-2 smmb:px-4 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm" onClick={openModal}>&#9745;</button>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <form onSubmit={onSubmit} className="flex flex-col justify-center items-center gap-8">
                     <h1>Registration form</h1>
