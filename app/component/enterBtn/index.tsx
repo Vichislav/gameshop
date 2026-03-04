@@ -52,8 +52,14 @@ export default function EnterBtn() {
       if (res.ok) {
         // Сохраняем токен (например, в localStorage или куки)
         localStorage.setItem('token', data.token);
-        // Перенаправляем пользователя
-        window.location.href = '/profile';
+        // Перенаправляем пользователя на страницу его профиля
+        const userId = data.user?.id;
+        if (userId) {
+          window.location.href = `/profile/${userId}`;
+        } else {
+          // fallback, если по какой‑то причине id нет
+          window.location.href = '/';
+        }
         closeModal() //закрывваем модальное окно
       } else {
         alert('Неверный код');
