@@ -7,14 +7,14 @@ import { IUser } from '@/app/component/enterBtn'
         password: string 
 } */
 
-export  interface userProps {
-    name: string,
-    password: string 
+export interface userProps {
+  name: string
+  password: string
 }
 
 const initialState: IUser = {
-    name: '',
-    password: ''
+  name: '',
+  password: '',
 }
 
 export const userSlice = createSlice({
@@ -22,14 +22,14 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     createUserData: (state, action: PayloadAction<userProps>) => {
-        console.log('createUserData')
-        state.name = action.payload.name;
-        state.password = action.payload.password
-    }
+      console.log('createUserData')
+      state.name = action.payload.name
+      state.password = action.payload.password
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { createUserData} = userSlice.actions
+export const { createUserData } = userSlice.actions
 
 export default userSlice.reducer

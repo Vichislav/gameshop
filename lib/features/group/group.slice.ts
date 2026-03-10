@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { User } from '@/app/first/page'
 
- export interface groupState {
-    group: User[],
+export interface groupState {
+  group: User[]
 }
 
 const initialState: groupState = {
@@ -18,8 +18,8 @@ export const groupSlice = createSlice({
       state.group.push(action.payload)
     },
     removeUserToGroup: (state, action: PayloadAction<number>) => {
-        //const { id } = action.payload;
-        state.group = state.group.filter((el) => el.id !== action.payload);
+      //const { id } = action.payload;
+      state.group = state.group.filter((el) => el.id !== action.payload)
     },
     /* incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload
@@ -28,6 +28,6 @@ export const groupSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addUserToGroup, removeUserToGroup} = groupSlice.actions
+export const { addUserToGroup, removeUserToGroup } = groupSlice.actions
 
 export default groupSlice.reducer

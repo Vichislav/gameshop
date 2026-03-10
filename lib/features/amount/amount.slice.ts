@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-export  interface amountState {
-    amount: {
-        [key: string]: number 
-    } 
+export interface amountState {
+  amount: {
+    [key: string]: number
+  }
 }
 
-export  interface amountProps {
-        key: string,
-        value: number 
+export interface amountProps {
+  key: string
+  value: number
 }
 
 const initialState: amountState = {
-    amount: {},
+  amount: {},
 }
 
 export const amountSlice = createSlice({
@@ -21,15 +21,15 @@ export const amountSlice = createSlice({
   initialState,
   reducers: {
     createAmountData: (state, action: PayloadAction<amountProps>) => {
-        state.amount[action.payload.key] = action.payload.value;
+      state.amount[action.payload.key] = action.payload.value
     },
     removeAmountData: (state, action: PayloadAction<string>) => {
-        delete state.amount[action.payload];
+      delete state.amount[action.payload]
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { createAmountData, removeAmountData} = amountSlice.actions
+export const { createAmountData, removeAmountData } = amountSlice.actions
 
 export default amountSlice.reducer

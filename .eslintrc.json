@@ -1,3 +1,27 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "semi": ["error", "never"],
+    "eqeqeq": ["error", "always"],
+    "no-unused-vars": "warn",
+    
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "function-declaration",
+        "unnamedComponents": "function-expression"
+      }
+    ],
+    
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
+  }
 }

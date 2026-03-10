@@ -19,14 +19,13 @@
 body {
   /*color: rgb(var(--foreground-rgb));*/
   color: black;
- /*  background: linear-gradient(
+  /*  background: linear-gradient(
     to bottom,
     transparent,
     rgb(var(--background-end-rgb))
   )
   rgb(var(--background-start-rgb)); */
 }
-
 
 @layer utilities {
   .text-balance {
@@ -74,7 +73,7 @@ body {
   0% {
     opacity: 0;
   }
-  
+
   100% {
     opacity: 1;
   }
@@ -86,12 +85,12 @@ body {
 
 @keyframes slideIn {
   0% {
-      opacity: 0;
-      transform: translateY(-20px);
+    opacity: 0;
+    transform: translateY(-20px);
   }
   100% {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -113,12 +112,12 @@ body {
 
 @keyframes slideright {
   0% {
-      opacity: 0;
-      transform: translateX(-20px);
+    opacity: 0;
+    transform: translateX(-20px);
   }
   100% {
-      opacity: 1;
-      transform: translateX(0);
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 

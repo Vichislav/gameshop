@@ -1,37 +1,49 @@
 'use client'
 
-
-import Link from "next/link";
-import EnterBtn from "../enterBtn";
-import { useState } from "react";
-import BackButton from "../backBtn";
-
-
+import Link from 'next/link'
+import EnterBtn from '../enterBtn'
+import { useState } from 'react'
+import BackButton from '../backBtn'
 
 export default function HeaderComponent() {
+  const [isOpen, setOpen] = useState(false)
 
-    const [isOpen, setOpen] = useState(false);
+  const OpentHandler = () => {
+    setOpen((prev) => !prev)
+  }
 
-    const OpentHandler = () => {
-        setOpen(prev => !prev)
-    }
+  return (
+    <>
+      <nav className="w-[100%]  md:w-[80%] lg:w-[55%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
+        <BackButton />
+        <Link
+          href={'/'}
+          className="px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+        >
+          Home
+        </Link>
+        <Link
+          href={'/about'}
+          className="px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+        >
+          About
+        </Link>
+        <Link
+          href={'/tasks'}
+          className="px-2 smmb:px-4  border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+        >
+          JS tasks
+        </Link>
+        <Link
+          href={'/questions'}
+          className="px-2 smmb:px-4 border-r-2  text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+        >
+          Questions
+        </Link>
+        <EnterBtn />
+      </nav>
 
-
-
-
-
-    return (
-        <>
-            <nav className="w-[100%]  md:w-[80%] lg:w-[55%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
-                <BackButton/>
-                <Link href={'/'} className=" px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">Home</Link>
-                <Link href={'/about'} className="px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">About</Link>
-                <Link href={'/tasks'} className="px-2 smmb:px-4  border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">JS tasks</Link>
-                <Link href={'/questions'} className="px-2 smmb:px-4 border-r-2  text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm">Questions</Link>
-                <EnterBtn />
-            </nav>
-
-        {/*     <div className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-fit flex md:hidden lg:hidden justify-center items-start flex-wrap">
+      {/*     <div className="w-[100%] md:w-[80%] lg:w-[50%] gap-1 md:g-0 h-fit flex md:hidden lg:hidden justify-center items-start flex-wrap">
 
 
                 {isOpen ?
@@ -53,7 +65,6 @@ export default function HeaderComponent() {
                     <div className="w-full h-[20px] flex p-1 justify-center bg-slate-500 items-center hover:border-2 hover:border-black" onClick={OpentHandler}>&#9660;</div>}
 
             </div> */}
-
-        </>
-    )
+    </>
+  )
 }
