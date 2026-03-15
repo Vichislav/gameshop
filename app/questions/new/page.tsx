@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import QuestionForm from '../(components)/question-form'
@@ -11,7 +11,7 @@ const typeTitles: Record<string, string> = {
   other: 'Создание вопроса',
 }
 
-export default function NewQuestionPage() {
+function NewQuestionForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [isSubmitting, setSubmitting] = useState(false)
@@ -69,6 +69,14 @@ export default function NewQuestionPage() {
         onSubmit={handleSubmit}
       />
     </section>
+  )
+}
+
+export default function NewQuestionPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center p-4">Загрузка...</div>}>
+      <NewQuestionForm />
+    </Suspense>
   )
 }
 

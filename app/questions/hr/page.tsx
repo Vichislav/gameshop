@@ -4,6 +4,8 @@ import prisma from '@/lib/prisma'
 import AddQuestionButton from '../(components)/add-question-button'
 import QuestionCard from '../(components)/question-card'
 
+export const dynamic = 'force-dynamic'
+
 async function getHrQuestions() {
   return prisma.question.findMany({
     where: { type: 'hr' },
