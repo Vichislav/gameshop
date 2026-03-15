@@ -1,5 +1,3 @@
-'use server'
-
 import prisma from '@/lib/prisma'
 import AddQuestionButton from '../(components)/add-question-button'
 import QuestionCard from '../(components)/question-card'
