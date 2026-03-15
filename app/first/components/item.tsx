@@ -1,5 +1,4 @@
 import { User } from '../page'
-import { useAppStore } from '@/lib/hooks'
 import Modal from '@/app/component/Modal'
 import { useState } from 'react'
 import Image from 'next/image'
@@ -15,7 +14,6 @@ function ItemComponent({ item }: MyProps) {
   const openModal = () => setModalOpen(true)
   const closeModal = () => setModalOpen(false)
 
-  const _store = useAppStore()
   const router = useRouter()
 
   const goToAothor = (id: string) => {

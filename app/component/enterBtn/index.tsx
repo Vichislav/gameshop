@@ -187,6 +187,7 @@ export default function EnterBtn() {
       >
         {headerUser ? (
           headerUser.image ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={headerUser.image}
               alt="avatar"

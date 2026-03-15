@@ -1,5 +1,4 @@
 'use client'
-import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function EventTask1() {
@@ -11,7 +10,7 @@ export default function EventTask1() {
     '...',
     '...',
   ])
-  const [activ, setActiv] = useState<boolean[]>([true, true, true, true, true])
+  const [_activ, setActiv] = useState<boolean[]>([true, true, true, true, true])
   const [count, setCount] = useState<number>(0)
 
   const dataHandler = (ind: number) => {

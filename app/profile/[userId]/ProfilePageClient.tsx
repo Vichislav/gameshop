@@ -185,11 +185,14 @@ export default function ProfilePageClient({
             className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-cyan-400 flex items-center justify-center bg-slate-700 hover:border-cyan-300 transition-colors"
           >
             {user.image ? (
-              <img
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                 src={user.image}
                 alt="Аватар"
                 className="w-full h-full object-cover"
               />
+              </>
             ) : (
               <span className="text-xs text-center px-2">
                 Нажмите, чтобы добавить аватар
@@ -277,11 +280,14 @@ export default function ProfilePageClient({
               или нажмите кнопку ниже, чтобы выбрать файл
             </p>
             {preview && (
-              <img
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                 src={preview}
                 alt="Превью"
                 className="mt-3 max-h-40 rounded-md object-contain"
               />
+              </>
             )}
           </div>
 

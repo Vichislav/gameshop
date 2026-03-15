@@ -5,7 +5,7 @@ import { useState } from 'react'
 interface QuestionLikeButtonProps {
   initialScore?: number
   initiallyLiked?: boolean
-  onToggleLike?: (nextLiked: boolean) => Promise<void> | void
+  onToggleLike?: (_nextLiked: boolean) => Promise<void> | void
 }
 
 export default function QuestionLikeButton({

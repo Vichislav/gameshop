@@ -38,7 +38,7 @@ interface QuestionFormProps {
   mode?: 'create' | 'edit'
   initialData?: QuestionFormInitialData
   isSubmitting?: boolean
-  onSubmit: (values: QuestionFormValues) => Promise<void> | void
+  onSubmit: (_values: QuestionFormValues) => Promise<void> | void
 }
 
 export default function QuestionForm({
@@ -213,6 +213,7 @@ export default function QuestionForm({
                 key={preview.id}
                 className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-slate-50"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={preview.url}
                   alt="Preview"
@@ -271,6 +272,7 @@ export default function QuestionForm({
                       key={preview.id}
                       className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-white"
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={preview.url}
                         alt="Answer preview"

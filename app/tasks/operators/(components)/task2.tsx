@@ -2,11 +2,6 @@
 import { useEffect, useState } from 'react'
 import React from 'react'
 
-interface Item {
-  id: number
-  text: string
-}
-
 export default function Task2() {
   // Сохраняем id перетаскиваемого элемента
 

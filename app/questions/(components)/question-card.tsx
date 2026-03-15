@@ -56,6 +56,7 @@ export default function QuestionCard({
               key={`${url}-${index}`}
               className="relative h-24 w-full overflow-hidden rounded-md border border-slate-200 bg-slate-50"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={url}
                 alt={`Question image ${index + 1}`}

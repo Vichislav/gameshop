@@ -2,16 +2,9 @@
 
 import Link from 'next/link'
 import EnterBtn from '../enterBtn'
-import { useState } from 'react'
 import BackButton from '../backBtn'
 
 export default function HeaderComponent() {
-  const [_isOpen, setOpen] = useState(false)
-
-  const _OpentHandler = () => {
-    setOpen((prev) => !prev)
-  }
-
   return (
     <>
       <nav className="w-[100%]  md:w-[80%] lg:w-[55%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">

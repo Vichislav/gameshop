@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import Task4 from './(components)/task4'

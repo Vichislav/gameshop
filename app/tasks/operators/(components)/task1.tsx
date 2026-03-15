@@ -2,11 +2,6 @@
 import { useEffect, useState } from 'react'
 import React from 'react'
 
-interface Item {
-  id: number
-  text: string
-}
-
 export default function Task1() {
   // Сохраняем id перетаскиваемого элемента
 
@@ -31,7 +26,7 @@ export default function Task1() {
     setTimeout(() => setRightActive(false), 1000)
   }
 
-  const dataHandler = (index: number) => {
+  const dataHandler = (_index: number) => {
     //если значение оператора утсановлено то
     if (isSetValue) {
       //устанавливаем значение по индексу

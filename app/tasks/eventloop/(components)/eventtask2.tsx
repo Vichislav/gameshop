@@ -1,5 +1,4 @@
 'use client'
-import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function EventTask2() {
@@ -13,7 +12,7 @@ export default function EventTask2() {
     '...',
     '...',
   ])
-  const [activ, setActiv] = useState<boolean[]>([
+  const [_activ, setActiv] = useState<boolean[]>([
     true,
     true,
     true,
