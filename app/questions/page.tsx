@@ -1,8 +1,7 @@
 'use server'
 
-import Link from 'next/link'
-
 import prisma from '@/lib/prisma'
+import AddQuestionButton from './(components)/add-question-button'
 import QuestionCard from './(components)/question-card'
 
 async function getQuestions() {
@@ -34,20 +33,15 @@ export default async function Questions() {
               images={question.images}
               createdAt={question.createdAt}
               likes={question.likes}
+              answerText={question.answerText}
+              answerImages={question.answerImages}
             />
           ))}
         </div>
       )}
 
       <div className="mt-6">
-        <Link href="/questions/new?type=other">
-          <button
-            type="button"
-            className="rounded-md bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500"
-          >
-            add
-          </button>
-        </Link>
+        <AddQuestionButton questionType="other" />
       </div>
     </section>
   )

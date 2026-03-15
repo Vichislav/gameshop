@@ -73,6 +73,21 @@ export default function EnterBtn() {
       })
   }, [])
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ mode?: AuthMode }>).detail
+      setModalOpen(true)
+      setStep('email')
+      setEmail('')
+      setCode('')
+      setAuthMode(detail?.mode ?? null)
+      setMessage(null)
+      setSuggestedAction(null)
+    }
+    window.addEventListener('openAuthModal', handler)
+    return () => window.removeEventListener('openAuthModal', handler)
+  }, [])
+
   const sendCode = async (mode: AuthMode) => {
     try {
       setMessage(null)

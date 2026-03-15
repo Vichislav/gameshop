@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 'use client'
 
+import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import QuestionForm from '../(components)/question-form'
@@ -14,6 +14,7 @@ const typeTitles: Record<string, string> = {
 export default function NewQuestionPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const [isSubmitting, setSubmitting] = useState(false)
 
   const type = searchParams.get('type') ?? 'other'
   const title = typeTitles[type] ?? typeTitles.other
@@ -22,12 +23,36 @@ export default function NewQuestionPage() {
     author: string
     text: string
     files: File[]
+    answerText?: string
+    answerFiles?: File[]
   }) {
-    console.log('Submit question (not implemented yet)', {
-      type,
-      ...values,
-    })
-    router.back()
+    setSubmitting(true)
+    try {
+      const formData = new FormData()
+      formData.set('type', type)
+      formData.set('author', values.author)
+      formData.set('text', values.text)
+      if (values.answerText?.trim()) {
+        formData.set('answerText', values.answerText.trim())
+      }
+      values.files.forEach((file) => formData.append('images', file))
+      values.answerFiles?.forEach((file) => formData.append('answerImages', file))
+
+      const res = await fetch('/api/questions', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error((data?.error as string) ?? 'Не удалось создать вопрос')
+      }
+
+      const listPath = type === 'other' ? '/questions' : `/questions/${type}`
+      router.push(listPath)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -38,7 +63,11 @@ export default function NewQuestionPage() {
     >
       <h1 className="text-center">{title}</h1>
 
-      <QuestionForm mode="create" onSubmit={handleSubmit} />
+      <QuestionForm
+        mode="create"
+        isSubmitting={isSubmitting}
+        onSubmit={handleSubmit}
+      />
     </section>
   )
 }

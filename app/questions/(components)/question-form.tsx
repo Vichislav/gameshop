@@ -1,6 +1,16 @@
 'use client'
 
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
+
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) {
+    return decodeURIComponent(parts.pop()!.split(';').shift() || '')
+  }
+  return null
+}
 
 interface QuestionFormImagesPreview {
   id: string
@@ -12,12 +22,16 @@ interface QuestionFormInitialData {
   author?: string
   text?: string
   images?: string[]
+  answerText?: string
+  answerImages?: string[]
 }
 
 interface QuestionFormValues {
   author: string
   text: string
   files: File[]
+  answerText?: string
+  answerFiles?: File[]
 }
 
 interface QuestionFormProps {
@@ -35,10 +49,33 @@ export default function QuestionForm({
 }: QuestionFormProps) {
   const [author, setAuthor] = useState(initialData?.author ?? '')
   const [text, setText] = useState(initialData?.text ?? '')
+
+  useEffect(() => {
+    const userId = getCookie('userId')
+    if (!userId) return
+    fetch(`/api/profile/${userId}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) {
+          const value = data.login ?? data.email ?? ''
+          setAuthor(value)
+        }
+      })
+      .catch(() => {})
+  }, [])
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<QuestionFormImagesPreview[]>(
     (initialData?.images ?? []).map((url, index) => ({
       id: `existing-${index}`,
+      url,
+    })),
+  )
+  const [showAnswerSection, setShowAnswerSection] = useState(false)
+  const [answerText, setAnswerText] = useState(initialData?.answerText ?? '')
+  const [answerFiles, setAnswerFiles] = useState<File[]>([])
+  const [answerPreviews, setAnswerPreviews] = useState<QuestionFormImagesPreview[]>(
+    (initialData?.answerImages ?? []).map((url, index) => ({
+      id: `answer-existing-${index}`,
       url,
     })),
   )
@@ -71,6 +108,30 @@ export default function QuestionForm({
     )
   }
 
+  function handleAnswerFilesChange(event: ChangeEvent<HTMLInputElement>) {
+    const newFiles = Array.from(event.target.files ?? [])
+    if (!newFiles.length) return
+    const nextFiles = [...answerFiles, ...newFiles]
+    setAnswerFiles(nextFiles)
+    const newPreviews = newFiles.map((file, index) => {
+      const id = `answer-file-${Date.now()}-${index}`
+      const url = URL.createObjectURL(file)
+      return { id, url, file }
+    })
+    setAnswerPreviews((prev) => [...prev, ...newPreviews])
+  }
+
+  function handleRemoveAnswerPreview(id: string) {
+    setAnswerPreviews((prev) => prev.filter((item) => item.id !== id))
+    setAnswerFiles((prev) =>
+      prev.filter((file) => {
+        return !answerPreviews.find(
+          (p) => p.id === id && p.file && p.file === file,
+        )
+      }),
+    )
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError(null)
@@ -90,6 +151,8 @@ export default function QuestionForm({
         author: author.trim(),
         text: text.trim(),
         files,
+        ...(answerText.trim() ? { answerText: answerText.trim() } : {}),
+        ...(answerFiles.length > 0 ? { answerFiles } : {}),
       })
     } catch (err) {
       console.error(err)
@@ -113,16 +176,9 @@ export default function QuestionForm({
         <p className="text-sm text-red-600 text-center">{error}</p>
       )}
 
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-slate-800">Author</span>
-        <input
-          type="text"
-          value={author}
-          onChange={(event) => setAuthor(event.target.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
-          placeholder="Your name or nickname"
-        />
-      </label>
+      <p className="text-sm text-slate-800">
+        Author: {author || '…'}
+      </p>
 
       <label className="flex flex-col gap-1 text-sm">
         <span className="font-medium text-slate-800">Question text</span>
@@ -172,6 +228,67 @@ export default function QuestionForm({
                 </button>
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      <div className="mt-2 flex flex-col gap-3">
+        <button
+          type="button"
+          onClick={() => setShowAnswerSection((prev) => !prev)}
+          className="w-fit rounded-md border border-slate-400 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+        >
+          ответ
+        </button>
+
+        {showAnswerSection && (
+          <div className="flex flex-col gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">
+            <label className="flex flex-col gap-1">
+              <span className="font-medium text-slate-800">Текст ответа (необязательно)</span>
+              <textarea
+                value={answerText}
+                onChange={(e) => setAnswerText(e.target.value)}
+                className="min-h-[80px] w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-y"
+                placeholder="Введите ответ..."
+              />
+            </label>
+            <div className="flex flex-col gap-2">
+              <span className="font-medium text-slate-800">Изображения ответа (необязательно)</span>
+              <label className="inline-flex w-fit cursor-pointer items-center justify-center rounded-md bg-slate-700 px-3 py-1.5 text-xs font-medium text-slate-50 hover:bg-slate-600">
+                Выбрать файлы
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleAnswerFilesChange}
+                />
+              </label>
+              {answerPreviews.length > 0 && (
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {answerPreviews.map((preview) => (
+                    <div
+                      key={preview.id}
+                      className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-white"
+                    >
+                      <img
+                        src={preview.url}
+                        alt="Answer preview"
+                        className="h-full w-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveAnswerPreview(preview.id)}
+                        className="absolute right-1 top-1 rounded-full bg-slate-900/70 px-1.5 text-xs text-slate-50"
+                        aria-label="Remove image"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

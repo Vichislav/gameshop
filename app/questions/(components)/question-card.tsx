@@ -1,9 +1,13 @@
+import QuestionCardAnswer from './question-card-answer'
+
 interface QuestionCardProps {
   author: string
   text: string
   images?: string[]
   createdAt?: Date | string
   likes?: number
+  answerText?: string | null
+  answerImages?: string[]
   footerSlot?: React.ReactNode
 }
 
@@ -13,6 +17,8 @@ export default function QuestionCard({
   images = [],
   createdAt,
   likes,
+  answerText,
+  answerImages = [],
   footerSlot,
 }: QuestionCardProps) {
   const createdLabel = createdAt
@@ -60,6 +66,8 @@ export default function QuestionCard({
           ))}
         </div>
       )}
+
+      <QuestionCardAnswer answerText={answerText} answerImages={answerImages} />
 
       {footerSlot && (
         <footer className="mt-2 flex items-center justify-between">
