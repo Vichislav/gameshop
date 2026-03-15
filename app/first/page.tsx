@@ -44,7 +44,7 @@ const getUsers = async () => {
   }
 }
 
-function FetchData() {
+async function FetchData() {
   const users = await getUsers()
 
   return (
