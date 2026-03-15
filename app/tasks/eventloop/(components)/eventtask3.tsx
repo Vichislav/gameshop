@@ -12,7 +12,7 @@ export default function EventTask3() {
     '...',
     '...',
   ])
-  const [_activ, setActiv] = useState<boolean[]>([
+  const [activ, setActiv] = useState<boolean[]>([
     true,
     true,
     true,

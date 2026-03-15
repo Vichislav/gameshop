@@ -10,7 +10,7 @@ export default function EventTask1() {
     '...',
     '...',
   ])
-  const [_activ, setActiv] = useState<boolean[]>([true, true, true, true, true])
+  const [activ, setActiv] = useState<boolean[]>([true, true, true, true, true])
   const [count, setCount] = useState<number>(0)
 
   const dataHandler = (ind: number) => {
