@@ -3,7 +3,7 @@ import { useAppSelector } from '@/lib/hooks'
 import { useEffect, useState } from 'react'
 
 export default function UserLabel() {
-  const [userlabel, setUserLebel] = useState<String>('')
+  const [_userlabel, setUserLebel] = useState<String>('')
   const userData = useAppSelector((state) => state.user)
 
   useEffect(() => {

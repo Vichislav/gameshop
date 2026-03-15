@@ -1,5 +1,4 @@
 import React from 'react'
-import PostItem from './components'
 import GridItem from './components/grid'
 
 export interface Post {

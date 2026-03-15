@@ -6,9 +6,9 @@ import { useState } from 'react'
 import BackButton from '../backBtn'
 
 export default function HeaderComponent() {
-  const [isOpen, setOpen] = useState(false)
+  const [_isOpen, setOpen] = useState(false)
 
-  const OpentHandler = () => {
+  const _OpentHandler = () => {
     setOpen((prev) => !prev)
   }
 

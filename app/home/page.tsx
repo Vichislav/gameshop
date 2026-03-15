@@ -1,6 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 import Image from 'next/image'
 import mem from '../img/sm.png'
@@ -11,11 +9,6 @@ import css from '../img/css.png'
 import html from '../img/html.png'
 
 export default function HomePage() {
-  const router = useRouter()
-
-  const goToHome = () => {
-    router.push('/')
-  }
 
   //grid-cols-1 md:grid-cols-2 lg:grid-cols-3
   //bg-gradient-to-tr from-slate-300 to-slate-100

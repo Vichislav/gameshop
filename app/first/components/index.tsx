@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { User } from '../page'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 import ItemComponent from './item'
 
@@ -12,7 +11,6 @@ interface UserListProps {
 
 export default function Grid({ dataProps }: UserListProps) {
   const [data, setData] = useState<User[] | null>(null)
-  const router = useRouter()
 
   /*     const goToBasket = () => { 
         router.push('/basket'); 

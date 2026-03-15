@@ -17,7 +17,7 @@ function GridItem({ arrPosts }: GridProps) {
   const [step, setStep] = useState<number>(0)
   const [filterPosts, setFilterPosts] = useState<Post[] | []>([])
   const [botBtn, setBotbtn] = useState<number[]>([])
-  const [delta, setDelta] = useState<number>(50)
+  const [delta, _setDelta] = useState<number>(50)
 
   useEffect(() => {
     setFilterPosts(arrPosts.slice(0, 10))

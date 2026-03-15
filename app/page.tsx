@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import FetchData from './first/page'
 import HomePage from './home/page'
 
 export default function Home() {

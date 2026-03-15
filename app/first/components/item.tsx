@@ -15,7 +15,7 @@ function ItemComponent({ item }: MyProps) {
   const openModal = () => setModalOpen(true)
   const closeModal = () => setModalOpen(false)
 
-  const store = useAppStore()
+  const _store = useAppStore()
   const router = useRouter()
 
   const goToAothor = (id: string) => {

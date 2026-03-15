@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { IUser } from '@/app/component/enterBtn'
 
-/* export  interface IuserLabel {
-        name: string,
-        password: string 
-} */
+export interface IUser {
+  name: string
+  password: string
+}
 
 export interface userProps {
   name: string
