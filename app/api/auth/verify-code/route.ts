@@ -52,6 +52,10 @@ export async function POST(req: Request) {
       user = await prisma.user.create({ data: { email } })
     }
 
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 500 })
+    }
+
     // Создаём JWT
     const token = jwt.sign({ userId: user.id, email }, JWT_SECRET, {
       expiresIn: '30d',
