@@ -5,8 +5,9 @@ import Link from 'next/link'
 
 import Modal from '@/app/component/Modal'
 
-const BUTTON_CLASS =
-  'min-w-[140px] rounded-md bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500'
+/** Как у «+ Новый комментарий» в question-comments-panel */
+const ADD_QUESTION_BTN_CLASS =
+  'w-full rounded-md border border-indigo-400 bg-indigo-50 py-2 text-xs font-medium text-indigo-800 transition-colors hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-60'
 
 function getCookie(name: string): string | null {
   if (typeof document === 'undefined') return null
@@ -50,23 +51,25 @@ export default function AddQuestionButton({ questionType }: AddQuestionButtonPro
   const openAuthModalRegister = () => {
     setShowAuthRequiredModal(false)
     window.dispatchEvent(
-      new CustomEvent('openAuthModal', { detail: { mode: 'register' as const } })
+      new CustomEvent('openAuthModal', { detail: { mode: 'register' as const } }),
     )
   }
 
+  const label = '+ Новый вопрос'
+
   if (isAuth === null) {
     return (
-      <button type="button" className={BUTTON_CLASS} disabled>
-        add
+      <button type="button" className={ADD_QUESTION_BTN_CLASS} disabled>
+        {label}
       </button>
     )
   }
 
   if (isAuth) {
     return (
-      <Link href={`/questions/new?type=${questionType}`}>
-        <button type="button" className={BUTTON_CLASS}>
-          add
+      <Link href={`/questions/new?type=${questionType}`} className="block w-full">
+        <button type="button" className={ADD_QUESTION_BTN_CLASS}>
+          {label}
         </button>
       </Link>
     )
@@ -76,10 +79,10 @@ export default function AddQuestionButton({ questionType }: AddQuestionButtonPro
     <>
       <button
         type="button"
-        className={BUTTON_CLASS}
+        className={ADD_QUESTION_BTN_CLASS}
         onClick={() => setShowAuthRequiredModal(true)}
       >
-        add
+        {label}
       </button>
       <Modal
         isOpen={showAuthRequiredModal}

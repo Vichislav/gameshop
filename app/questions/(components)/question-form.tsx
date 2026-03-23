@@ -39,6 +39,8 @@ interface QuestionFormProps {
   initialData?: QuestionFormInitialData
   isSubmitting?: boolean
   onSubmit: (_values: QuestionFormValues) => Promise<void> | void
+  /** Отмена (например возврат на список вопросов); кнопка показывается только если передано */
+  onCancel?: () => void
 }
 
 export default function QuestionForm({
@@ -46,6 +48,7 @@ export default function QuestionForm({
   initialData,
   isSubmitting = false,
   onSubmit,
+  onCancel,
 }: QuestionFormProps) {
   const [author, setAuthor] = useState(initialData?.author ?? '')
   const [text, setText] = useState(initialData?.text ?? '')
@@ -295,7 +298,17 @@ export default function QuestionForm({
         )}
       </div>
 
-      <div className="mt-2 flex justify-center">
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+        {onCancel && mode === 'create' && (
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={isSubmitting}
+            className="min-w-[140px] rounded-md border border-slate-400 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Отмена
+          </button>
+        )}
         <button
           type="submit"
           disabled={isSubmitting}

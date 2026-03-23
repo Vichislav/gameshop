@@ -18,6 +18,7 @@ function NewQuestionForm() {
 
   const type = searchParams.get('type') ?? 'other'
   const title = typeTitles[type] ?? typeTitles.other
+  const listPath = type === 'other' ? '/questions' : `/questions/${type}`
 
   async function handleSubmit(values: {
     author: string
@@ -48,7 +49,6 @@ function NewQuestionForm() {
         throw new Error((data?.error as string) ?? 'Не удалось создать вопрос')
       }
 
-      const listPath = type === 'other' ? '/questions' : `/questions/${type}`
       router.push(listPath)
     } finally {
       setSubmitting(false)
@@ -67,6 +67,7 @@ function NewQuestionForm() {
         mode="create"
         isSubmitting={isSubmitting}
         onSubmit={handleSubmit}
+        onCancel={() => router.push(listPath)}
       />
     </section>
   )
