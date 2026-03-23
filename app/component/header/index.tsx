@@ -11,25 +11,25 @@ export default function HeaderComponent() {
         <BackButton />
         <Link
           href={'/'}
-          className="px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+          className="px-2 smmb:px-4 border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
         >
           Home
         </Link>
         <Link
           href={'/about'}
-          className="px-2 smmb:px-4 border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+          className="px-2 smmb:px-4 border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
         >
           About
         </Link>
         <Link
           href={'/tasks'}
-          className="px-2 smmb:px-4  border-r-2 text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+          className="px-2 smmb:px-4  border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
         >
           JS tasks
         </Link>
         <Link
           href={'/questions'}
-          className="px-2 smmb:px-4 border-r-2  text-cyan-100 text-[10px] smmb:text-[12px] md:text-sm hover:text-white hover:border-white transition-colors"
+          className="px-2 smmb:px-4 border-r-2 border-black  text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
         >
           Questions
         </Link>

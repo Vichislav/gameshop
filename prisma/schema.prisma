@@ -43,7 +43,7 @@ model Question {
   images    String[]  @default([]) 
   answerText   String?
   answerImages String[]  @default([])
-  likes     Int       @default(0)
+  likeList     String[]  @default([])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
@@ -54,7 +54,7 @@ model Comment {
   id        Int      @id @default(autoincrement())
   text      String
   author    String
-  likes     Int      @default(0)
+  likeList     String[]  @default([])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

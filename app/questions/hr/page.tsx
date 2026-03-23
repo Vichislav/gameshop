@@ -1,11 +1,17 @@
+import { getCurrentUserIdFromCookies } from '@/lib/auth-cookies'
 import prisma from '@/lib/prisma'
 import AddQuestionButton from '../(components)/add-question-button'
 import QuestionCard from '../(components)/question-card'
+import {
+  questionForCardSelect,
+  type QuestionForCard,
+} from '../question-for-card'
 
 export const dynamic = 'force-dynamic'
 
 async function getHrQuestions() {
   return prisma.question.findMany({
+    select: questionForCardSelect,
     where: { type: 'hr' },
     orderBy: { createdAt: 'desc' },
   })
@@ -13,6 +19,7 @@ async function getHrQuestions() {
 
 export default async function HrScreening() {
   const questions = await getHrQuestions()
+  const currentUserId = getCurrentUserIdFromCookies()
 
   return (
     <section
@@ -22,27 +29,30 @@ export default async function HrScreening() {
     >
       <h1 className="text-center">Вопросы HR скрининга</h1>
 
-      {questions.length === 0 ? (
-        <p className="mt-4 text-sm text-slate-700">Вопросов пока нет</p>
-      ) : (
-        <div className="mt-4 flex w-full max-w-2xl flex-col gap-4">
-          {questions.map((question) => (
+      <div className="flex w-full max-w-2xl flex-col gap-4">
+        <div className="rounded-lg border border-dashed border-slate-300 bg-white p-3">
+          <AddQuestionButton questionType="hr" />
+        </div>
+
+        {questions.length === 0 ? (
+          <p className="text-sm text-slate-700">Вопросов пока нет</p>
+        ) : (
+          questions.map((question: QuestionForCard) => (
             <QuestionCard
               key={question.id}
               author={question.author}
               text={question.text ?? ''}
               images={question.images}
               createdAt={question.createdAt}
-              likes={question.likes}
+              questionId={question.id}
+              likeList={question.likeList}
+              currentUserId={currentUserId}
               answerText={question.answerText}
               answerImages={question.answerImages}
+              comments={question.comments}
             />
-          ))}
-        </div>
-      )}
-
-      <div className="mt-6">
-        <AddQuestionButton questionType="hr" />
+          ))
+        )}
       </div>
     </section>
   )

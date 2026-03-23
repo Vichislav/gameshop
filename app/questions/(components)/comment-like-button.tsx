@@ -2,23 +2,22 @@
 
 import { useState } from 'react'
 
-interface QuestionLikeButtonProps {
-  questionId: number
-  /** Снимок likeList с сервера; длина = число лайков */
+interface CommentLikeButtonProps {
+  commentId: number
   initialLikeList: string[]
-  /** id текущего пользователя (из JWT на сервере); без него лайк недоступен */
   currentUserId: string | null
 }
 
-export default function QuestionLikeButton({
-  questionId,
+export default function CommentLikeButton({
+  commentId,
   initialLikeList,
   currentUserId,
-}: QuestionLikeButtonProps) {
+}: CommentLikeButtonProps) {
   const [likeList, setLikeList] = useState<string[]>(() => [...initialLikeList])
   const [isBusy, setIsBusy] = useState(false)
 
-  const isLiked = currentUserId !== null && likeList.includes(currentUserId)
+  const isLiked =
+    currentUserId !== null && likeList.includes(currentUserId)
   const score = likeList.length
 
   async function handleClick() {
@@ -38,7 +37,7 @@ export default function QuestionLikeButton({
     setIsBusy(true)
 
     try {
-      const res = await fetch(`/api/questions/${questionId}/like`, {
+      const res = await fetch(`/api/comments/${commentId}/like`, {
         method: 'POST',
         credentials: 'include',
       })
@@ -65,11 +64,11 @@ export default function QuestionLikeButton({
       type="button"
       onClick={() => void handleClick()}
       disabled={isBusy}
-      className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+      className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition-colors ${
         isLiked
           ? 'border-cyan-600 bg-cyan-600 text-white'
           : 'border-slate-300 bg-white text-slate-700 hover:border-cyan-500 hover:text-cyan-700'
-      } ${isBusy ? 'opacity-60 cursor-not-allowed' : ''}`}
+      } ${isBusy ? 'cursor-not-allowed opacity-60' : ''}`}
       aria-pressed={isLiked}
     >
       <span>{isLiked ? '♥' : '♡'}</span>

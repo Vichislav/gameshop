@@ -26,7 +26,9 @@ export default function BackButton({ fallback = '/' }: Props) {
       type="button"
       onClick={handleBack}
       aria-label="Назад"
-      className="flex justify-center items-center pb-[3px] w-[20px] h-[20px] border-2 border-white text-white rounded-[10px] smmb:w-[24px] smmb:h-[24px] smmb:rounded-[12px] hover:bg-white hover:text-slate-900 transition-colors"
+      className="flex justify-center items-center pb-[3px] w-[20px] h-[20px] border-2 
+      border-black text-black rounded-[10px] smmb:w-[24px] smmb:h-[24px] smmb:rounded-[12px] 
+      hover:bg-white hover:text-slate-900 transition-colors"
     >
       &#8656;
     </button>

@@ -27,7 +27,7 @@ export default function HomePage() {
         >
           <div className="bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full">
             <h1 className="text-sm md:text-md lg:text-lg text-start">
-              Здесь вы можете порешать задачи, которые встречались мне на
+              Здесь вы можете посмотреть задачи, которые встречались мне на
               собеседованиях либо подобные им
             </h1>
           </div>
@@ -58,7 +58,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div
+       {/*  <div
           className="w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-15
               transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
         >
@@ -74,7 +74,7 @@ export default function HomePage() {
           >
             About
           </Link>
-        </div>
+        </div> */}
 
         <div className="relative z-0 flex  justify-center items-center h-[200px] w-[100%]">
           <div className="absolute z-10 flex h-[80%] p-2 mb-5 items-start bg-white border-dashed border-2 border-black rounded-lg origin-bottom animate-swingL-1">
