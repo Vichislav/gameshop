@@ -8,6 +8,10 @@ import ts from '../img/ts.png'
 import css from '../img/css.png'
 import html from '../img/html.png'
 
+/** Как «+ Новый вопрос» (indigo), без фиксации ширины на всю колонку — размеры задаём на ссылке */
+const homeNavLinkClass =
+  'rounded-md border border-indigo-400 bg-indigo-50 font-medium text-indigo-800 transition-colors hover:bg-indigo-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2'
+
 export default function HomePage() {
   // grid-cols-1 md:grid-cols-2 lg:grid-cols-3
   // bg-gradient-to-tr from-slate-300 to-slate-100
@@ -27,14 +31,12 @@ export default function HomePage() {
         >
           <div className="bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full">
             <h1 className="text-sm md:text-md lg:text-lg text-start">
-              Здесь вы можете посмотреть задачи, которые встречались мне на
-              собеседованиях либо подобные им
+              Задачи на операторы и eventLoop 
             </h1>
           </div>
           <Link
             href={'/tasks'}
-            className="rounded-lg my-4 flex  justify-center  items-center pl-4 pr-4 h-[30px] w-[50%] text-cyan-100 text-sm lg:text-md
-                bg-violet-500 hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700"
+            className={`my-4 flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
           >
             JS tasks
           </Link>
@@ -46,13 +48,12 @@ export default function HomePage() {
         >
           <div className="bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full">
             <h1 className="text-sm md:text-md lg:text-lg text-start">
-              Здесь собраны вопросы с моих собеседований
+              Вопросы с собеседований
             </h1>
           </div>
           <Link
             href={'/questions'}
-            className="rounded-lg my-4 flex  justify-center  items-center pl-4 pr-4 h-[30px] w-[50%] text-cyan-100 text-sm lg:text-md
-                bg-violet-500 hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700"
+            className={`my-4 flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
           >
             Questions
           </Link>
@@ -69,8 +70,7 @@ export default function HomePage() {
           </div>
           <Link
             href={'/about'}
-            className="rounded-lg my-4 flex  justify-center  items-center pl-4 pr-4 h-[30px] w-[50%] text-cyan-100 text-sm lg:text-md
-                bg-violet-500 hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700"
+            className={`my-4 flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
           >
             About
           </Link>
