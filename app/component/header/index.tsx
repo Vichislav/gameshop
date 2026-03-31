@@ -16,10 +16,10 @@ export default function HeaderComponent() {
           Home
         </Link>
         <Link
-          href={'/about'}
+          href={'/docs'}
           className="px-2 smmb:px-4 border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
         >
-          About
+          Docs
         </Link>
         <Link
           href={'/tasks'}
