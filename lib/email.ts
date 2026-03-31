@@ -19,3 +19,16 @@ export async function sendVerificationEmail(to: string, code: string) {
     html: `<p>Ваш код: <strong>${code}</strong></p>`,
   })
 }
+
+/** Почта разработчика для формы обратной связи (можно переопределить в CONTACT_DEVELOPER_EMAIL). */
+const DEVELOPER_INBOX =
+  process.env.CONTACT_DEVELOPER_EMAIL ?? 's1ava8968@gmail.com'
+
+export async function sendDeveloperContactEmail(messageBody: string) {
+  await transporter.sendMail({
+    from: `"JS study — сайт" <${process.env.SMTP_USER}>`,
+    to: DEVELOPER_INBOX,
+    subject: 'Сообщение с сайта JS study',
+    text: messageBody,
+  })
+}

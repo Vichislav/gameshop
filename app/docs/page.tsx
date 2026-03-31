@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import ContactDeveloperTrigger from './ContactDeveloperTrigger'
 
 export const metadata: Metadata = {
   title: 'Документация | JS study',
@@ -18,76 +19,6 @@ export default function DocsPage() {
         </h1>
       </header>
 
-      <section className="space-y-3 rounded-lg border border-slate-400/40 bg-white/80 p-4 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-800">Карта разделов</h2>
-        <ul className="list-inside list-disc space-y-2 text-sm leading-relaxed">
-          <li>
-            <strong>Главная</strong> (<code className="rounded bg-slate-200 px-1">/</code>) —
-            обзор и переходы в разделы.
-          </li>
-          <li>
-            <strong>Задачи</strong> (<code className="rounded bg-slate-200 px-1">/tasks</code>,
-            подстраницы operators и eventloop) — краткая теория и практические задания.
-          </li>
-          <li>
-            <strong>Вопросы</strong> (<code className="rounded bg-slate-200 px-1">/questions</code>,
-            вкладки HR / Technical) — списки вопросов из базы; добавление нового вопроса:{' '}
-            <code className="rounded bg-slate-200 px-1">/questions/new</code> (тип можно задать
-            параметром <code className="rounded bg-slate-200 px-1">?type=</code>).
-          </li>
-          <li>
-            <strong>Посты и авторы (демо)</strong> —{' '}
-            <code className="rounded bg-slate-200 px-1">/posts</code>,{' '}
-            <code className="rounded bg-slate-200 px-1">/author/[id]</code> — данные с публичного
-            API JSONPlaceholder, не связаны с вашей учётной записью на сайте.
-          </li>
-          <li>
-            <strong>Профиль</strong> (<code className="rounded bg-slate-200 px-1">
-              /profile/[userId]
-            </code>
-            ) — данные пользователя из приложения после входа.
-          </li>
-          <li>
-            <strong>Об авторе</strong> — отдельная страница{' '}
-            <Link href="/about" className="font-medium text-indigo-700 underline">
-              /about
-            </Link>
-            .
-          </li>
-        </ul>
-      </section>
-
-      <section className="space-y-3 rounded-lg border border-slate-400/40 bg-white/80 p-4 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-800">
-          Учётная запись и безопасность
-        </h2>
-        <ul className="list-inside list-disc space-y-2 text-sm leading-relaxed">
-          <li>
-            Вход по коду на email: отправка кода и проверка через API (серверные маршруты{' '}
-            <code className="rounded bg-slate-200 px-1">/api/auth/send-code</code> и{' '}
-            <code className="rounded bg-slate-200 px-1">/api/auth/verify-code</code>).
-          </li>
-          <li>
-            После успешной проверки выдаётся JWT; проверка на сервере выполняется библиотекой{' '}
-            <strong>jsonwebtoken</strong>, токен передаётся в cookie (чтение через{' '}
-            <code className="rounded bg-slate-200 px-1">next/headers</code>).
-          </li>
-          <li>
-            Создание вопросов, лайки, комментарии и профиль рассчитаны на работу с авторизованным
-            пользователем; сценарии зависят от UI конкретных страниц.
-          </li>
-        </ul>
-      </section>
-
-      <section className="space-y-3 rounded-lg border border-slate-400/40 bg-white/80 p-4 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-800">Раздел «Вопросы»</h2>
-        <p className="text-sm leading-relaxed">
-          Вопросы хранятся в базе <strong>PostgreSQL</strong>, доступ через ORM{' '}
-          <strong>Prisma</strong> (клиент и миграции в репозитории). Типы вопросов: technical, hr,
-          other. Серверные страницы списков настроены на актуальные данные при запросе.
-        </p>
-      </section>
-
       <section className="space-y-4 rounded-lg border border-slate-400/40 bg-white/80 p-4 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-800">Технологический стек</h2>
         <dl className="space-y-3 text-sm leading-relaxed">
@@ -98,13 +29,6 @@ export default function DocsPage() {
               оптимизация изображений и шрифтов — встроенные{' '}
               <code className="rounded bg-slate-200 px-1">next/image</code>,{' '}
               <code className="rounded bg-slate-200 px-1">next/font</code>.
-            </dd>
-          </div>
-          <div>
-            <dt className="font-medium text-slate-800">Состояние в браузере</dt>
-            <dd className="mt-1 text-slate-700">
-              Redux Toolkit 2.2 и react-redux 9 (глобальное состояние через провайдер в корне
-              приложения).
             </dd>
           </div>
           <div>
@@ -119,7 +43,7 @@ export default function DocsPage() {
             <dd className="mt-1 text-slate-700">
               PostgreSQL; подключение и схема через Prisma 5.22 (
               <code className="rounded bg-slate-200 px-1">@prisma/client</code>). Конкретная версия
-              СУБД задаётся окружением (хостинг, Docker и т.д.).
+              СУБД задаётся окружением (хостинг).
             </dd>
           </div>
           <div>
@@ -143,6 +67,34 @@ export default function DocsPage() {
           Внутренние секреты (ключи JWT, строка подключения к БД, SMTP) в документации не
           публикуются и задаются только в окружении сервера.
         </p>
+      </section>
+
+      <section className="space-y-2 rounded-lg border border-dashed border-slate-400/60 bg-slate-100/50 p-4 text-sm text-slate-600">
+        <p className="mb-2">Информация о разработчике сайта:</p>
+        <ul className="list-inside list-disc space-y-2 pl-1">
+          <li>имя: Вячеслав</li>
+          <li>
+            Email: <ContactDeveloperTrigger />
+          </li>
+          <li>
+            GitHub:{' '}
+            <a
+              href="https://github.com/Vichislav"
+              className="font-medium text-indigo-700 underline"
+            >
+              Vichislav
+            </a>
+          </li>
+          <li>
+            hh.ru:{' '}
+            <a
+              href="https://omsk.hh.ru/resume/18965610ff0e34064e0039ed1f635974323168"
+              className="font-medium text-indigo-700 underline"
+            >
+              Frontend-разработчик
+            </a>
+          </li>
+        </ul>
       </section>
     </article>
   )

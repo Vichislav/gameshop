@@ -23,18 +23,18 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="w-[90%] h-[400px] lg:w-[60%] bg-white p-[10px] lg:p-[20px] rounded-[15px]"
+        className="flex h-[400px] w-[90%] flex-col rounded-[15px] bg-white p-[10px] lg:w-[60%] lg:p-[20px] [--modal-height:400px]"
         onClick={handleInnerClick}
       >
-        <div className="flex justify-end px-2">
+        <div className="flex shrink-0 justify-end px-2">
           <button
             onClick={onClose}
-            className="w-[30px] h-[30px] hover:bg-slate-300"
+            className="h-[30px] w-[30px] hover:bg-slate-300"
           >
             &#10005;
           </button>
         </div>
-        {children}
+        <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
       </div>
     </div>,
     document.getElementById('modal-root') as HTMLElement, // Убедитесь, что данный элемент существует
