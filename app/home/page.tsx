@@ -26,37 +26,41 @@ export default function HomePage() {
       </div>
       <div className="pt-3 w-[80%] lg:w-[50%] lg:pt-10 h-full flex flex-col  justify-center  items-center gap-5">
         <div
-          className="w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-05
+          className="w-[90%] flex flex-col items-stretch overflow-hidden rounded-lg border border-indigo-400 animate-slideIn-05
               transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
         >
-          <div className="bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full">
+          <div className="w-full bg-gradient-to-tr from-sky-300 to-sky-200 p-2">
             <h1 className="text-sm md:text-md lg:text-lg text-start">
-              Задачи на операторы и eventLoop 
+              Задачи на операторы и eventLoop
             </h1>
           </div>
-          <Link
-            href={'/tasks'}
-            className={`my-4 flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
-          >
-            JS tasks
-          </Link>
+          <div className="flex w-full flex-col items-center bg-white py-4">
+            <Link
+              href={'/tasks'}
+              className={`flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
+            >
+              JS tasks
+            </Link>
+          </div>
         </div>
 
         <div
-          className="w-[90%] flex flex-col items-center rounded-lg bg-gradient-to-tr from-sky-200 to-sky-150 animate-slideIn-1
+          className="w-[90%] flex flex-col items-stretch overflow-hidden rounded-lg border border-indigo-400 animate-slideIn-1
               transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
         >
-          <div className="bg-gradient-to-tr from-sky-300 to-sky-200 p-2 rounded-t-lg w-full">
+          <div className="w-full bg-gradient-to-tr from-sky-300 to-sky-200 p-2">
             <h1 className="text-sm md:text-md lg:text-lg text-start">
               Вопросы с собеседований
             </h1>
           </div>
-          <Link
-            href={'/questions'}
-            className={`my-4 flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
-          >
-            Questions
-          </Link>
+          <div className="flex w-full flex-col items-center bg-white py-4">
+            <Link
+              href={'/questions'}
+              className={`flex h-[30px] w-[50%] items-center justify-center px-4 text-sm lg:text-base ${homeNavLinkClass}`}
+            >
+              Questions
+            </Link>
+          </div>
         </div>
 
        {/*  <div

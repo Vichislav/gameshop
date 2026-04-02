@@ -1,6 +1,7 @@
 'use client'
 import Modal from '../Modal'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { isValidEmailFormat } from '@/lib/email-validation'
 
 type AuthMode = 'login' | 'register'
 
@@ -29,6 +30,19 @@ export default function EnterBtn() {
   const [message, setMessage] = useState<string | null>(null)
   const [suggestedAction, setSuggestedAction] = useState<AuthMode | null>(null)
   const [headerUser, setHeaderUser] = useState<HeaderUser | null>(null)
+  const [emailBorderFlash, setEmailBorderFlash] = useState(false)
+
+  const emailIsValid = useMemo(() => isValidEmailFormat(email), [email])
+
+  useEffect(() => {
+    if (!isModalOpen || step !== 'email') return
+    setEmailBorderFlash(true)
+    const t = window.setTimeout(() => setEmailBorderFlash(false), 1500)
+    return () => {
+      window.clearTimeout(t)
+      setEmailBorderFlash(false)
+    }
+  }, [isModalOpen, step])
 
   const openModal = () => {
     if (headerUser) {
@@ -88,14 +102,18 @@ export default function EnterBtn() {
     return () => window.removeEventListener('openAuthModal', handler)
   }, [])
 
+  const authBtnClass =
+    'w-[60%] h-[30px] border-2 border-blue-500 mx-auto my-2 flex justify-center items-center rounded no-parent-hover active:border-4 disabled:cursor-not-allowed disabled:opacity-40 disabled:border-slate-400'
+
   const sendCode = async (mode: AuthMode) => {
+    if (!isValidEmailFormat(email)) return
     try {
       setMessage(null)
       setSuggestedAction(null)
 
       const res = await fetch('/api/auth/send-code', {
         method: 'POST',
-        body: JSON.stringify({ email, mode }),
+        body: JSON.stringify({ email: email.trim(), mode }),
         headers: { 'Content-Type': 'application/json' },
       })
 
@@ -116,6 +134,8 @@ export default function EnterBtn() {
             'По этому email уже есть зарегистрированный пользователь. Желаете войти по этой почте?',
           )
           setSuggestedAction('login')
+        } else if (data?.error === 'INVALID_EMAIL') {
+          setMessage('Некорректный формат email. Проверьте адрес и попробуйте снова.')
         } else {
           alert('Ошибка отправки кода. Попробуйте позже.')
         }
@@ -134,7 +154,12 @@ export default function EnterBtn() {
 
     const res = await fetch('/api/auth/verify-code', {
       method: 'POST',
-      body: JSON.stringify({ email, code, mode: authMode }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email.trim(),
+        code,
+        mode: authMode,
+      }),
     })
     const data = await res.json()
     if (res.ok) {
@@ -223,14 +248,21 @@ export default function EnterBtn() {
               <label className="w-[80%] flex flex-col gap-1 items-centr justify-start">
                 <h2 className="text-[14px] smmb:text-[18px]">email</h2>
                 <input
-                  type="text"
-                  className="w-[100%] border-2 h-8 p-2 rounded-md"
-                  placeholder="enter the email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  maxLength={254}
+                  className={`w-[100%] border-2 h-8 bg-white p-2 rounded-md border-slate-400 transition-colors ${
+                    emailBorderFlash ? 'animate-email-border-flash' : ''
+                  }`}
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <p className="text-[10px] smmb:text-[12px]">
-                  the email must not contain unprintable characters
+                <p className="text-[10px] smmb:text-[12px] text-slate-600">
+                  {email.trim().length > 0 && !emailIsValid
+                    ? 'Введите корректный email (формат: имя@домен.зона).'
+                    : 'Кнопки Registration и Login доступны после корректного email.'}
                 </p>
               </label>
 
@@ -240,8 +272,9 @@ export default function EnterBtn() {
                   {suggestedAction === 'register' && (
                     <button
                       type="button"
+                      disabled={!emailIsValid}
                       onClick={() => sendCode('register')}
-                      className="w-[60%] h-[30px] border-2 border-blue-500 mx-auto my-2 flex justify-center items-center rounded no-parent-hover active:border-4"
+                      className={authBtnClass}
                     >
                       Registration
                     </button>
@@ -249,8 +282,9 @@ export default function EnterBtn() {
                   {suggestedAction === 'login' && (
                     <button
                       type="button"
+                      disabled={!emailIsValid}
                       onClick={() => sendCode('login')}
-                      className="w-[60%] h-[30px] border-2 border-blue-500 mx-auto my-2 flex justify-center items-center rounded no-parent-hover active:border-4"
+                      className={authBtnClass}
                     >
                       Login
                     </button>
@@ -262,15 +296,17 @@ export default function EnterBtn() {
                 <>
                   <button
                     type="button"
+                    disabled={!emailIsValid}
                     onClick={() => sendCode('register')}
-                    className="w-[60%] h-[30px] border-2 border-blue-500 m-2 flex justify-center items-center rounded no-parent-hover active:border-4"
+                    className={authBtnClass}
                   >
                     Registration
                   </button>
                   <button
                     type="button"
+                    disabled={!emailIsValid}
                     onClick={() => sendCode('login')}
-                    className="w-[60%] h-[30px] border-2 border-blue-500 m-2 flex justify-center items-center rounded no-parent-hover active:border-4"
+                    className={authBtnClass}
                   >
                     Login
                   </button>

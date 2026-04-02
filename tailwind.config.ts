@@ -19,6 +19,21 @@ const config: Config = {
       screens: {
         smmb: '460px',
       },
+      keyframes: {
+        'email-border-flash': {
+          '0%, 100%': {
+            borderColor: 'rgb(148 163 184)',
+            backgroundColor: 'rgb(255 255 255)',
+          },
+          '50%': {
+            borderColor: 'rgb(34 197 94)',
+            backgroundColor: 'rgb(220 252 231)',
+          },
+        },
+      },
+      animation: {
+        'email-border-flash': 'email-border-flash 1.5s ease-in-out 1',
+      },
     },
   },
   plugins: [],

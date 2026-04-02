@@ -1,14 +1,20 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import jwt from 'jsonwebtoken'
+import { isValidEmailFormat } from '@/lib/email-validation'
 
 const JWT_SECRET = process.env.JWT_SECRET!
 
 export async function POST(req: Request) {
   try {
     const { email, code, mode } = await req.json()
-    if (!email || !code)
+    if (typeof email !== 'string' || !email.trim() || !code) {
       return NextResponse.json({ error: 'Missing data' }, { status: 400 })
+    }
+    const emailTrimmed = email.trim()
+    if (!isValidEmailFormat(emailTrimmed)) {
+      return NextResponse.json({ error: 'INVALID_EMAIL' }, { status: 400 })
+    }
 
     if (mode !== 'login' && mode !== 'register') {
       return NextResponse.json({ error: 'Invalid mode' }, { status: 400 })
@@ -17,7 +23,7 @@ export async function POST(req: Request) {
     // Ищем действующий код
     const validCode = await prisma.verificationCode.findFirst({
       where: {
-        email,
+        email: emailTrimmed,
         code,
         expiresAt: { gt: new Date() },
       },
@@ -34,7 +40,7 @@ export async function POST(req: Request) {
     await prisma.verificationCode.delete({ where: { id: validCode.id } })
 
     // Находим пользователя
-    let user = await prisma.user.findUnique({ where: { email } })
+    let user = await prisma.user.findUnique({ where: { email: emailTrimmed } })
 
     if (mode === 'login') {
       // Для входа пользователь должен существовать
@@ -49,7 +55,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'ALREADY_EXISTS' }, { status: 400 })
       }
 
-      user = await prisma.user.create({ data: { email } })
+      user = await prisma.user.create({ data: { email: emailTrimmed } })
     }
 
     if (!user) {
@@ -57,7 +63,7 @@ export async function POST(req: Request) {
     }
 
     // Создаём JWT
-    const token = jwt.sign({ userId: user.id, email }, JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id, email: emailTrimmed }, JWT_SECRET, {
       expiresIn: '30d',
     })
 
