@@ -18,20 +18,28 @@ interface QuestionFormImagesPreview {
   file?: File
 }
 
+type QuestionTypeValue = 'technical' | 'hr' | 'other'
+
 interface QuestionFormInitialData {
   author?: string
   text?: string
   images?: string[]
   answerText?: string
   answerImages?: string[]
+  /** Только для mode=edit — для PATCH */
+  questionType?: QuestionTypeValue
 }
 
-interface QuestionFormValues {
+export interface QuestionFormValues {
   author: string
   text: string
   files: File[]
   answerText?: string
   answerFiles?: File[]
+  /** Редактирование: URL картинок, которые оставляем */
+  keepImageUrls?: string[]
+  keepAnswerImageUrls?: string[]
+  questionType?: QuestionTypeValue
 }
 
 interface QuestionFormProps {
@@ -54,6 +62,7 @@ export default function QuestionForm({
   const [text, setText] = useState(initialData?.text ?? '')
 
   useEffect(() => {
+    if (mode === 'edit') return
     const userId = getCookie('userId')
     if (!userId) return
     fetch(`/api/profile/${userId}`)
@@ -65,7 +74,7 @@ export default function QuestionForm({
         }
       })
       .catch(() => {})
-  }, [])
+  }, [mode])
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<QuestionFormImagesPreview[]>(
     (initialData?.images ?? []).map((url, index) => ({
@@ -73,7 +82,12 @@ export default function QuestionForm({
       url,
     })),
   )
-  const [showAnswerSection, setShowAnswerSection] = useState(false)
+  const [showAnswerSection, setShowAnswerSection] = useState(() => {
+    const hasAnswer =
+      !!(initialData?.answerText?.trim?.() ||
+        (initialData?.answerImages && initialData.answerImages.length > 0))
+    return hasAnswer
+  })
   const [answerText, setAnswerText] = useState(initialData?.answerText ?? '')
   const [answerFiles, setAnswerFiles] = useState<File[]>([])
   const [answerPreviews, setAnswerPreviews] = useState<QuestionFormImagesPreview[]>(
@@ -150,12 +164,28 @@ export default function QuestionForm({
     }
 
     try {
+      const keepImageUrls = previews
+        .filter((p) => !p.file)
+        .map((p) => p.url)
+      const keepAnswerImageUrls = answerPreviews
+        .filter((p) => !p.file)
+        .map((p) => p.url)
+
       await onSubmit({
         author: author.trim(),
         text: text.trim(),
         files,
         ...(answerText.trim() ? { answerText: answerText.trim() } : {}),
         ...(answerFiles.length > 0 ? { answerFiles } : {}),
+        ...(mode === 'edit'
+          ? {
+              keepImageUrls,
+              keepAnswerImageUrls,
+              ...(initialData?.questionType
+                ? { questionType: initialData.questionType }
+                : {}),
+            }
+          : {}),
       })
     } catch (err) {
       console.error(err)
@@ -299,7 +329,7 @@ export default function QuestionForm({
       </div>
 
       <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-        {onCancel && mode === 'create' && (
+        {onCancel && (
           <button
             type="button"
             onClick={onCancel}

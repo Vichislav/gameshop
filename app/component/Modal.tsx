@@ -5,9 +5,11 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   children: React.ReactNode
+  /** Высота до ~90vh, скролл внутри — для длинных форм */
+  tall?: boolean
 }
 
-function Modal({ isOpen, onClose, children }: ModalProps) {
+function Modal({ isOpen, onClose, children, tall = false }: ModalProps) {
   if (!isOpen) {
     return null
   }
@@ -23,7 +25,11 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="flex h-[400px] w-[90%] flex-col rounded-[15px] bg-white p-[10px] lg:w-[60%] lg:p-[20px] [--modal-height:400px]"
+        className={
+          tall
+            ? 'flex max-h-[90vh] w-[90%] flex-col rounded-[15px] bg-white p-[10px] lg:w-[60%] lg:p-[20px] [--modal-height:min(90vh,800px)]'
+            : 'flex h-[400px] w-[90%] flex-col rounded-[15px] bg-white p-[10px] lg:w-[60%] lg:p-[20px] [--modal-height:400px]'
+        }
         onClick={handleInnerClick}
       >
         <div className="flex shrink-0 justify-end px-2">
@@ -34,7 +40,13 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
             &#10005;
           </button>
         </div>
-        <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
+        <div
+          className={
+            tall ? 'min-h-0 flex-1 overflow-y-auto overflow-x-hidden' : 'min-h-0 flex-1 overflow-hidden'
+          }
+        >
+          {children}
+        </div>
       </div>
     </div>,
     document.getElementById('modal-root') as HTMLElement, // Убедитесь, что данный элемент существует

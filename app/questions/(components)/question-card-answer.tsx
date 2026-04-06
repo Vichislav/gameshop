@@ -1,15 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 
 interface QuestionCardAnswerProps {
   answerText?: string | null
   answerImages?: string[]
+  /** Кнопки справа на одной линии с «ответ» (удалить, редактировать) */
+  endActions?: ReactNode
 }
 
 export default function QuestionCardAnswer({
   answerText,
   answerImages = [],
+  endActions,
 }: QuestionCardAnswerProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -17,13 +20,18 @@ export default function QuestionCardAnswer({
 
   return (
     <div className="mt-2 flex flex-col gap-2">
-      <button
-        type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="w-fit rounded-md border border-slate-400 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
-      >
-        ответ
-      </button>
+      <div className="flex w-full flex-wrap items-center justify-between gap-2">
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="w-fit shrink-0 rounded-md border border-slate-400 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+        >
+          ответ
+        </button>
+        {endActions ? (
+          <div className="flex shrink-0 items-center gap-2">{endActions}</div>
+        ) : null}
+      </div>
 
       {isOpen && (
         <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">

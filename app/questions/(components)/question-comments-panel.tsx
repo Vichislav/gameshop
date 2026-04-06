@@ -13,18 +13,22 @@ export type CommentRow = {
   author: string
   likeList: string[]
   createdAt: Date | string
+  updatedAt?: Date | string
 }
 
 interface QuestionCommentsPanelProps {
   questionId: number
   initialComments: CommentForCard[]
   currentUserId: string | null
+  /** Для прав редактирования/удаления комментариев */
+  viewerAuthorLabel?: string | null
 }
 
 export default function QuestionCommentsPanel({
   questionId,
   initialComments,
   currentUserId,
+  viewerAuthorLabel = null,
 }: QuestionCommentsPanelProps) {
   const [listOpen, setListOpen] = useState(false)
   const [composerOpen, setComposerOpen] = useState(false)
@@ -154,7 +158,29 @@ export default function QuestionCommentsPanel({
               author={c.author}
               likeList={c.likeList}
               createdAt={c.createdAt}
+              updatedAt={c.updatedAt}
               currentUserId={currentUserId}
+              canEdit={
+                viewerAuthorLabel !== null && viewerAuthorLabel === c.author
+              }
+              onCommentUpdated={(row) => {
+                setComments((prev) =>
+                  prev.map((x) =>
+                    x.id === row.id
+                      ? {
+                          ...x,
+                          text: row.text,
+                          likeList: row.likeList,
+                          createdAt: row.createdAt,
+                          updatedAt: row.updatedAt,
+                        }
+                      : x,
+                  ),
+                )
+              }}
+              onCommentDeleted={(commentId) => {
+                setComments((prev) => prev.filter((x) => x.id !== commentId))
+              }}
             />
           ))}
         </div>

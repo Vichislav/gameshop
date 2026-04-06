@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { authorDisplayFromUser } from '@/lib/author-display'
 import { getUserIdFromRequest } from '@/lib/auth-request'
 import prisma from '@/lib/prisma'
 
@@ -39,16 +40,13 @@ export async function POST(req: NextRequest, { params }: Params) {
 
     const user = await prisma.user.findUnique({
       where: { id: userNumericId },
-      select: { login: true, email: true },
+      select: { id: true, login: true, email: true },
     })
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    const author =
-      user.login?.trim() ||
-      user.email ||
-      `user-${userNumericId}`
+    const author = authorDisplayFromUser(user)
 
     const comment = await prisma.comment.create({
       data: {
@@ -62,6 +60,7 @@ export async function POST(req: NextRequest, { params }: Params) {
         author: true,
         likeList: true,
         createdAt: true,
+        updatedAt: true,
       },
     })
 

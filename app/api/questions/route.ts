@@ -1,33 +1,13 @@
 import { NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import path from 'path'
 
 import prisma from '@/lib/prisma'
+import { saveQuestionImageUpload } from '@/lib/question-upload'
 
 const QUESTION_TYPES = ['technical', 'hr', 'other'] as const
 type QuestionType = (typeof QUESTION_TYPES)[number]
 
 function isQuestionType(s: string): s is QuestionType {
   return QUESTION_TYPES.includes(s as QuestionType)
-}
-
-function sanitizeFileName(name: string): string {
-  const base = path.basename(name).replace(/[^a-zA-Z0-9.-]/g, '_')
-  return base.slice(0, 100) || 'image'
-}
-
-async function saveUpload(
-  file: File,
-  dir: string
-): Promise<string> {
-  await mkdir(dir, { recursive: true })
-  const bytes = await file.arrayBuffer()
-  const ext = path.extname(file.name) || '.jpg'
-  const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}-${sanitizeFileName(file.name)}`
-  const filename = safeName.endsWith(ext) ? safeName : `${safeName}${ext}`
-  const filePath = path.join(dir, filename)
-  await writeFile(filePath, new Uint8Array(bytes))
-  return `/uploads/questions/${filename}`
 }
 
 export async function POST(req: Request) {
@@ -52,8 +32,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Text is required' }, { status: 400 })
     }
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'questions')
-
     const imageFiles = formData.getAll('images').filter((f): f is File => f instanceof File)
     const answerImageFiles = formData
       .getAll('answerImages')
@@ -61,13 +39,13 @@ export async function POST(req: Request) {
 
     const imageUrls: string[] = []
     for (const file of imageFiles) {
-      const url = await saveUpload(file, uploadDir)
+      const url = await saveQuestionImageUpload(file)
       imageUrls.push(url)
     }
 
     const answerImageUrls: string[] = []
     for (const file of answerImageFiles) {
-      const url = await saveUpload(file, uploadDir)
+      const url = await saveQuestionImageUpload(file)
       answerImageUrls.push(url)
     }
 

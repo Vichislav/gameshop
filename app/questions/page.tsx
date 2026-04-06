@@ -1,4 +1,5 @@
 import { getCurrentUserIdFromCookies } from '@/lib/auth-cookies'
+import { getViewerAuthorLabel } from '@/lib/viewer-author-label'
 import prisma from '@/lib/prisma'
 import AddQuestionButton from './(components)/add-question-button'
 import QuestionCard from './(components)/question-card'
@@ -19,6 +20,7 @@ async function getQuestions() {
 export default async function Questions() {
   const questions = await getQuestions()
   const currentUserId = getCurrentUserIdFromCookies()
+  const viewerAuthorLabel = await getViewerAuthorLabel(currentUserId)
 
   return (
     <section
@@ -43,12 +45,19 @@ export default async function Questions() {
               text={question.text ?? ''}
               images={question.images}
               createdAt={question.createdAt}
+              updatedAt={question.updatedAt}
+              questionType={question.type}
               questionId={question.id}
               likeList={question.likeList}
               currentUserId={currentUserId}
               answerText={question.answerText}
               answerImages={question.answerImages}
               comments={question.comments}
+              canEdit={
+                viewerAuthorLabel !== null &&
+                viewerAuthorLabel === question.author
+              }
+              viewerAuthorLabel={viewerAuthorLabel}
             />
           ))
         )}
