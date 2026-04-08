@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Comment" ADD COLUMN "images" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[];

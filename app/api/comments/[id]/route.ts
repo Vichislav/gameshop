@@ -41,6 +41,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         id: true,
         text: true,
         author: true,
+        images: true,
         likeList: true,
         createdAt: true,
         editedAt: true,

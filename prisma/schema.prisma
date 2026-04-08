@@ -55,6 +55,7 @@ model Comment {
   id        Int      @id @default(autoincrement())
   text      String
   author    String
+  images    String[]  @default([])
   likeList     String[]  @default([])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

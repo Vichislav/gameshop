@@ -6,6 +6,8 @@ import Modal from '@/app/component/Modal'
 
 import CommentLikeButton from './comment-like-button'
 
+import { formatDateTimeRu } from '@/lib/date-display-ru'
+
 const commentBtnClass =
   'inline-flex items-center justify-center rounded-md border border-indigo-400 bg-indigo-50 px-2 py-1.5 text-xs font-medium text-indigo-800 transition-colors hover:bg-indigo-100'
 
@@ -13,6 +15,7 @@ export interface QuestionCommentCardProps {
   id: number
   text: string
   author: string
+  images?: string[]
   likeList: string[]
   createdAt: Date | string
   editedAt?: Date | string | null
@@ -22,6 +25,7 @@ export interface QuestionCommentCardProps {
     id: number
     text: string
     author: string
+    images: string[]
     likeList: string[]
     createdAt: Date | string
     editedAt: Date | string | null
@@ -33,6 +37,7 @@ export default function QuestionCommentCard({
   id,
   text,
   author,
+  images = [],
   likeList,
   createdAt,
   editedAt,
@@ -51,9 +56,9 @@ export default function QuestionCommentCard({
 
   const dateLine = useMemo(() => {
     if (editedAt) {
-      return `${new Date(editedAt).toLocaleString()} ред.`
+      return `${formatDateTimeRu(editedAt)} ред.`
     }
-    return new Date(createdAt).toLocaleString()
+    return formatDateTimeRu(createdAt)
   }, [createdAt, editedAt])
 
   async function handlePatch() {
@@ -75,6 +80,7 @@ export default function QuestionCommentCard({
             id: number
             text: string
             author: string
+            images: string[]
             likeList: string[]
             createdAt: string
             editedAt: string | null
@@ -93,6 +99,7 @@ export default function QuestionCommentCard({
         id: number
         text: string
         author: string
+        images: string[]
         likeList: string[]
         createdAt: string
         editedAt: string | null
@@ -101,6 +108,7 @@ export default function QuestionCommentCard({
         id: data.id,
         text: data.text,
         author: data.author,
+        images: data.images ?? [],
         likeList: data.likeList,
         createdAt: data.createdAt,
         editedAt: data.editedAt,
@@ -167,6 +175,24 @@ export default function QuestionCommentCard({
           </div>
         </header>
         <p className="whitespace-pre-line text-xs text-slate-800">{text}</p>
+        {images.length > 0 && (
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {images.map((url, index) => (
+              <div
+                key={`${url}-${index}`}
+                className="relative h-20 w-full overflow-hidden rounded-md border border-slate-200 bg-white sm:h-24"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={url}
+                  alt={`Комментарий, изображение ${index + 1}`}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </article>
 
       <Modal isOpen={editOpen} onClose={handleCancelEdit}>

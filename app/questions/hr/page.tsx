@@ -1,18 +1,16 @@
 import { getCurrentUserIdFromCookies } from '@/lib/auth-cookies'
 import { getViewerAuthorLabel } from '@/lib/viewer-author-label'
-import prisma from '@/lib/prisma'
 import AddQuestionButton from '../(components)/add-question-button'
 import QuestionCard from '../(components)/question-card'
 import {
-  questionForCardSelect,
+  fetchQuestionsForCard,
   type QuestionForCard,
 } from '../question-for-card'
 
 export const dynamic = 'force-dynamic'
 
 async function getHrQuestions() {
-  return prisma.question.findMany({
-    select: questionForCardSelect,
+  return fetchQuestionsForCard({
     where: { type: 'hr' },
     orderBy: { createdAt: 'desc' },
   })

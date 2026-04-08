@@ -14,6 +14,8 @@ import QuestionCardAnswer from './question-card-answer'
 import QuestionCommentsPanel from './question-comments-panel'
 import QuestionLikeButton from './question-like-button'
 
+import { formatDateRu } from '@/lib/date-display-ru'
+
 const commentBtnClass =
   'inline-flex items-center justify-center rounded-md border border-indigo-400 bg-indigo-50 px-2 py-1.5 text-xs font-medium text-indigo-800 transition-colors hover:bg-indigo-100'
 
@@ -69,9 +71,9 @@ export default function QuestionCard({
   const dateLine = useMemo(() => {
     if (!createdAt) return null
     if (editedAt) {
-      return `${new Date(editedAt).toLocaleDateString()} ред.`
+      return `${formatDateRu(editedAt)} ред.`
     }
-    return new Date(createdAt).toLocaleDateString()
+    return formatDateRu(createdAt)
   }, [createdAt, editedAt])
 
   const handlePatch = useCallback(

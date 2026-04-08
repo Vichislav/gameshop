@@ -82,12 +82,6 @@ export default function QuestionForm({
       url,
     })),
   )
-  const [showAnswerSection, setShowAnswerSection] = useState(() => {
-    const hasAnswer =
-      !!(initialData?.answerText?.trim?.() ||
-        (initialData?.answerImages && initialData.answerImages.length > 0))
-    return hasAnswer
-  })
   const [answerText, setAnswerText] = useState(initialData?.answerText ?? '')
   const [answerFiles, setAnswerFiles] = useState<File[]>([])
   const [answerPreviews, setAnswerPreviews] = useState<QuestionFormImagesPreview[]>(
@@ -266,64 +260,57 @@ export default function QuestionForm({
         )}
       </div>
 
-      <div className="mt-2 flex flex-col gap-3">
-        <button
-          type="button"
-          onClick={() => setShowAnswerSection((prev) => !prev)}
-          className="w-fit rounded-md border border-slate-400 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
-        >
-          ответ
-        </button>
+      <label className="flex flex-col gap-1 text-sm">
+        <span className="font-medium text-slate-800">
+          Ответ (необязательно)
+        </span>
+        <textarea
+          value={answerText}
+          onChange={(e) => setAnswerText(e.target.value)}
+          className="w-full min-h-[120px] rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-y"
+          placeholder="Введите ответ..."
+        />
+      </label>
 
-        {showAnswerSection && (
-          <div className="flex flex-col gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">
-            <label className="flex flex-col gap-1">
-              <span className="font-medium text-slate-800">Текст ответа (необязательно)</span>
-              <textarea
-                value={answerText}
-                onChange={(e) => setAnswerText(e.target.value)}
-                className="min-h-[80px] w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-y"
-                placeholder="Введите ответ..."
-              />
-            </label>
-            <div className="flex flex-col gap-2">
-              <span className="font-medium text-slate-800">Изображения ответа (необязательно)</span>
-              <label className="inline-flex w-fit cursor-pointer items-center justify-center rounded-md bg-slate-700 px-3 py-1.5 text-xs font-medium text-slate-50 hover:bg-slate-600">
-                Выбрать файлы
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleAnswerFilesChange}
+      <div className="flex flex-col gap-2 text-sm">
+        <span className="font-medium text-slate-800">
+          Изображения ответа (необязательно)
+        </span>
+
+        <label className="inline-flex w-fit cursor-pointer items-center justify-center rounded-md bg-slate-800 px-3 py-1.5 text-xs font-medium text-slate-50 hover:bg-slate-700">
+          Choose files
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            className="hidden"
+            onChange={handleAnswerFilesChange}
+          />
+        </label>
+
+        {answerPreviews.length > 0 && (
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            {answerPreviews.map((preview) => (
+              <div
+                key={preview.id}
+                className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-slate-50"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={preview.url}
+                  alt="Answer preview"
+                  className="h-full w-full object-cover"
                 />
-              </label>
-              {answerPreviews.length > 0 && (
-                <div className="mt-2 grid grid-cols-3 gap-2">
-                  {answerPreviews.map((preview) => (
-                    <div
-                      key={preview.id}
-                      className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-white"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={preview.url}
-                        alt="Answer preview"
-                        className="h-full w-full object-cover"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveAnswerPreview(preview.id)}
-                        className="absolute right-1 top-1 rounded-full bg-slate-900/70 px-1.5 text-xs text-slate-50"
-                        aria-label="Remove image"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveAnswerPreview(preview.id)}
+                  className="absolute right-1 top-1 rounded-full bg-slate-900/70 px-1.5 text-xs text-slate-50"
+                  aria-label="Remove image"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
           </div>
         )}
       </div>

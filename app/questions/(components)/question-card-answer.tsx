@@ -21,13 +21,22 @@ export default function QuestionCardAnswer({
   return (
     <div className="mt-2 flex flex-col gap-2">
       <div className="flex w-full flex-wrap items-center justify-between gap-2">
-        <button
-          type="button"
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="w-fit shrink-0 rounded-md border border-slate-400 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
-        >
-          ответ
-        </button>
+        <div className="flex min-w-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="w-fit shrink-0 rounded-md border border-slate-400 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            ответ
+          </button>
+          <span
+            className="shrink-0 text-base font-medium leading-none text-slate-600"
+            title={hasAnswer ? 'Есть ответ' : 'Ответа нет'}
+            aria-label={hasAnswer ? 'Есть ответ' : 'Ответа нет'}
+          >
+            {hasAnswer ? '✓' : '—'}
+          </span>
+        </div>
         {endActions ? (
           <div className="flex shrink-0 items-center gap-2">{endActions}</div>
         ) : null}
