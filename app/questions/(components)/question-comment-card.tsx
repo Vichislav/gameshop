@@ -15,7 +15,7 @@ export interface QuestionCommentCardProps {
   author: string
   likeList: string[]
   createdAt: Date | string
-  updatedAt?: Date | string
+  editedAt?: Date | string | null
   currentUserId: string | null
   canEdit?: boolean
   onCommentUpdated?: (row: {
@@ -24,7 +24,7 @@ export interface QuestionCommentCardProps {
     author: string
     likeList: string[]
     createdAt: Date | string
-    updatedAt: Date | string
+    editedAt: Date | string | null
   }) => void
   onCommentDeleted?: (id: number) => void
 }
@@ -35,7 +35,7 @@ export default function QuestionCommentCard({
   author,
   likeList,
   createdAt,
-  updatedAt,
+  editedAt,
   currentUserId,
   canEdit = false,
   onCommentUpdated,
@@ -50,15 +50,11 @@ export default function QuestionCommentCard({
   }, [text])
 
   const dateLine = useMemo(() => {
-    const created = new Date(createdAt)
-    const updated = updatedAt ? new Date(updatedAt) : null
-    const showEdited =
-      updated !== null && updated.getTime() > created.getTime() + 500
-    if (showEdited && updated) {
-      return `${updated.toLocaleString()} ред.`
+    if (editedAt) {
+      return `${new Date(editedAt).toLocaleString()} ред.`
     }
-    return created.toLocaleString()
-  }, [createdAt, updatedAt])
+    return new Date(createdAt).toLocaleString()
+  }, [createdAt, editedAt])
 
   async function handlePatch() {
     const body = editText.trim().replace(/\s+/g, ' ')
@@ -81,7 +77,7 @@ export default function QuestionCommentCard({
             author: string
             likeList: string[]
             createdAt: string
-            updatedAt: string
+            editedAt: string | null
           }
         | { error?: string }
         | null
@@ -99,7 +95,7 @@ export default function QuestionCommentCard({
         author: string
         likeList: string[]
         createdAt: string
-        updatedAt: string
+        editedAt: string | null
       }
       onCommentUpdated?.({
         id: data.id,
@@ -107,7 +103,7 @@ export default function QuestionCommentCard({
         author: data.author,
         likeList: data.likeList,
         createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
+        editedAt: data.editedAt,
       })
       setEditOpen(false)
     } finally {

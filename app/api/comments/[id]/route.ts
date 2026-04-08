@@ -36,14 +36,14 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
     const updated = await prisma.comment.update({
       where: { id: commentId },
-      data: { text },
+      data: { text, editedAt: new Date() },
       select: {
         id: true,
         text: true,
         author: true,
         likeList: true,
         createdAt: true,
-        updatedAt: true,
+        editedAt: true,
         questionId: true,
       },
     })

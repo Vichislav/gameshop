@@ -117,7 +117,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
     const updated = await prisma.question.update({
       where: { id: questionId },
-      data,
+      data: { ...data, editedAt: new Date() },
       select: {
         id: true,
         type: true,
@@ -128,7 +128,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         answerImages: true,
         likeList: true,
         createdAt: true,
-        updatedAt: true,
+        editedAt: true,
       },
     })
 
@@ -222,6 +222,7 @@ async function patchMultipart(
         answerText,
         images,
         answerImages,
+        editedAt: new Date(),
         ...(type !== undefined ? { type } : {}),
       },
       select: {
@@ -234,7 +235,7 @@ async function patchMultipart(
         answerImages: true,
         likeList: true,
         createdAt: true,
-        updatedAt: true,
+        editedAt: true,
       },
     })
 

@@ -13,7 +13,7 @@ export type CommentRow = {
   author: string
   likeList: string[]
   createdAt: Date | string
-  updatedAt?: Date | string
+  editedAt?: Date | string | null
 }
 
 interface QuestionCommentsPanelProps {
@@ -158,7 +158,7 @@ export default function QuestionCommentsPanel({
               author={c.author}
               likeList={c.likeList}
               createdAt={c.createdAt}
-              updatedAt={c.updatedAt}
+              editedAt={c.editedAt}
               currentUserId={currentUserId}
               canEdit={
                 viewerAuthorLabel !== null && viewerAuthorLabel === c.author
@@ -172,7 +172,7 @@ export default function QuestionCommentsPanel({
                           text: row.text,
                           likeList: row.likeList,
                           createdAt: row.createdAt,
-                          updatedAt: row.updatedAt,
+                          editedAt: row.editedAt,
                         }
                       : x,
                   ),

@@ -46,7 +46,7 @@ export default async function Technical() {
               text={question.text ?? ''}
               images={question.images}
               createdAt={question.createdAt}
-              updatedAt={question.updatedAt}
+              editedAt={question.editedAt}
               questionType={question.type}
               questionId={question.id}
               likeList={question.likeList}

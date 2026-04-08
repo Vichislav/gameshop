@@ -46,6 +46,7 @@ model Question {
   likeList     String[]  @default([])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  editedAt  DateTime?
 
   comments  Comment[]
 }
@@ -57,6 +58,7 @@ model Comment {
   likeList     String[]  @default([])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  editedAt  DateTime?
 
   question  Question @relation(fields: [questionId], references: [id])
   questionId Int

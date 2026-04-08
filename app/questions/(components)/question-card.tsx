@@ -24,7 +24,8 @@ interface QuestionCardProps {
   text: string
   images?: string[]
   createdAt?: Date | string
-  updatedAt?: Date | string
+  /** Только после PATCH правки вопроса; лайки не меняют. */
+  editedAt?: Date | string | null
   questionType?: QuestionType
   /** Лайки: кнопка с likeList (предпочтительно) */
   questionId?: number
@@ -48,7 +49,7 @@ export default function QuestionCard({
   text,
   images = [],
   createdAt,
-  updatedAt,
+  editedAt,
   questionType = 'other',
   questionId,
   likeList,
@@ -67,15 +68,11 @@ export default function QuestionCard({
 
   const dateLine = useMemo(() => {
     if (!createdAt) return null
-    const created = new Date(createdAt)
-    const updated = updatedAt ? new Date(updatedAt) : null
-    const showEdited =
-      updated !== null && updated.getTime() > created.getTime() + 500
-    if (showEdited && updated) {
-      return `${updated.toLocaleDateString()} ред.`
+    if (editedAt) {
+      return `${new Date(editedAt).toLocaleDateString()} ред.`
     }
-    return created.toLocaleDateString()
-  }, [createdAt, updatedAt])
+    return new Date(createdAt).toLocaleDateString()
+  }, [createdAt, editedAt])
 
   const handlePatch = useCallback(
     async (values: QuestionFormValues) => {

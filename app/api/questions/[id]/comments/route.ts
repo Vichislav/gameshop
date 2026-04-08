@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Prisma } from '@prisma/client'
 
 import { authorDisplayFromUser } from '@/lib/author-display'
 import { getUserIdFromRequest } from '@/lib/auth-request'
@@ -60,8 +61,8 @@ export async function POST(req: NextRequest, { params }: Params) {
         author: true,
         likeList: true,
         createdAt: true,
-        updatedAt: true,
-      },
+        editedAt: true,
+      } as unknown as Prisma.CommentSelect,
     })
 
     return NextResponse.json(comment)
