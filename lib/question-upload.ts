@@ -1,10 +1,12 @@
 import { mkdir, writeFile } from 'fs/promises'
 import path from 'path'
 
+import { getUploadsBaseDir } from '@/lib/upload-base-path'
+
 const UPLOAD_SUBDIR = 'questions'
 
 export function getQuestionUploadDir(): string {
-  return path.join(process.cwd(), 'public', 'uploads', UPLOAD_SUBDIR)
+  return path.join(getUploadsBaseDir(), UPLOAD_SUBDIR)
 }
 
 function sanitizeFileName(name: string): string {
