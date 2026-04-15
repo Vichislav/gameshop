@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -23,6 +24,8 @@ type QuestionType = 'technical' | 'hr' | 'other'
 
 interface QuestionCardProps {
   author: string
+  /** Если задан — имя автора ведёт на /profile/[id]. */
+  authorUserId?: number | null
   text: string
   images?: string[]
   createdAt?: Date | string
@@ -48,6 +51,7 @@ interface QuestionCardProps {
 
 export default function QuestionCard({
   author,
+  authorUserId = null,
   text,
   images = [],
   createdAt,
@@ -156,7 +160,16 @@ export default function QuestionCard({
       <article className="w-full max-w-2xl rounded-lg border border-slate-300 bg-white p-4 shadow-sm">
         <header className="mb-2 flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-semibold text-slate-900">{author}</p>
+            {authorUserId != null && authorUserId > 0 ? (
+              <Link
+                href={`/profile/${authorUserId}`}
+                className="text-sm font-semibold text-slate-900 no-underline hover:text-cyan-700"
+              >
+                {author}
+              </Link>
+            ) : (
+              <p className="text-sm font-semibold text-slate-900">{author}</p>
+            )}
             {dateLine && (
               <p className="text-xs text-slate-500">{dateLine}</p>
             )}

@@ -49,7 +49,7 @@ function Modal({ isOpen, onClose, children, tall = false }: ModalProps) {
         </div>
       </div>
     </div>,
-    document.getElementById('modal-root') as HTMLElement, // Убедитесь, что данный элемент существует
+    document.getElementById('modal-root') as HTMLElement, 
   )
 }
 

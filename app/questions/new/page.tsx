@@ -41,6 +41,7 @@ function NewQuestionForm() {
 
       const res = await fetch('/api/questions', {
         method: 'POST',
+        credentials: 'include',
         body: formData,
       })
 

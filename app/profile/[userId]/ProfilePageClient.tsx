@@ -184,7 +184,7 @@ export default function ProfilePageClient({
   const showInputs = !storedFilled || isEditing
 
   return (
-    <main className="flex w-full flex-col items-center justify-start bg-gradient-to-tr from-slate-300 to-slate-100 py-8 px-4">
+    <main className="flex w-full flex-col items-center justify-start py-8 px-4">
       <section className="w-full max-w-2xl rounded-lg border border-slate-300 bg-white p-4 shadow-sm flex flex-col gap-4">
         <h1 className="text-2xl font-semibold text-center text-slate-900">
           Профиль пользователя

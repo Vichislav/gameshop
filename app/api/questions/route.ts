@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
+import { getUserIdFromRequest } from '@/lib/auth-request'
 import prisma from '@/lib/prisma'
 import { saveQuestionImageUpload } from '@/lib/question-upload'
 
@@ -10,9 +11,17 @@ function isQuestionType(s: string): s is QuestionType {
   return QUESTION_TYPES.includes(s as QuestionType)
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData()
+
+    const userIdStr = getUserIdFromRequest(req)
+    const authorUserId =
+      userIdStr &&
+      Number.isInteger(Number(userIdStr)) &&
+      Number(userIdStr) > 0
+        ? Number(userIdStr)
+        : null
 
     const typeRaw = formData.get('type')
     const author = formData.get('author')
@@ -53,6 +62,7 @@ export async function POST(req: Request) {
       data: {
         type: typeRaw,
         author: author.trim(),
+        ...(authorUserId !== null ? { authorUserId } : {}),
         text: text.trim(),
         images: imageUrls,
         answerText:

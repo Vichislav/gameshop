@@ -24,13 +24,13 @@ export default function RootLayout({
       <StoreProvider>
         <body className={inter.className}>
           <div className="relative w-full flex justify-center">
-            <div className=" hidden md:block absolute inset-0 z-0">
-              <Image
+            <div className=" hidden md:block absolute inset-0 z-0 bg-gradient-to-r from-indigo-100 via-indigo-500 to-indigo-100">
+              {/* <Image
                 className="object-cover" // чтобы изображение сохраняло свои пропорции и заполнило контейнер
                 src={backGround}
                 fill // подгоняет изображение под размер контейнера
                 alt="Picture of the background"
-              />
+              /> */}
             </div>
 
             <div className="w-full md:w-[80%] relative z-10">

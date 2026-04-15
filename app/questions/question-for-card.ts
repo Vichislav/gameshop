@@ -10,6 +10,7 @@ export const questionForCardSelect = Prisma.validator<Prisma.QuestionSelect>()({
   id: true,
   type: true,
   author: true,
+  authorUserId: true,
   text: true,
   images: true,
   createdAt: true,

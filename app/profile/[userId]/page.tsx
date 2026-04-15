@@ -60,9 +60,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         }}
       />
 
-      <section
-        className="flex w-full flex-col items-center gap-3 bg-gradient-to-tr from-slate-300 to-slate-100 px-4 pt-2 pb-12"
-      >
+      <section className="flex w-full flex-col items-center gap-3 px-4 pt-2 pb-12">
         <h2 className="text-center text-lg font-semibold text-slate-900">
           Вопросы, где вы автор
         </h2>
@@ -74,6 +72,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               <QuestionCard
                 key={question.id}
                 author={question.author}
+                authorUserId={question.authorUserId}
                 text={question.text ?? ''}
                 images={question.images}
                 createdAt={question.createdAt}

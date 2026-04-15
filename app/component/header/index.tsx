@@ -7,29 +7,29 @@ import BackButton from '../backBtn'
 export default function HeaderComponent() {
   return (
     <>
-      <nav className="w-[100%]  md:w-[80%] lg:w-[55%] gap-1 md:g-0 h-[40px] flex justify-center items-start mt-4 flex-wrap">
+      <nav className="w-[100%]  md:w-[80%] lg:w-[55%] gap-1 md:g-0 h-[24px] flex justify-center items-centr my-4 flex-wrap">
         <BackButton />
         <Link
           href={'/'}
-          className="px-2 smmb:px-4 border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
+          className="px-2 flex justify-center items-center smmb:px-4 border-r-2 border-black text-black text-[12px] smmb:text-[14px] md:text-sm hover:text-white  transition-colors"
         >
           Home
         </Link>
         <Link
           href={'/docs'}
-          className="px-2 smmb:px-4 border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
+          className="px-2 flex justify-center items-center smmb:px-4 border-r-2 border-black text-black text-[12px] smmb:text-[14px] md:text-sm hover:text-white  transition-colors"
         >
           Docs
         </Link>
         <Link
           href={'/tasks'}
-          className="px-2 smmb:px-4  border-r-2 border-black text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
+          className="px-2 flex justify-center items-center smmb:px-4  border-r-2 border-black text-black text-[12px] smmb:text-[14px] md:text-sm hover:text-white  transition-colors"
         >
           JS tasks
         </Link>
         <Link
           href={'/questions'}
-          className="px-2 smmb:px-4 border-r-2 border-black  text-black text-[10px] smmb:text-[12px] md:text-sm hover:text-white  transition-colors"
+          className="px-2 flex justify-center items-center smmb:px-4 border-r-2 border-black  text-black text-[12px] smmb:text-[14px] md:text-sm hover:text-white  transition-colors"
         >
           Questions
         </Link>

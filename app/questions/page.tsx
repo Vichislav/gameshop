@@ -38,6 +38,7 @@ export default async function Questions() {
             <QuestionCard
               key={question.id}
               author={question.author}
+              authorUserId={question.authorUserId}
               text={question.text ?? ''}
               images={question.images}
               createdAt={question.createdAt}

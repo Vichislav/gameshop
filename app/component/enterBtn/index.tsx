@@ -103,7 +103,7 @@ export default function EnterBtn() {
   }, [])
 
   const authBtnClass =
-    'w-[60%] h-[30px] border-2 border-blue-500 mx-auto my-2 flex justify-center items-center rounded no-parent-hover active:border-4 disabled:cursor-not-allowed disabled:opacity-40 disabled:border-slate-400'
+    'w-[60%] h-[30px] border-2 border-blue-500  mx-auto my-2 flex justify-center items-center rounded no-parent-hover active:border-4 disabled:cursor-not-allowed disabled:opacity-40 disabled:border-slate-400'
 
   const sendCode = async (mode: AuthMode) => {
     if (!isValidEmailFormat(email)) return
@@ -207,7 +207,7 @@ export default function EnterBtn() {
   return (
     <>
       <button
-        className="group w-6 h-6 rounded-full border border-cyan-300 flex items-center justify-center bg-cyan-100 text-slate-900 text-[10px] smmb:text-[12px] md:text-sm hover:bg-cyan-200 transition-colors"
+        className="group w-6 h-6 ml-2 rounded-full border border-black flex items-center justify-center bg-slate-400 color-black  text-[10px] smmb:text-[12px] md:text-sm hover:bg-white transition-colors"
         onClick={openModal}
       >
         {headerUser ? (
@@ -226,7 +226,7 @@ export default function EnterBtn() {
           ) : (
             <svg
               viewBox="0 0 24 24"
-              className="w-5 h-5 smmb:w-6 smmb:h-6 text-gray-300 group-hover:text-slate-900 transition-colors"
+              className="w-5 h-5 smmb:w-6 smmb:h-6 text-slate-900"
               aria-hidden="true"
             >
               <circle cx="12" cy="8" r="4" fill="currentColor" />
@@ -245,8 +245,8 @@ export default function EnterBtn() {
           {step === 'email' ? (
             <>
               <h1>Registration / Login</h1>
-              <label className="w-[80%] flex flex-col gap-1 items-centr justify-start">
-                <h2 className="text-[14px] smmb:text-[18px]">email</h2>
+              <label className="w-[80%] flex flex-col gap-1  justify-start">
+                <h2 className="block text-sm font-medium smmb:text-lg">email</h2>
                 <input
                   type="email"
                   inputMode="email"

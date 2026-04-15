@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { requireAuthorUser } from '@/lib/require-author-user'
+import {
+  requireAuthorUser,
+  type AuthorUserContext,
+} from '@/lib/require-author-user'
 import {
   isAllowedQuestionImageUrl,
   saveQuestionImageUpload,
@@ -41,7 +44,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   const contentType = req.headers.get('content-type') ?? ''
   if (contentType.includes('multipart/form-data')) {
-    return patchMultipart(req, questionId, auth.authorLabel)
+    return patchMultipart(req, questionId, auth)
   }
 
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null
@@ -117,7 +120,11 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
     const updated = await prisma.question.update({
       where: { id: questionId },
-      data: { ...data, editedAt: new Date() },
+      data: {
+        ...data,
+        editedAt: new Date(),
+        authorUserId: auth.user.id,
+      },
       select: {
         id: true,
         type: true,
@@ -145,8 +152,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 async function patchMultipart(
   req: NextRequest,
   questionId: number,
-  authorLabel: string,
+  auth: AuthorUserContext,
 ) {
+  const authorLabel = auth.authorLabel
   let formData: FormData
   try {
     formData = await req.formData()
@@ -223,6 +231,7 @@ async function patchMultipart(
         images,
         answerImages,
         editedAt: new Date(),
+        authorUserId: auth.user.id,
         ...(type !== undefined ? { type } : {}),
       },
       select: {
