@@ -207,7 +207,7 @@ export default function EnterBtn() {
   return (
     <>
       <button
-        className="group w-6 h-6 ml-2 rounded-full border border-black flex items-center justify-center bg-slate-400 color-black  text-[10px] smmb:text-[12px] md:text-sm hover:bg-white transition-colors"
+        className="group w-6 h-6 ml-2 rounded-full border border-indigo-500  flex items-center justify-center bg-slate-400 color-black  text-[10px] smmb:text-[12px] md:text-sm hover:bg-white transition-colors"
         onClick={openModal}
       >
         {headerUser ? (

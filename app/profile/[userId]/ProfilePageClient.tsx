@@ -232,10 +232,10 @@ export default function ProfilePageClient({
               )}
             </div>
             <div>
-              <p className="text-sm text-slate-800">
+              {/* <p className="text-sm text-slate-800">
                 <span className="text-slate-600">Email:</span>{' '}
                 <span className="font-medium text-slate-900">{user.email}</span>
-              </p>
+              </p> */}
               <p className="text-sm text-slate-800">
                 <span className="text-slate-600">Дата регистрации:</span>{' '}
                 <span className="font-medium text-slate-900">
