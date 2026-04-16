@@ -194,13 +194,13 @@ export default function QuestionCard({
             {images.map((url, index) => (
               <div
                 key={`${url}-${index}`}
-                className="relative h-24 w-full overflow-hidden rounded-md border border-slate-200 bg-slate-50"
+                className="flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={url}
                   alt={`Question image ${index + 1}`}
-                  className="h-full w-full object-cover"
+                  className="h-24 w-auto max-w-full object-contain"
                   loading="lazy"
                 />
               </div>

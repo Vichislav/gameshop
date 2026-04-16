@@ -180,13 +180,13 @@ export default function QuestionCommentCard({
             {images.map((url, index) => (
               <div
                 key={`${url}-${index}`}
-                className="relative h-20 w-full overflow-hidden rounded-md border border-slate-200 bg-white sm:h-24"
+                className="flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-white"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={url}
                   alt={`Комментарий, изображение ${index + 1}`}
-                  className="h-full w-full object-cover"
+                  className="h-24 w-auto max-w-full object-contain"
                   loading="lazy"
                 />
               </div>

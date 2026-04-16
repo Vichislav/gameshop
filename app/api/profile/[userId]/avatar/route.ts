@@ -1,4 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+
+import { getUserIdFromRequest } from '@/lib/auth-request'
 import prisma from '@/lib/prisma'
 
 interface Params {
@@ -7,11 +9,16 @@ interface Params {
   }
 }
 
-export async function POST(req: Request, { params }: Params) {
+export async function POST(req: NextRequest, { params }: Params) {
   const id = Number(params.userId)
 
   if (!Number.isInteger(id)) {
     return NextResponse.json({ error: 'Invalid user id' }, { status: 400 })
+  }
+
+  const viewerIdStr = getUserIdFromRequest(req)
+  if (!viewerIdStr || Number(viewerIdStr) !== id) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const body = (await req.json().catch(() => null)) as { image?: string } | null

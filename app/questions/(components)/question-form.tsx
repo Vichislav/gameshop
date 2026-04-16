@@ -1,6 +1,12 @@
 'use client'
 
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+} from 'react'
 
 function getCookie(name: string): string | null {
   if (typeof document === 'undefined') return null
@@ -91,6 +97,26 @@ export default function QuestionForm({
     })),
   )
   const [error, setError] = useState<string | null>(null)
+  const answerTextareaRef = useRef<HTMLTextAreaElement>(null)
+
+  function insertAnswerImageMarker(slot: number) {
+    const marker = `[[img:${slot}]]`
+    const el = answerTextareaRef.current
+    if (!el) {
+      setAnswerText((prev) => prev + marker)
+      return
+    }
+    const start = el.selectionStart
+    const end = el.selectionEnd
+    const value = answerText
+    const next = value.slice(0, start) + marker + value.slice(end)
+    setAnswerText(next)
+    requestAnimationFrame(() => {
+      el.focus()
+      const pos = start + marker.length
+      el.setSelectionRange(pos, pos)
+    })
+  }
 
   function handleFilesChange(event: ChangeEvent<HTMLInputElement>) {
     const newFiles = Array.from(event.target.files ?? [])
@@ -238,13 +264,13 @@ export default function QuestionForm({
             {previews.map((preview) => (
               <div
                 key={preview.id}
-                className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-slate-50"
+                className="relative flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={preview.url}
                   alt="Preview"
-                  className="h-full w-full object-cover"
+                  className="h-24 w-auto max-w-full object-contain"
                 />
                 <button
                   type="button"
@@ -264,7 +290,15 @@ export default function QuestionForm({
         <span className="font-medium text-slate-800">
           Ответ (необязательно)
         </span>
+        <p className="text-xs text-slate-600">
+          Чтобы вставить фото внутри текста, загрузите картинки ниже, затем
+          вставьте маркеры{' '}
+          <code className="rounded bg-slate-100 px-1">[[img:1]]</code>,{' '}
+          <code className="rounded bg-slate-100 px-1">[[img:2]]</code> … —
+          номер совпадает с порядком изображений ответа (первая = 1).
+        </p>
         <textarea
+          ref={answerTextareaRef}
           value={answerText}
           onChange={(e) => setAnswerText(e.target.value)}
           className="w-full min-h-[120px] rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-y"
@@ -293,13 +327,13 @@ export default function QuestionForm({
             {answerPreviews.map((preview) => (
               <div
                 key={preview.id}
-                className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-slate-50"
+                className="relative flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={preview.url}
                   alt="Answer preview"
-                  className="h-full w-full object-cover"
+                  className="h-24 w-auto max-w-full object-contain"
                 />
                 <button
                   type="button"
@@ -310,6 +344,21 @@ export default function QuestionForm({
                   ×
                 </button>
               </div>
+            ))}
+          </div>
+        )}
+        {answerPreviews.length > 0 && (
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-slate-600">Вставить в ответ:</span>
+            {answerPreviews.map((p, index) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => insertAnswerImageMarker(index + 1)}
+                className="rounded border border-cyan-600 bg-cyan-50 px-2 py-0.5 font-mono text-xs text-cyan-900 hover:bg-cyan-100"
+              >
+                {`[[img:${index + 1}]]`}
+              </button>
             ))}
           </div>
         )}

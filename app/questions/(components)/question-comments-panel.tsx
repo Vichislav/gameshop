@@ -181,13 +181,13 @@ export default function QuestionCommentsPanel({
                       {imagePreviews.map((preview) => (
                         <div
                           key={preview.id}
-                          className="relative flex h-20 w-full items-center justify-center overflow-hidden rounded-md border border-slate-300 bg-slate-50"
+                          className="relative flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={preview.url}
                             alt=""
-                            className="h-full w-full object-cover"
+                            className="h-24 w-auto max-w-full object-contain"
                           />
                           <button
                             type="button"

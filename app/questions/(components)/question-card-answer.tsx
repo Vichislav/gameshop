@@ -2,6 +2,9 @@
 
 import { useState, type ReactNode } from 'react'
 
+import AnswerTextBody from '@/app/questions/(components)/answer-text-body'
+import { answerTextHasImageMarkers } from '@/lib/answer-image-placeholders'
+
 interface QuestionCardAnswerProps {
   answerText?: string | null
   answerImages?: string[]
@@ -48,28 +51,37 @@ export default function QuestionCardAnswer({
             <p className="text-slate-500">Ответа пока нет.</p>
           ) : (
             <>
-              {answerText?.trim() && (
-                <p className="mb-3 whitespace-pre-line text-slate-900">
-                  {answerText.trim()}
-                </p>
-              )}
-              {answerImages.length > 0 && (
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {answerImages.map((url, index) => (
-                    <div
-                      key={`${url}-${index}`}
-                      className="relative h-24 w-full overflow-hidden rounded-md border border-slate-200 bg-white"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={url}
-                        alt={`Answer image ${index + 1}`}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                      />
+              {answerText?.trim() && answerTextHasImageMarkers(answerText) ? (
+                <AnswerTextBody
+                  answerText={answerText}
+                  answerImages={answerImages}
+                />
+              ) : (
+                <>
+                  {answerText?.trim() && (
+                    <p className="mb-3 whitespace-pre-line text-slate-900">
+                      {answerText.trim()}
+                    </p>
+                  )}
+                  {answerImages.length > 0 && (
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                      {answerImages.map((url, index) => (
+                        <div
+                          key={`${url}-${index}`}
+                          className="flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-white"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={url}
+                            alt={`Answer image ${index + 1}`}
+                            className="h-24 w-auto max-w-full object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
               )}
             </>
           )}

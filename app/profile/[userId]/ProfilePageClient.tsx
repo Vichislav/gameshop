@@ -15,6 +15,8 @@ interface ProfileUser {
 }
 
 interface ProfilePageClientProps {
+  /** Только владелец профиля может редактировать данные и аватар. */
+  isOwner: boolean
   user: ProfileUser
 }
 
@@ -23,13 +25,16 @@ function hasProfileContent(u: ProfileUser): boolean {
 }
 
 export default function ProfilePageClient({
+  isOwner,
   user: initialUser,
 }: ProfilePageClientProps) {
   const [user, setUser] = useState<ProfileUser>(initialUser)
   const [infoDraft, setInfoDraft] = useState<string>(initialUser.info || '')
   const [loginDraft, setLoginDraft] = useState<string>(initialUser.login || '')
   const [isSaving, setIsSaving] = useState(false)
-  const [isEditing, setIsEditing] = useState(() => !hasProfileContent(initialUser))
+  const [isEditing, setIsEditing] = useState(
+    () => isOwner && !hasProfileContent(initialUser),
+  )
 
   const [isAvatarModalOpen, setAvatarModalOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -37,6 +42,8 @@ export default function ProfilePageClient({
   const [isUploading, setIsUploading] = useState(false)
 
   const storedFilled = useMemo(() => hasProfileContent(user), [user])
+
+  const showInputs = isOwner && (!storedFilled || isEditing)
 
   const openAvatarModal = () => setAvatarModalOpen(true)
   const closeAvatarModal = () => {
@@ -181,8 +188,6 @@ export default function ProfilePageClient({
     window.location.href = '/'
   }
 
-  const showInputs = !storedFilled || isEditing
-
   return (
     <main className="flex w-full flex-col items-center justify-start py-8 px-4">
       <section className="w-full max-w-2xl rounded-lg border border-slate-300 bg-white p-4 shadow-sm flex flex-col gap-4">
@@ -191,26 +196,45 @@ export default function ProfilePageClient({
         </h1>
 
         <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
-          <button
-            type="button"
-            onClick={openAvatarModal}
-            className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-slate-300 flex items-center justify-center bg-slate-50 hover:border-slate-400 transition-colors"
-          >
-            {user.image ? (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={user.image}
-                  alt="Аватар"
-                  className="w-full h-full object-cover"
-                />
-              </>
-            ) : (
-              <span className="text-xs text-center px-2 text-slate-600">
-                Нажмите, чтобы добавить аватар
-              </span>
-            )}
-          </button>
+          {isOwner ? (
+            <button
+              type="button"
+              onClick={openAvatarModal}
+              className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-2 border-slate-300 bg-slate-50 transition-colors hover:border-slate-400"
+            >
+              {user.image ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={user.image}
+                    alt="Аватар"
+                    className="h-full w-full object-cover"
+                  />
+                </>
+              ) : (
+                <span className="px-2 text-center text-xs text-slate-600">
+                  Нажмите, чтобы добавить аватар
+                </span>
+              )}
+            </button>
+          ) : (
+            <div className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-2 border-slate-300 bg-slate-50">
+              {user.image ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={user.image}
+                    alt="Аватар"
+                    className="h-full w-full object-cover"
+                  />
+                </>
+              ) : (
+                <span className="px-2 text-center text-xs text-slate-600">
+                  Нет аватара
+                </span>
+              )}
+            </div>
+          )}
 
           <div className="flex-1 flex flex-col gap-3 w-full min-w-0">
             <div className="flex flex-col gap-1">
@@ -262,54 +286,57 @@ export default function ProfilePageClient({
               {user.info.trim() ? user.info : '—'}
             </p>
           )}
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="min-w-[140px] rounded-md border border-slate-400 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
-            >
-              Выйти
-            </button>
-            <div className="flex flex-1 justify-end items-center gap-2 flex-wrap">
-              {storedFilled && !isEditing ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLoginDraft(user.login || '')
-                    setInfoDraft(user.info || '')
-                    setIsEditing(true)
-                  }}
-                  className="min-w-[140px] rounded-md bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500"
-                >
-                  Редактировать
-                </button>
-              ) : (
-                <>
-                  {storedFilled && isEditing && (
-                    <button
-                      type="button"
-                      onClick={handleCancelEdit}
-                      disabled={isSaving}
-                      className="min-w-[140px] rounded-md border border-slate-400 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:opacity-60"
-                    >
-                      Отмена
-                    </button>
-                  )}
+          {isOwner && (
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="min-w-[140px] rounded-md border border-slate-400 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
+              >
+                Выйти
+              </button>
+              <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
+                {storedFilled && !isEditing ? (
                   <button
                     type="button"
-                    onClick={() => void handleSaveInfo()}
-                    disabled={isSaving}
-                    className="min-w-[140px] rounded-md bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 disabled:opacity-60 disabled:cursor-not-allowed"
+                    onClick={() => {
+                      setLoginDraft(user.login || '')
+                      setInfoDraft(user.info || '')
+                      setIsEditing(true)
+                    }}
+                    className="min-w-[140px] rounded-md bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500"
                   >
-                    {isSaving ? 'Сохранение...' : 'Сохранить'}
+                    Редактировать
                   </button>
-                </>
-              )}
+                ) : (
+                  <>
+                    {storedFilled && isEditing && (
+                      <button
+                        type="button"
+                        onClick={handleCancelEdit}
+                        disabled={isSaving}
+                        className="min-w-[140px] rounded-md border border-slate-400 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:opacity-60"
+                      >
+                        Отмена
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => void handleSaveInfo()}
+                      disabled={isSaving}
+                      className="min-w-[140px] rounded-md bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {isSaving ? 'Сохранение...' : 'Сохранить'}
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
+      {isOwner && (
       <Modal isOpen={isAvatarModalOpen} onClose={closeAvatarModal}>
         <div className="w-full max-w-md flex flex-col gap-4">
           <h2 className="text-lg font-semibold text-center mb-2">
@@ -361,6 +388,7 @@ export default function ProfilePageClient({
           </div>
         </div>
       </Modal>
+      )}
     </main>
   )
 }

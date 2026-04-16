@@ -46,9 +46,16 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const currentUserId = getCurrentUserIdFromCookies()
   const viewerAuthorLabel = await getViewerAuthorLabel(currentUserId)
 
+  const viewerNumericId =
+    currentUserId !== null && Number.isInteger(Number(currentUserId))
+      ? Number(currentUserId)
+      : null
+  const isProfileOwner = viewerNumericId !== null && viewerNumericId === user.id
+
   return (
     <>
       <ProfilePageClient
+        isOwner={isProfileOwner}
         user={{
           id: user.id,
           login: user.login ?? '',
@@ -62,7 +69,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
       <section className="flex w-full flex-col items-center gap-3 px-4 pt-2 pb-12">
         <h2 className="text-center text-lg font-semibold text-slate-900">
-          Вопросы, где вы автор
+          {isProfileOwner
+            ? 'Вопросы, где вы автор'
+            : `Вопросы пользователя ${authorLabel}`}
         </h2>
         <div className="flex w-full max-w-2xl flex-col gap-4">
           {authoredQuestions.length === 0 ? (
