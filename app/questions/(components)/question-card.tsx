@@ -16,6 +16,7 @@ import QuestionCommentsPanel from './question-comments-panel'
 import QuestionLikeButton from './question-like-button'
 
 import { formatDateRu } from '@/lib/date-display-ru'
+import ZoomImage from '@/app/component/ZoomImage'
 
 const commentBtnClass =
   'inline-flex items-center justify-center rounded-md border border-indigo-400 bg-indigo-50 px-2 py-1.5 text-xs font-medium text-indigo-800 transition-colors hover:bg-indigo-100'
@@ -196,13 +197,15 @@ export default function QuestionCard({
                 key={`${url}-${index}`}
                 className="flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={url}
-                  alt={`Question image ${index + 1}`}
-                  className="h-24 w-auto max-w-full object-contain"
-                  loading="lazy"
-                />
+                <ZoomImage>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={`Question image ${index + 1}`}
+                    className="h-24 w-auto max-w-full object-contain"
+                    loading="lazy"
+                  />
+                </ZoomImage>
               </div>
             ))}
           </div>

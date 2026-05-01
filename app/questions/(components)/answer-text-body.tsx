@@ -7,6 +7,8 @@ import {
   parseAnswerTextWithImageSlots,
 } from '@/lib/answer-image-placeholders'
 
+import ZoomImage from '@/app/component/ZoomImage'
+
 interface AnswerTextBodyProps {
   answerText: string
   answerImages: string[]
@@ -15,13 +17,15 @@ interface AnswerTextBodyProps {
 function InlineImage({ url, label }: { url: string; label: string }) {
   return (
     <div className="relative my-2 w-full max-w-md overflow-hidden rounded-md bg-white">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={url}
-        alt={label}
-        className="max-h-72 w-full object-contain"
-        loading="lazy"
-      />
+      <ZoomImage>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={url}
+          alt={label}
+          className="max-h-72 w-full object-contain"
+          loading="lazy"
+        />
+      </ZoomImage>
     </div>
   )
 }
@@ -80,13 +84,15 @@ export default function AnswerTextBody({
                 key={`unused-${idx}-${answerImages[idx]}`}
                 className="flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-white"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={answerImages[idx]}
-                  alt={`Answer image ${idx + 1}`}
-                  className="h-24 w-auto max-w-full object-contain"
-                  loading="lazy"
-                />
+                <ZoomImage>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={answerImages[idx]}
+                    alt={`Answer image ${idx + 1}`}
+                    className="h-24 w-auto max-w-full object-contain"
+                    loading="lazy"
+                  />
+                </ZoomImage>
               </div>
             ))}
           </div>

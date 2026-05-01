@@ -5,6 +5,7 @@ import { useState, type ChangeEvent } from 'react'
 import type { CommentForCard } from '../question-for-card'
 
 import QuestionCommentCard from './question-comment-card'
+import ZoomImage from '@/app/component/ZoomImage'
 
 /** Данные комментария в состоянии (дата с сервера или из JSON). */
 export type CommentRow = {
@@ -183,12 +184,14 @@ export default function QuestionCommentsPanel({
                           key={preview.id}
                           className="relative flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={preview.url}
-                            alt=""
-                            className="h-24 w-auto max-w-full object-contain"
-                          />
+                          <ZoomImage>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={preview.url}
+                              alt=""
+                              className="h-24 w-auto max-w-full object-contain"
+                            />
+                          </ZoomImage>
                           <button
                             type="button"
                             onClick={() => handleRemoveCommentImage(preview.id)}

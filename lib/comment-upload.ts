@@ -25,3 +25,8 @@ export async function saveCommentImageUpload(file: File): Promise<string> {
   await writeFile(filePath, new Uint8Array(bytes))
   return `/uploads/${UPLOAD_SUBDIR}/${filename}`
 }
+
+/** Разрешённые URL уже загруженных картинок комментариев (относительные пути). */
+export function isAllowedCommentImageUrl(url: string): boolean {
+  return url.startsWith(`/uploads/${UPLOAD_SUBDIR}/`)
+}

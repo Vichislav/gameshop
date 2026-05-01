@@ -8,6 +8,8 @@ import {
   useRef,
 } from 'react'
 
+import ZoomImage from '@/app/component/ZoomImage'
+
 function getCookie(name: string): string | null {
   if (typeof document === 'undefined') return null
   const value = `; ${document.cookie}`
@@ -266,12 +268,14 @@ export default function QuestionForm({
                 key={preview.id}
                 className="relative flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={preview.url}
-                  alt="Preview"
-                  className="h-24 w-auto max-w-full object-contain"
-                />
+                <ZoomImage>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={preview.url}
+                    alt="Preview"
+                    className="h-24 w-auto max-w-full object-contain"
+                  />
+                </ZoomImage>
                 <button
                   type="button"
                   onClick={() => handleRemovePreview(preview.id)}
@@ -329,12 +333,14 @@ export default function QuestionForm({
                 key={preview.id}
                 className="relative flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-slate-50"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={preview.url}
-                  alt="Answer preview"
-                  className="h-24 w-auto max-w-full object-contain"
-                />
+                <ZoomImage>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={preview.url}
+                    alt="Answer preview"
+                    className="h-24 w-auto max-w-full object-contain"
+                  />
+                </ZoomImage>
                 <button
                   type="button"
                   onClick={() => handleRemoveAnswerPreview(preview.id)}

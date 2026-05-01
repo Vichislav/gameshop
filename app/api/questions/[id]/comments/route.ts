@@ -33,7 +33,7 @@ export async function POST(req: NextRequest, { params }: Params) {
     const textRaw = formData.get('text')
     text =
       typeof textRaw === 'string'
-        ? textRaw.trim().replace(/\s+/g, ' ')
+        ? textRaw.replace(/\r\n/g, '\n').trim()
         : ''
     for (const entry of formData.getAll('images')) {
       if (entry instanceof File && entry.size > 0) {
@@ -43,7 +43,9 @@ export async function POST(req: NextRequest, { params }: Params) {
   } else {
     const body = (await req.json().catch(() => null)) as { text?: string } | null
     text =
-      typeof body?.text === 'string' ? body.text.trim().replace(/\s+/g, ' ') : ''
+      typeof body?.text === 'string'
+        ? body.text.replace(/\r\n/g, '\n').trim()
+        : ''
   }
 
   if (!text) {

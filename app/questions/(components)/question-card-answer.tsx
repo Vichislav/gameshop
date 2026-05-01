@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react'
 
 import AnswerTextBody from '@/app/questions/(components)/answer-text-body'
 import { answerTextHasImageMarkers } from '@/lib/answer-image-placeholders'
+import ZoomImage from '@/app/component/ZoomImage'
 
 interface QuestionCardAnswerProps {
   answerText?: string | null
@@ -70,13 +71,15 @@ export default function QuestionCardAnswer({
                           key={`${url}-${index}`}
                           className="flex h-24 w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-white"
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={url}
-                            alt={`Answer image ${index + 1}`}
-                            className="h-24 w-auto max-w-full object-contain"
-                            loading="lazy"
-                          />
+                          <ZoomImage>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={url}
+                              alt={`Answer image ${index + 1}`}
+                              className="h-24 w-auto max-w-full object-contain"
+                              loading="lazy"
+                            />
+                          </ZoomImage>
                         </div>
                       ))}
                     </div>
