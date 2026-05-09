@@ -1,63 +1,38 @@
 'use client'
 import { useEffect, useState } from 'react'
 import React from 'react'
+import { Task1Props } from '../page'
 
-export default function Task1() {
-  // Сохраняем id перетаскиваемого элемента
+export default function Task1({ operands, operators, taskKey, id }: Task1Props) {
+  const slotsCount = Math.max(0, operands.length - 1)
+  const [currentValue, setCurrentValue] = useState<string[]>(
+    Array.from({ length: slotsCount }, () => '...'),
+  )
 
-  const [currentValue, setCurrentValue] = useState<string>('')
-  const [leftActive, setLeftActive] = useState<boolean>(false) //подсветить ли поле выбора элементов
-  const [rightActive, setRightActive] = useState<boolean>(false) //подсветить ли основное выражение, куда вставлять значение
-  const [isSetValue, setIsSetValue] = useState<boolean>(false) //задано ли текущие значение
+  const [rightActive] = useState<boolean>(false) //подсветить ли основное выражение, куда вставлять значение
   const [solving, setSolving] = useState<boolean>(false) // верно ли решено задание
-  //one two three
-  const [data, setData] = useState<string>('...')
-  const [borederChange, setBorderChange] = useState<boolean[]>([false, false])
-
-  const itemHandler = (str: string, ind: number) => {
-    setCurrentValue(str) //берем с кнопки текущее значение оператора
-    setBorderChange(() => {
-      const newArr = [false, false]
-      newArr[ind] = true
-      return newArr
-    })
-    setRightActive(true) //подсвечиваем правую часть зеленым
-    setIsSetValue(true) // говорим о том что значение взято
-    setTimeout(() => setRightActive(false), 1000)
-  }
-
-  const dataHandler = (_index: number) => {
-    //если значение оператора утсановлено то
-    if (isSetValue) {
-      //устанавливаем значение по индексу
-      setData(currentValue)
-      //убираем флаг того, что значение оператора выбрано
-      setIsSetValue(false)
-      //убираем текущие значение оператора
-      setCurrentValue('...')
-      //убираем выделение с кнопки панели выбора оператора
-      setBorderChange(() => {
-        const newArr = [false, false]
-        return newArr
-      })
-    } else {
-      //если значение я нет подсвечиваем операторы красным
-      setLeftActive(true)
-      setTimeout(() => setLeftActive(false), 1000)
-    }
-  }
 
   useEffect(() => {
-    //
-    const expression = 'undefined||42'
-    const currentSolving = `undefined${data}42`
+    const sumString = operands
+      .map((el, i) =>
+        el +
+        (i < currentValue.length && i < operands.length - 1
+          ? currentValue[i]
+          : ''),
+      )
+      .join('')
+ 
 
-    if (currentSolving === expression) {
+    if (sumString === taskKey) {
       setSolving(true)
     } else {
       setSolving(false)
     }
-  }, [data])
+  }, [currentValue, operands, taskKey])
+
+  useEffect(() => {
+    setCurrentValue(Array.from({ length: slotsCount }, () => '...'))
+  }, [slotsCount])
 
   //className={`border-2 rounded p-2 border-gray-300 ${ isHighlighted ? 'animate-highlight' : ''}`}
 
@@ -73,45 +48,42 @@ export default function Task1() {
         </p>
       </div>
 
-      <div className="w-[100%] flex flex-col lg:flex-row items-center gap-[10px] p-5">
-        <div className="flex flex-row border-b-2 lg:flex-col lg:border-r-2 lg:border-b-0 w-[90%] lg:w-[60px] border-black gap-6 lg:gap-2 justify-center  p-2">
-          <div
-            className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
-                        cursor-pointer ${borederChange[0] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
-                        ${leftActive ? 'animate-redlight' : ''}`}
-            onClick={() => itemHandler('||', 0)}
-          >
-            ||
-          </div>
-          <div
-            className={`flex justify-center items-center w-[45px] h-[45px]  rounded-lg 
-                        cursor-pointer ${borederChange[1] ? 'border-2 border-dashed border-gray-600 bg-[#dde4ec]' : 'border-2 border-black bg-white'}
-                        ${leftActive ? 'animate-redlight' : ''}`}
-            onClick={() => itemHandler('&&', 1)}
-          >
-            &&
-          </div>
-        </div>
+      <div className="w-[100%] flex flex-col lg:flex-row justify-center items-center gap-[10px] p-5">
+
 
         <div className="flex h-[43%] gap-[2px] relative">
-          <div className="flex justify-center items-center w-fit px-1 h-[40px]  lg:h-[45px] rounded-lg bg-white">
-            <p>undefined</p>
-          </div>
+          {operands.map((operand: string, index: number) => {
+            
+            return (
+              <React.Fragment key={`${id}_${index}`}>
+                <div className="flex justify-center items-center w-fit px-1 h-[40px]  lg:h-[45px] rounded-lg bg-white">
+                  <p>{operand}</p>
+                </div>
+                {index < operands.length - 1 && (
+                  <select id={`operator_${index}`} name="operSelect"
+                    className={`appearance-none bg-transparent px-0 text-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
+                                cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
+                    onChange={(e) => setCurrentValue((currentValue) => {
+                      const newCurrentValue = [...currentValue]
+                      newCurrentValue[index] = e.target.value
+                      return newCurrentValue
+                    })}
+                  >
+                    <option value="...">...</option>
+                    {operators.map((operator: string) => (
+                      <option key={`${id}_${index}_${operator}`} value={operator}>{operator}</option>
+                    ))}
+                  </select>
+                )}
+              </React.Fragment>
 
-          <div
-            className={`flex justify-center items-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
-                            cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
-            onClick={() => dataHandler(0)}
-          >
-            {data}
-          </div>
+            )
+          })}
 
-          <div className="flex justify-center items-center w-[40px]  lg:w-[45px] rounded-lg bg-white z-0">
-            <p>42</p>
-          </div>
+          {solving && <div className=" p-2">true!</div>}
         </div>
-        {solving && <div className=" p-2">true!</div>}
+
       </div>
-    </div>
+    </div >
   )
 }

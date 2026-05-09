@@ -49,6 +49,7 @@ model Question {
   answerText   String?
   answerImages String[]  @default([])
   likeList     String[]  @default([])
+  tags         Tag[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   editedAt  DateTime?
@@ -79,4 +80,23 @@ model VerificationCode {
 
   @@unique([email, code])
   @@index([email])
+}
+
+model OperTask {
+  id        Int      @id @default(autoincrement())
+  operands  String[]  @default([])
+  operators String[]  @default([])
+  taskKey   String  
+}
+
+model EventTask {
+  id          Int      @id @default(autoincrement())
+  tasksLines  String[]  @default([])
+  taskKey     String  
+}
+
+model Tag {
+  id      Int      @id @default(autoincrement())
+  name    String  @unique
+  questions Question[]
 }
