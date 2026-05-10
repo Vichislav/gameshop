@@ -1,6 +1,8 @@
 import Task1 from './(components)/task1'
 import prisma from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export interface Task1Props {  
   id: number // id задания
   operands: string[] // [undefined, 42]
