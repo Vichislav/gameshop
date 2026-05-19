@@ -2,7 +2,7 @@
 
 import { useState, type ChangeEvent } from 'react'
 
-import type { CommentForCard } from '../question-for-card'
+import type { CommentForCard } from '../question-for-card.types'
 
 import QuestionCommentCard from './question-comment-card'
 import ZoomImage from '@/app/component/ZoomImage'

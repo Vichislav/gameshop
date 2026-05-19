@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 
-import type { CommentForCard } from '../question-for-card'
+import type { CommentForCard } from '../question-for-card.types'
 
 import Modal from '@/app/component/Modal'
 import QuestionForm, {

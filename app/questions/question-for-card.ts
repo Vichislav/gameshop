@@ -2,10 +2,11 @@ import { Prisma } from '@prisma/client'
 
 import prisma from '@/lib/prisma'
 
-/** Поля вопроса для карточки + комментарии (порядок: старые → новые).
- *  `images` у комментариев не в nested select: старый Prisma Client без поля в DMMF
- *  падает в runtime; значения подмешиваются в `fetchQuestionsForCard` через `$queryRaw`.
- */
+import type { CommentForCard, QuestionForCard } from './question-for-card.types'
+
+export type { CommentForCard, QuestionForCard } from './question-for-card.types'
+
+/** Поля вопроса для карточки + комментарии (порядок: старые → новые). */
 export const questionForCardSelect = Prisma.validator<Prisma.QuestionSelect>()({
   id: true,
   type: true,
@@ -34,18 +35,6 @@ export const questionForCardSelect = Prisma.validator<Prisma.QuestionSelect>()({
     orderBy: { createdAt: 'asc' },
   },
 })
-
-type QuestionForCardPayload = Prisma.QuestionGetPayload<{
-  select: typeof questionForCardSelect
-}>
-
-export type CommentForCard = QuestionForCardPayload['comments'][number] & {
-  images: string[]
-}
-
-export type QuestionForCard = Omit<QuestionForCardPayload, 'comments'> & {
-  comments: CommentForCard[]
-}
 
 /** Список вопросов для карточек; подгружает `images` комментариев одним raw-запросом. */
 export async function fetchQuestionsForCard(

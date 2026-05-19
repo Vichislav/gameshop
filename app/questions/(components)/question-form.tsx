@@ -10,7 +10,7 @@ import {
 } from 'react'
 
 import ZoomImage from '@/app/component/ZoomImage'
-import { normalizeTagName } from '@/lib/question-tags'
+import { normalizeTagName } from '@/lib/question-tag-utils'
 
 function getCookie(name: string): string | null {
   if (typeof document === 'undefined') return null

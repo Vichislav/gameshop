@@ -17,12 +17,21 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma */
 
 import { PrismaClient } from '@prisma/client'
 
-// Проверяем наличие URL (он уже должен быть в process.env)
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is not defined')
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-// Создаём клиент без передачи опций – в Prisma 5 он сам подхватит DATABASE_URL
-const prisma = new PrismaClient()
+function createPrismaClient(): PrismaClient {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is not defined')
+  }
+  return new PrismaClient()
+}
+
+const prisma = globalForPrisma.prisma ?? createPrismaClient()
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma
+}
 
 export default prisma

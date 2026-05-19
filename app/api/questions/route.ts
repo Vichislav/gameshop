@@ -3,10 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getUserIdFromRequest } from '@/lib/auth-request'
 import prisma from '@/lib/prisma'
 import { saveQuestionImageUpload } from '@/lib/question-upload'
-import {
-  parseTagNamesJson,
-  syncQuestionTags,
-} from '@/lib/question-tags'
+import { parseTagNamesJson } from '@/lib/question-tag-utils'
+import { syncQuestionTags } from '@/lib/question-tags-server'
 
 const QUESTION_TYPES = ['technical', 'hr', 'other'] as const
 type QuestionType = (typeof QUESTION_TYPES)[number]
