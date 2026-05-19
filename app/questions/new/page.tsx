@@ -24,6 +24,7 @@ function NewQuestionForm() {
     author: string
     text: string
     files: File[]
+    tags: string[]
     answerText?: string
     answerFiles?: File[]
   }) {
@@ -33,6 +34,7 @@ function NewQuestionForm() {
       formData.set('type', type)
       formData.set('author', values.author)
       formData.set('text', values.text)
+      formData.set('tags', JSON.stringify(values.tags))
       if (values.answerText?.trim()) {
         formData.set('answerText', values.answerText.trim())
       }

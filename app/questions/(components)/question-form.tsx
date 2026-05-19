@@ -4,11 +4,13 @@ import {
   useState,
   ChangeEvent,
   FormEvent,
+  KeyboardEvent,
   useEffect,
   useRef,
 } from 'react'
 
 import ZoomImage from '@/app/component/ZoomImage'
+import { normalizeTagName } from '@/lib/question-tags'
 
 function getCookie(name: string): string | null {
   if (typeof document === 'undefined') return null
@@ -34,6 +36,7 @@ interface QuestionFormInitialData {
   images?: string[]
   answerText?: string
   answerImages?: string[]
+  tags?: string[]
   /** Только для mode=edit — для PATCH */
   questionType?: QuestionTypeValue
 }
@@ -44,6 +47,7 @@ export interface QuestionFormValues {
   files: File[]
   answerText?: string
   answerFiles?: File[]
+  tags: string[]
   /** Редактирование: URL картинок, которые оставляем */
   keepImageUrls?: string[]
   keepAnswerImageUrls?: string[]
@@ -98,8 +102,58 @@ export default function QuestionForm({
       url,
     })),
   )
+  const [tags, setTags] = useState<string[]>(initialData?.tags ?? [])
+  const [tagInput, setTagInput] = useState('')
+  const [tagSuggestions, setTagSuggestions] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
   const answerTextareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const q = tagInput.trim()
+    if (q.length < 1) {
+      setTagSuggestions([])
+      return
+    }
+    const ac = new AbortController()
+    const t = window.setTimeout(() => {
+      fetch(`/api/tags?q=${encodeURIComponent(q)}`, { signal: ac.signal })
+        .then((res) => (res.ok ? res.json() : []))
+        .then((names: unknown) => {
+          if (!Array.isArray(names)) return
+          setTagSuggestions(
+            names.filter((n): n is string => typeof n === 'string'),
+          )
+        })
+        .catch(() => {})
+    }, 200)
+    return () => {
+      clearTimeout(t)
+      ac.abort()
+    }
+  }, [tagInput])
+
+  function addTag(raw: string) {
+    const name = normalizeTagName(raw)
+    if (!name) return
+    setTags((prev) => {
+      if (prev.some((t) => t.toLowerCase() === name.toLowerCase())) return prev
+      if (prev.length >= 20) return prev
+      return [...prev, name]
+    })
+    setTagInput('')
+    setTagSuggestions([])
+  }
+
+  function removeTag(name: string) {
+    setTags((prev) => prev.filter((t) => t !== name))
+  }
+
+  function handleTagKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      addTag(tagInput)
+    }
+  }
 
   function insertAnswerImageMarker(slot: number) {
     const marker = `[[img:${slot}]]`
@@ -197,6 +251,7 @@ export default function QuestionForm({
         author: author.trim(),
         text: text.trim(),
         files,
+        tags,
         ...(answerText.trim() ? { answerText: answerText.trim() } : {}),
         ...(answerFiles.length > 0 ? { answerFiles } : {}),
         ...(mode === 'edit'
@@ -244,6 +299,54 @@ export default function QuestionForm({
           placeholder="Write the question, context, notes..."
         />
       </label>
+
+      <div className="flex flex-col gap-2 text-sm">
+        <span className="font-medium text-slate-800">Теги (необязательно)</span>
+        <p className="text-xs text-slate-600">
+          Введите тег и нажмите Enter или «Добавить». До 20 тегов.
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="inline-flex items-center gap-1 rounded-full bg-cyan-50 px-2 py-0.5 text-xs text-cyan-900 ring-1 ring-cyan-200"
+            >
+              {tag}
+              <button
+                type="button"
+                onClick={() => removeTag(tag)}
+                className="leading-none text-cyan-700 hover:text-cyan-950"
+                aria-label={`Удалить тег ${tag}`}
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <input
+            type="text"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={handleTagKeyDown}
+            list="question-tag-suggestions"
+            className="min-w-[160px] flex-1 rounded-md border border-slate-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            placeholder="javascript, react…"
+          />
+          <datalist id="question-tag-suggestions">
+            {tagSuggestions.map((name) => (
+              <option key={name} value={name} />
+            ))}
+          </datalist>
+          <button
+            type="button"
+            onClick={() => addTag(tagInput)}
+            className="rounded-md border border-slate-400 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50"
+          >
+            Добавить
+          </button>
+        </div>
+      </div>
 
       <div className="flex flex-col gap-2 text-sm">
         <span className="font-medium text-slate-800">

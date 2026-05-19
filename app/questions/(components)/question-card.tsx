@@ -41,6 +41,7 @@ interface QuestionCardProps {
   likes?: number
   answerText?: string | null
   answerImages?: string[]
+  tags?: string[]
   /** Комментарии к вопросу (длина массива = счётчик) */
   comments?: CommentForCard[]
   footerSlot?: React.ReactNode
@@ -64,6 +65,7 @@ export default function QuestionCard({
   likes,
   answerText,
   answerImages = [],
+  tags = [],
   comments,
   footerSlot,
   canEdit = false,
@@ -97,6 +99,7 @@ export default function QuestionCard({
           'keepAnswerImageUrls',
           JSON.stringify(values.keepAnswerImageUrls ?? []),
         )
+        fd.set('tags', JSON.stringify(values.tags))
         values.files.forEach((f) => fd.append('images', f))
         values.answerFiles?.forEach((f) => fd.append('answerImages', f))
 
@@ -190,6 +193,19 @@ export default function QuestionCard({
 
         <p className="mb-3 text-sm text-slate-900 whitespace-pre-line">{text}</p>
 
+        {tags.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-1.5">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
         {images.length > 0 && (
           <div className="mb-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {images.map((url, index) => (
@@ -246,6 +262,7 @@ export default function QuestionCard({
                 images,
                 answerText: answerText ?? undefined,
                 answerImages,
+                tags,
                 questionType,
               }}
               onSubmit={handlePatch}

@@ -1,6 +1,16 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  // классы из HTML-строк EventTask в БД (Tailwind их не видит при сборке)
+  safelist: [
+    'px-2',
+    'text-blue-500',
+    'text-blue-800',
+    'pl-4',
+    'text-yellow-400',
+    'text-yellow-500',
+    'text-purple-700',
+  ],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',

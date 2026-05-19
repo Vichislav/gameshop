@@ -90,9 +90,9 @@ model OperTask {
 }
 
 model EventTask {
-  id          Int      @id @default(autoincrement())
-  tasksLines  String[]  @default([])
-  taskKey     String  
+  id         Int    @id @default(autoincrement())
+  tasksLines Json   @default("[]") // string[][], токены строк кода
+  taskKey    String
 }
 
 model Tag {

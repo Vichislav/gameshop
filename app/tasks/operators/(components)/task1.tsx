@@ -21,7 +21,6 @@ export default function Task1({ operands, operators, taskKey, id }: Task1Props) 
           : ''),
       )
       .join('')
- 
 
     if (sumString === taskKey) {
       setSolving(true)
@@ -33,8 +32,6 @@ export default function Task1({ operands, operators, taskKey, id }: Task1Props) 
   useEffect(() => {
     setCurrentValue(Array.from({ length: slotsCount }, () => '...'))
   }, [slotsCount])
-
-  //className={`border-2 rounded p-2 border-gray-300 ${ isHighlighted ? 'animate-highlight' : ''}`}
 
   return (
     <div
@@ -49,41 +46,45 @@ export default function Task1({ operands, operators, taskKey, id }: Task1Props) 
       </div>
 
       <div className="w-[100%] flex flex-col lg:flex-row justify-center items-center gap-[10px] p-5">
-
-
         <div className="flex h-[43%] gap-[2px] relative">
           {operands.map((operand: string, index: number) => {
-            
             return (
-              <React.Fragment key={`${id}_${index}`}>
+              <React.Fragment key={`opertask${id}_${index}`}>
                 <div className="flex justify-center items-center w-fit px-1 h-[40px]  lg:h-[45px] rounded-lg bg-white">
                   <p>{operand}</p>
                 </div>
                 {index < operands.length - 1 && (
-                  <select id={`operator_${index}`} name="operSelect"
+                  <select
+                    id={`operator_${index}`}
+                    name="operSelect"
                     className={`appearance-none bg-transparent px-0 text-center w-[40px]  lg:w-[45px] border-2 border-gray-500 z-10 rounded-lg 
                                 cursor-pointer ${rightActive ? 'animate-highlight' : ''}`}
-                    onChange={(e) => setCurrentValue((currentValue) => {
-                      const newCurrentValue = [...currentValue]
-                      newCurrentValue[index] = e.target.value
-                      return newCurrentValue
-                    })}
+                    onChange={(e) =>
+                      setCurrentValue((currentValue) => {
+                        const newCurrentValue = [...currentValue]
+                        newCurrentValue[index] = e.target.value
+                        return newCurrentValue
+                      })
+                    }
                   >
                     <option value="...">...</option>
                     {operators.map((operator: string) => (
-                      <option key={`${id}_${index}_${operator}`} value={operator}>{operator}</option>
+                      <option
+                        key={`${id}_${index}_${operator}`}
+                        value={operator}
+                      >
+                        {operator}
+                      </option>
                     ))}
                   </select>
                 )}
               </React.Fragment>
-
             )
           })}
 
           {solving && <div className=" p-2">true!</div>}
         </div>
-
       </div>
-    </div >
+    </div>
   )
 }

@@ -10,11 +10,7 @@ export interface Task1Props {
   taskKey: string // key задания
 }
 
-export interface EventProps {  
-  id: number // id задания
-  tasksLines: string[] // [undefined, 42]tasks lines
-  taskKey: string // key задания
-}
+
 
 async function getOperTasks(): Promise<Task1Props[]> {
   const rows = await prisma.operTask.findMany({

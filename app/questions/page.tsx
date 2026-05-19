@@ -49,6 +49,7 @@ export default async function Questions() {
               currentUserId={currentUserId}
               answerText={question.answerText}
               answerImages={question.answerImages}
+              tags={question.tags.map((t) => t.name)}
               comments={question.comments}
               canEdit={
                 viewerAuthorLabel !== null &&

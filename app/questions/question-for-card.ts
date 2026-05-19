@@ -18,6 +18,10 @@ export const questionForCardSelect = Prisma.validator<Prisma.QuestionSelect>()({
   likeList: true,
   answerText: true,
   answerImages: true,
+  tags: {
+    select: { name: true },
+    orderBy: { name: 'asc' },
+  },
   comments: {
     select: {
       id: true,

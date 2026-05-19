@@ -9,6 +9,11 @@ import {
   saveQuestionImageUpload,
 } from '@/lib/question-upload'
 import prisma from '@/lib/prisma'
+import {
+  normalizeTagNames,
+  parseTagNamesJson,
+  syncQuestionTags,
+} from '@/lib/question-tags'
 
 const QUESTION_TYPES = ['technical', 'hr', 'other'] as const
 type QuestionType = (typeof QUESTION_TYPES)[number]
@@ -55,10 +60,11 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   const hasText = 'text' in body
   const hasAnswer = 'answerText' in body
   const hasType = 'type' in body
+  const hasTags = 'tags' in body
 
-  if (!hasText && !hasAnswer && !hasType) {
+  if (!hasText && !hasAnswer && !hasType && !hasTags) {
     return NextResponse.json(
-      { error: 'Provide at least one of: text, answerText, type' },
+      { error: 'Provide at least one of: text, answerText, type, tags' },
       { status: 400 },
     )
   }
@@ -104,6 +110,17 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     data.type = body.type
   }
 
+  let tagNames: string[] | undefined
+  if (hasTags) {
+    if (!Array.isArray(body.tags)) {
+      return NextResponse.json(
+        { error: 'tags must be an array of strings' },
+        { status: 400 },
+      )
+    }
+    tagNames = normalizeTagNames(body.tags)
+  }
+
   try {
     const question = await prisma.question.findUnique({
       where: { id: questionId },
@@ -136,10 +153,35 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         likeList: true,
         createdAt: true,
         editedAt: true,
+        tags: { select: { name: true }, orderBy: { name: 'asc' } },
       },
     })
 
-    return NextResponse.json(updated)
+    if (tagNames !== undefined) {
+      await syncQuestionTags(questionId, tagNames)
+    }
+
+    const withTags =
+      tagNames !== undefined
+        ? await prisma.question.findUnique({
+            where: { id: questionId },
+            select: {
+              id: true,
+              type: true,
+              author: true,
+              text: true,
+              images: true,
+              answerText: true,
+              answerImages: true,
+              likeList: true,
+              createdAt: true,
+              editedAt: true,
+              tags: { select: { name: true }, orderBy: { name: 'asc' } },
+            },
+          })
+        : updated
+
+    return NextResponse.json(withTags ?? updated)
   } catch (e) {
     console.error('PATCH /api/questions/[id]', e)
     return NextResponse.json(
@@ -208,6 +250,8 @@ async function patchMultipart(
 
   const images = [...keepImageUrls, ...newImageUrls]
   const answerImages = [...keepAnswerUrls, ...newAnswerUrls]
+  const tagNames = parseTagNamesJson(formData.get('tags'))
+  const hasTagsField = formData.has('tags')
 
   try {
     const question = await prisma.question.findUnique({
@@ -245,10 +289,34 @@ async function patchMultipart(
         likeList: true,
         createdAt: true,
         editedAt: true,
+        tags: { select: { name: true }, orderBy: { name: 'asc' } },
       },
     })
 
-    return NextResponse.json(updated)
+    if (hasTagsField) {
+      await syncQuestionTags(questionId, tagNames)
+    }
+
+    const withTags = hasTagsField
+      ? await prisma.question.findUnique({
+          where: { id: questionId },
+          select: {
+            id: true,
+            type: true,
+            author: true,
+            text: true,
+            images: true,
+            answerText: true,
+            answerImages: true,
+            likeList: true,
+            createdAt: true,
+            editedAt: true,
+            tags: { select: { name: true }, orderBy: { name: 'asc' } },
+          },
+        })
+      : updated
+
+    return NextResponse.json(withTags ?? updated)
   } catch (e) {
     console.error('PATCH multipart /api/questions/[id]', e)
     return NextResponse.json(

@@ -1,16 +1,19 @@
 'use client'
-import { useEffect, useState } from 'react'
 
-export default function EventTask1() {
-  const [solving, setSolving] = useState<boolean>(false) // верно ли решено задание
-  const [data, setData] = useState<string[]>([
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-  ])
-  const [activ, setActiv] = useState<boolean[]>([true, true, true, true, true])
+import { useEffect, useState, type KeyboardEvent } from 'react'
+import { EventProps } from '../page'
+import { buildEventLineHtml, prepareTaskLineHtml } from '@/lib/event-task-lines'
+
+export default function EventTask1({ id, tasksLines, taskKey }: EventProps) {
+  const countLines = tasksLines.length
+
+  const [solving, setSolving] = useState<boolean>(false)
+  const [data, setData] = useState<string[]>(
+    Array.from({ length: countLines }, () => '...'),
+  )
+  const [activ, setActiv] = useState<boolean[]>(
+    Array.from({ length: countLines }, () => true),
+  )
   const [count, setCount] = useState<number>(0)
 
   const dataHandler = (ind: number) => {
@@ -32,29 +35,22 @@ export default function EventTask1() {
   }
 
   const onStart = () => {
-    setData(() => {
-      const newArr = ['...', '...', '...', '...', '...']
-      return newArr
-    })
-    setActiv((activ) => {
-      const newArr = [true, true, true, true, true]
-      return newArr
-    })
+    setData(Array.from({ length: countLines }, () => '...'))
+    setActiv(Array.from({ length: countLines }, () => true))
     setCount(0)
   }
 
   useEffect(() => {
-    //
-    const expression = '13542'
-    const currentSolving = `${data[0]}${data[1]}${data[2]}${data[3]}${data[4]}`
+    const currentSolving = data.join('')
+    setSolving(currentSolving === taskKey)
+  }, [data, taskKey])
 
-    if (currentSolving === expression) {
-      setSolving(true)
-    } else {
-      setSolving(false)
-    }
-  }, [data])
-  //bg-[#c0bfbf]
+  useEffect(() => {
+    setData(Array.from({ length: countLines }, () => '...'))
+    setActiv(Array.from({ length: countLines }, () => true))
+    setCount(0)
+  }, [countLines])
+
   return (
     <div
       className="w-[100%] lg:w-[80%] flex flex-col items-center gap-[10px] border-2  border-black rounded-[8px] "
@@ -69,96 +65,28 @@ export default function EventTask1() {
 
       <div className="flex w-full justify-around">
         <div className="flex flex-col text-[10px] leading-8 md:text-sm lg:text-base">
-          <div
-            className=" cursor-pointer "
-            style={{ backgroundColor: activ[0] ? 'white' : '#c0bfbf' }}
-            onClick={() => dataHandler(0)}
-          >
-            <p className=" px-2 ">
-              <span className="text-blue-500">console</span>.
-              <span className="text-yellow-500">log</span>
-              <span className="text-purple-700">&#40;</span>
-              &nbsp;1&nbsp;
-              <span className="text-purple-700">&#41;</span>
-            </p>
-          </div>
-
-          <div
-            className=" cursor-pointer "
-            style={{ backgroundColor: activ[1] ? 'white' : '#c0bfbf' }}
-            onClick={() => dataHandler(1)}
-          >
-            <p className=" px-2 ">
-              <span className="text-yellow-500">setTimeout</span>
-              <span className="text-yellow-400">&#40;</span>
-              <span className="text-purple-700">&#40;</span>
-              <span className="text-purple-700">&#41;</span>
-              <span>&nbsp;=&gt;&nbsp;</span>
-              <span className="text-blue-500">console</span>.
-              <span className="text-yellow-500">log</span>
-              <span className="text-purple-700">&#40;</span>
-              <span>&nbsp;2&nbsp;</span>
-              <span className="text-purple-700">&#41;</span>
-              <span>&sbquo;&nbsp;1000</span>
-              <span className="text-yellow-400">&#41;</span>
-            </p>
-          </div>
-
-          <div
-            className=" cursor-pointer "
-            style={{ backgroundColor: activ[2] ? 'white' : '#c0bfbf' }}
-            onClick={() => dataHandler(2)}
-          >
-            <p className=" px-2 ">
-              <span className="text-blue-500">console</span>.
-              <span className="text-yellow-500">log</span>
-              <span className="text-purple-700">&#40;</span>
-              &nbsp;3&nbsp;
-              <span className="text-purple-700">&#41;</span>
-            </p>
-          </div>
-
-          <div
-            className=" cursor-pointer "
-            style={{ backgroundColor: activ[3] ? 'white' : '#c0bfbf' }}
-            onClick={() => dataHandler(3)}
-          >
-            <p className=" px-2 ">
-              <span className="text-yellow-500">setTimeout</span>
-              <span className="text-yellow-400">&#40;</span>
-              <span className="text-purple-700">&#40;</span>
-              <span className="text-purple-700">&#41;</span>
-              <span>&nbsp;=&gt;&nbsp;</span>
-              <span className="text-blue-500">console</span>.
-              <span className="text-yellow-500">log</span>
-              <span className="text-purple-700">&#40;</span>
-              <span>&nbsp;4&nbsp;</span>
-              <span className="text-purple-700">&#41;</span>
-              <span className="text-yellow-400">&#41;</span>
-            </p>
-          </div>
-
-          <div
-            className=" cursor-pointer  "
-            style={{ backgroundColor: activ[4] ? 'white' : '#c0bfbf' }}
-            onClick={() => dataHandler(4)}
-          >
-            <p className="px-2 ">
-              <span className="text-blue-500">console</span>.
-              <span className="text-yellow-500">log</span>
-              <span className="text-purple-700">&#40;</span>
-              &nbsp;5&nbsp;
-              <span className="text-purple-700">&#41;</span>
-            </p>
-          </div>
+          {tasksLines.map((lineTokens, index) => (
+            <div
+              key={`eventTask_${id}_${index}`}
+              role="button"
+              tabIndex={0}
+              className="cursor-pointer"
+              style={{ backgroundColor: activ[index] ? 'white' : '#c0bfbf' }}
+              onClick={() => dataHandler(index)}
+              onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
+                if (e.key === 'Enter' || e.key === ' ') dataHandler(index)
+              }}
+              dangerouslySetInnerHTML={{
+                __html: prepareTaskLineHtml(buildEventLineHtml(lineTokens)),
+              }}
+            />
+          ))}
         </div>
 
         <div className="flex flex-col w-[20px] justify-center items-center pb-2">
-          <div>{data[0]}</div>
-          <div>{data[1]}</div>
-          <div>{data[2]}</div>
-          <div>{data[3]}</div>
-          <div>{data[4]}</div>
+          {data.map((item, index) => (
+            <div key={`eventData${index}`}>{item}</div>
+          ))}
           <div className="cursor-pointer" onClick={() => onStart()}>
             &#10060;
           </div>
