@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, type KeyboardEvent } from 'react'
-import { EventProps } from '../page'
+import type { EventProps } from '../event-task-types'
 import { buildEventLineHtml, prepareTaskLineHtml } from '@/lib/event-task-lines'
 
 export default function EventTask1({ id, tasksLines, taskKey }: EventProps) {
